@@ -1,3 +1,6 @@
+/* Font families (loaded in app/layout.tsx). */
+:root { --font-hebrew: 'Noto Serif Hebrew'; --font-korean: 'Noto Sans KR'; }
+
 /* Palette from the illustrations: Zoe's chestnut patch and Rebekah's hair (primary),
    peach/cream watercolor ground, terracotta jar, a touch of shawl blue. */
 :root {

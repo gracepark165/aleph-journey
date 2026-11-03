@@ -1,21 +1,25 @@
 import type { Metadata, Viewport } from 'next'
 import Link from 'next/link'
-import { Noto_Sans_KR, Noto_Serif_Hebrew } from 'next/font/google'
 import { HeaderStats } from '@/components/HeaderStats'
 import { TabBar } from '@/components/TabBar'
 import { ProgressProvider } from '@/lib/progress/ProgressProvider'
 import { APP_NAME } from '@/lib/version'
 import './globals.css'
 
-const hebrew = Noto_Serif_Hebrew({ subsets: ['hebrew'], weight: ['400', '600'], variable: '--font-hebrew', display: 'swap' })
-const korean = Noto_Sans_KR({ subsets: ['latin'], weight: ['400', '700', '800'], variable: '--font-korean', display: 'swap', preload: false })
+// Fonts load in the browser from Google Fonts, so builds never depend on fetching font metadata.
+const FONTS_CSS = 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800&family=Noto+Serif+Hebrew:wght@400;600&display=swap'
 
 export const metadata: Metadata = { title: APP_NAME, description: '성경 히브리어를 장면 속 대화로 배우는 게임' }
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover' }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko" className={`${hebrew.variable} ${korean.variable}`}>
+    <html lang="ko">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="stylesheet" href={FONTS_CSS} />
+      </head>
       <body>
         <ProgressProvider>
           <header className="site-header">
