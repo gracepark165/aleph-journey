@@ -12,7 +12,15 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
+    // Tests build deliberately malformed fixtures with `as any`.
+    files: ["tests/**/*.{ts,tsx}"],
+    rules: { "@typescript-eslint/no-explicit-any": "off" },
+  },
+  {
     ignores: [
+      ".superpowers/**",
+      "test-results/**",
+      "playwright-report/**",
       "node_modules/**",
       ".next/**",
       "out/**",
