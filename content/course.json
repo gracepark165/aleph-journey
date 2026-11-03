@@ -1,0 +1,25 @@
+{
+  "id": "genesis-intro",
+  "titleKo": "창세기 입문",
+  "units": [
+    {
+      "id": "unit-0-alefbet",
+      "titleKo": "알파벳 첫걸음",
+      "mapLabelKo": "출발",
+      "lessonIds": [
+        "alef-bet-1"
+      ]
+    },
+    {
+      "id": "unit-1-rebekah",
+      "titleKo": "우물가의 리브가",
+      "refKo": "창세기 24:17-18",
+      "mapLabelKo": "나홀의 성 우물",
+      "lessonIds": [
+        "rebekah-reading",
+        "rebekah-quiz",
+        "rebekah-roleplay"
+      ]
+    }
+  ]
+}

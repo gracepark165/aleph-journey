@@ -1,0 +1,72 @@
+{
+  "id": "alef-bet-1",
+  "type": "quiz",
+  "titleKo": "첫 다섯 글자",
+  "questions": [
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "א",
+        "ko": "이 글자의 이름은?"
+      },
+      "choices": [
+        "알레프",
+        "베트",
+        "기멜"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "ב",
+        "ko": "이 글자의 이름은?"
+      },
+      "choices": [
+        "베트",
+        "달레트",
+        "헤"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "ג",
+        "ko": "이 글자의 이름은?"
+      },
+      "choices": [
+        "기멜",
+        "알레프",
+        "헤"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "ד",
+        "ko": "이 글자의 이름은?"
+      },
+      "choices": [
+        "달레트",
+        "베트",
+        "기멜"
+      ],
+      "answerIndex": 0
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "ה",
+        "ko": "이 글자의 이름은?"
+      },
+      "choices": [
+        "헤",
+        "달레트",
+        "알레프"
+      ],
+      "answerIndex": 0
+    }
+  ]
+}

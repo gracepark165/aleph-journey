@@ -1,0 +1,114 @@
+{
+  "H7323": {
+    "id": "H7323",
+    "lemma": "רוּץ",
+    "translit": "루츠",
+    "glossKo": "달리다",
+    "posKo": "동사"
+  },
+  "H5650": {
+    "id": "H5650",
+    "lemma": "עֶבֶד",
+    "translit": "에베드",
+    "glossKo": "종, 하인",
+    "posKo": "명사"
+  },
+  "H7125": {
+    "id": "H7125",
+    "lemma": "קִרְאָה",
+    "translit": "키르아",
+    "glossKo": "맞으러 (לִקְרַאת: ~를 맞으러)",
+    "posKo": "명사(전치사적 용법)"
+  },
+  "H559": {
+    "id": "H559",
+    "lemma": "אָמַר",
+    "translit": "아마르",
+    "glossKo": "말하다",
+    "posKo": "동사"
+  },
+  "H1572": {
+    "id": "H1572",
+    "lemma": "גָּמָא",
+    "translit": "가마",
+    "glossKo": "마시다 (히필: 마시게 하다)",
+    "posKo": "동사"
+  },
+  "H4994": {
+    "id": "H4994",
+    "lemma": "נָא",
+    "translit": "나",
+    "glossKo": "부디, 제발",
+    "posKo": "불변화사"
+  },
+  "H4592": {
+    "id": "H4592",
+    "lemma": "מְעַט",
+    "translit": "메아트",
+    "glossKo": "조금, 적은 것",
+    "posKo": "명사"
+  },
+  "H4325": {
+    "id": "H4325",
+    "lemma": "מַיִם",
+    "translit": "마임",
+    "glossKo": "물",
+    "posKo": "명사"
+  },
+  "H3537": {
+    "id": "H3537",
+    "lemma": "כַּד",
+    "translit": "카드",
+    "glossKo": "항아리",
+    "posKo": "명사"
+  },
+  "H8354": {
+    "id": "H8354",
+    "lemma": "שָׁתָה",
+    "translit": "샤타",
+    "glossKo": "마시다",
+    "posKo": "동사"
+  },
+  "H113": {
+    "id": "H113",
+    "lemma": "אָדוֹן",
+    "translit": "아돈",
+    "glossKo": "주인, 주",
+    "posKo": "명사"
+  },
+  "H4116": {
+    "id": "H4116",
+    "lemma": "מָהַר",
+    "translit": "마하르",
+    "glossKo": "서두르다",
+    "posKo": "동사"
+  },
+  "H3381": {
+    "id": "H3381",
+    "lemma": "יָרַד",
+    "translit": "야라드",
+    "glossKo": "내려가다 (히필: 내리다)",
+    "posKo": "동사"
+  },
+  "H5921": {
+    "id": "H5921",
+    "lemma": "עַל",
+    "translit": "알",
+    "glossKo": "~위에",
+    "posKo": "전치사"
+  },
+  "H3027": {
+    "id": "H3027",
+    "lemma": "יָד",
+    "translit": "야드",
+    "glossKo": "손",
+    "posKo": "명사"
+  },
+  "H8248": {
+    "id": "H8248",
+    "lemma": "שָׁקָה",
+    "translit": "샤카",
+    "glossKo": "마시게 하다",
+    "posKo": "동사"
+  }
+}

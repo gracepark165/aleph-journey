@@ -1,0 +1,145 @@
+{
+  "id": "rebekah-reading",
+  "type": "reading",
+  "titleKo": "본문 읽기: 물을 청하다",
+  "verses": [
+    {
+      "refKo": "창세기 24:17",
+      "translationKo": "종이 그녀를 맞으러 달려가서 말했다. \"부디 당신의 항아리에서 물을 조금 마시게 해 주십시오.\"",
+      "words": [
+        {
+          "surface": "וַיָּרָץ",
+          "lemmaId": "H7323",
+          "translit": "바야라츠",
+          "glossKo": "그리고 그가 달려갔다",
+          "grammarKo": "와우 연속법 칼 미완료 3인칭 남성 단수"
+        },
+        {
+          "surface": "הָעֶבֶד",
+          "lemmaId": "H5650",
+          "translit": "하에베드",
+          "glossKo": "그 종",
+          "grammarKo": "정관사 + 명사 남성 단수"
+        },
+        {
+          "surface": "לִקְרָאתָהּ",
+          "lemmaId": "H7125",
+          "translit": "리크라타",
+          "glossKo": "그녀를 맞으러",
+          "grammarKo": "전치사 לְ + 부정사 연계형 + 3인칭 여성 단수 접미사"
+        },
+        {
+          "surface": "וַיֹּאמֶר",
+          "lemmaId": "H559",
+          "translit": "바요메르",
+          "glossKo": "그리고 그가 말했다",
+          "grammarKo": "와우 연속법 칼 미완료 3인칭 남성 단수"
+        },
+        {
+          "surface": "הַגְמִיאִינִי",
+          "lemmaId": "H1572",
+          "translit": "하그미이니",
+          "glossKo": "나로 마시게 해 주세요",
+          "grammarKo": "히필 명령형 2인칭 여성 단수 + 1인칭 단수 접미사"
+        },
+        {
+          "surface": "נָא",
+          "lemmaId": "H4994",
+          "translit": "나",
+          "glossKo": "부디",
+          "grammarKo": "간청의 불변화사"
+        },
+        {
+          "surface": "מְעַט",
+          "lemmaId": "H4592",
+          "translit": "메아트",
+          "glossKo": "조금의",
+          "grammarKo": "명사 남성 단수 연계형"
+        },
+        {
+          "surface": "מַיִם",
+          "lemmaId": "H4325",
+          "translit": "마임",
+          "glossKo": "물",
+          "grammarKo": "명사 남성 복수"
+        },
+        {
+          "surface": "מִכַּדֵּךְ",
+          "lemmaId": "H3537",
+          "translit": "미카데크",
+          "glossKo": "당신(여)의 항아리에서",
+          "grammarKo": "전치사 מִן + 명사 여성 단수 + 2인칭 여성 단수 접미사"
+        }
+      ]
+    },
+    {
+      "refKo": "창세기 24:18",
+      "translationKo": "그녀가 \"마시십시오, 내 주여\" 하고, 급히 항아리를 손에 내려 그에게 마시게 했다.",
+      "words": [
+        {
+          "surface": "וַתֹּאמֶר",
+          "lemmaId": "H559",
+          "translit": "바토메르",
+          "glossKo": "그리고 그녀가 말했다",
+          "grammarKo": "와우 연속법 칼 미완료 3인칭 여성 단수"
+        },
+        {
+          "surface": "שְׁתֵה",
+          "lemmaId": "H8354",
+          "translit": "셰테",
+          "glossKo": "마시라",
+          "grammarKo": "칼 명령형 2인칭 남성 단수"
+        },
+        {
+          "surface": "אֲדֹנִי",
+          "lemmaId": "H113",
+          "translit": "아도니",
+          "glossKo": "나의 주여",
+          "grammarKo": "명사 남성 단수 + 1인칭 단수 접미사"
+        },
+        {
+          "surface": "וַתְּמַהֵר",
+          "lemmaId": "H4116",
+          "translit": "바테마헤르",
+          "glossKo": "그리고 그녀가 서둘렀다",
+          "grammarKo": "와우 연속법 피엘 미완료 3인칭 여성 단수"
+        },
+        {
+          "surface": "וַתֹּרֶד",
+          "lemmaId": "H3381",
+          "translit": "바토레드",
+          "glossKo": "그리고 그녀가 내렸다",
+          "grammarKo": "와우 연속법 히필 미완료 3인칭 여성 단수"
+        },
+        {
+          "surface": "כַּדָּהּ",
+          "lemmaId": "H3537",
+          "translit": "카다",
+          "glossKo": "그녀의 항아리",
+          "grammarKo": "명사 여성 단수 + 3인칭 여성 단수 접미사"
+        },
+        {
+          "surface": "עַל",
+          "lemmaId": "H5921",
+          "translit": "알",
+          "glossKo": "~위에",
+          "grammarKo": "전치사"
+        },
+        {
+          "surface": "יָדָהּ",
+          "lemmaId": "H3027",
+          "translit": "야다",
+          "glossKo": "그녀의 손",
+          "grammarKo": "명사 여성 단수 + 3인칭 여성 단수 접미사"
+        },
+        {
+          "surface": "וַתַּשְׁקֵהוּ",
+          "lemmaId": "H8248",
+          "translit": "바타슈케후",
+          "glossKo": "그리고 그녀가 그에게 마시게 했다",
+          "grammarKo": "와우 연속법 히필 미완료 3인칭 여성 단수 + 3인칭 남성 단수 접미사"
+        }
+      ]
+    }
+  ]
+}

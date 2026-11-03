@@ -1,0 +1,148 @@
+{
+  "id": "rebekah-roleplay",
+  "type": "roleplay",
+  "titleKo": "미션: 우물가에서 물을 청하라",
+  "setupKo": "당신은 아브라함의 종입니다. 나홀의 성 우물가에서 물 항아리를 어깨에 멘 소녀를 만났습니다.",
+  "character": {
+    "nameKo": "리브가",
+    "nameHe": "רִבְקָה"
+  },
+  "startNodeId": "intro",
+  "nodes": {
+    "intro": {
+      "id": "intro",
+      "narrationKo": "소녀에게 달려가 물을 청하세요.",
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "ask",
+            "line": {
+              "he": "הַגְמִיאִינִי נָא מְעַט מַיִם",
+              "translit": "하그미이니 나 메아트 마임",
+              "ko": "부디 물을 조금 마시게 해 주세요",
+              "lemmaIds": [
+                "H1572",
+                "H4994",
+                "H4592",
+                "H4325"
+              ]
+            },
+            "correct": true,
+            "next": "rebekah-answers"
+          },
+          {
+            "id": "ask-jar",
+            "line": {
+              "he": "הַגְמִיאִינִי נָא מְעַט מַיִם מִכַּדֵּךְ",
+              "translit": "하그미이니 나 메아트 마임 미카데크",
+              "ko": "부디 당신의 항아리에서 물을 조금 마시게 해 주세요",
+              "lemmaIds": [
+                "H1572",
+                "H4994",
+                "H4592",
+                "H4325",
+                "H3537"
+              ]
+            },
+            "correct": true,
+            "next": "rebekah-lowers-jar"
+          },
+          {
+            "id": "wrong-drink",
+            "line": {
+              "he": "שְׁתֵה אֲדֹנִי",
+              "translit": "셰테 아도니",
+              "ko": "마시십시오, 내 주여",
+              "lemmaIds": [
+                "H8354",
+                "H113"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "이 말은 '마시십시오, 내 주여'라는 뜻으로, 리브가가 할 대답이에요."
+          },
+          {
+            "id": "wrong-hand",
+            "line": {
+              "he": "עַל יָדָהּ",
+              "translit": "알 야다",
+              "ko": "그녀의 손 위에",
+              "lemmaIds": [
+                "H5921",
+                "H3027"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "'그녀의 손 위에'라는 뜻이에요. 물을 청하는 말을 골라 보세요."
+          }
+        ]
+      }
+    },
+    "rebekah-answers": {
+      "id": "rebekah-answers",
+      "narrationKo": "리브가가 당신을 바라보며 대답합니다.",
+      "npc": {
+        "he": "שְׁתֵה אֲדֹנִי",
+        "translit": "셰테 아도니",
+        "ko": "마시십시오, 내 주여",
+        "lemmaIds": [
+          "H8354",
+          "H113"
+        ]
+      },
+      "reply": {
+        "mode": "blocks",
+        "promptKo": "물을 마신 뒤, 다시 한번 \"물 조금\"을 청해 보세요",
+        "tokens": [
+          "מַיִם",
+          "מְעַט",
+          "כַּד"
+        ],
+        "accepted": [
+          "מְעַט מַיִם"
+        ],
+        "next": "end",
+        "lemmaIds": [
+          "H4592",
+          "H4325"
+        ]
+      }
+    },
+    "rebekah-lowers-jar": {
+      "id": "rebekah-lowers-jar",
+      "narrationKo": "리브가가 급히 항아리를 손에 내리며 대답합니다.",
+      "npc": {
+        "he": "שְׁתֵה אֲדֹנִי",
+        "translit": "셰테 아도니",
+        "ko": "마시십시오, 내 주여",
+        "lemmaIds": [
+          "H8354",
+          "H113"
+        ]
+      },
+      "reply": {
+        "mode": "blocks",
+        "promptKo": "물을 마신 뒤, 다시 한번 \"물 조금\"을 청해 보세요",
+        "tokens": [
+          "מַיִם",
+          "מְעַט",
+          "כַּד"
+        ],
+        "accepted": [
+          "מְעַט מַיִם"
+        ],
+        "next": "end",
+        "lemmaIds": [
+          "H4592",
+          "H4325"
+        ]
+      }
+    },
+    "end": {
+      "id": "end",
+      "narrationKo": "리브가가 당신에게 물을 마시게 했습니다(창 24:18). 미션 완료!",
+      "end": true
+    }
+  }
+}

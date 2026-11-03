@@ -1,0 +1,80 @@
+{
+  "id": "rebekah-quiz",
+  "type": "quiz",
+  "titleKo": "단어 연습",
+  "questions": [
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "מַיִם",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "물",
+        "손",
+        "항아리"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H4325"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "נָא",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "부디, 제발",
+        "~위에",
+        "조금"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H4994"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "שְׁתֵה",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "마시라",
+        "달려가라",
+        "말하라"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H8354"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "אֲדֹנִי",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "나의 주여",
+        "그 종",
+        "그녀의 손"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H113"
+    },
+    {
+      "kind": "order",
+      "promptKo": "'물 조금'을 히브리어 어순대로 배열하세요",
+      "tokens": [
+        "מַיִם",
+        "כַּד",
+        "מְעַט"
+      ],
+      "answer": [
+        "מְעַט",
+        "מַיִם"
+      ],
+      "lemmaIds": [
+        "H4592",
+        "H4325"
+      ]
+    }
+  ]
+}
