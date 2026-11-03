@@ -1,12 +1,37 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
+import Link from 'next/link'
+import { Noto_Serif_Hebrew } from 'next/font/google'
+import { HeaderStats } from '@/components/HeaderStats'
+import { ProgressProvider } from '@/lib/progress/ProgressProvider'
+import { APP_NAME } from '@/lib/version'
 import './globals.css'
 
-export const metadata: Metadata = { title: '알레프 여정', description: '성경 히브리어 대화 학습 게임' }
+const hebrew = Noto_Serif_Hebrew({ subsets: ['hebrew'], weight: ['400', '600'], variable: '--font-hebrew', display: 'swap' })
+
+export const metadata: Metadata = { title: APP_NAME, description: '성경 히브리어를 장면 속 대화로 배우는 게임' }
+export const viewport: Viewport = { width: 'device-width', initialScale: 1 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko">
-      <body>{children}</body>
+    <html lang="ko" className={hebrew.variable}>
+      <body>
+        <ProgressProvider>
+          <header className="site-header">
+            <div className="wrap header-row">
+              <Link href="/" className="brand">{APP_NAME}</Link>
+              <HeaderStats />
+            </div>
+            <nav className="wrap nav">
+              <Link href="/">진도 지도</Link>
+              <Link href="/vocab">단어장</Link>
+            </nav>
+          </header>
+          <main className="wrap">{children}</main>
+          <footer className="wrap site-footer">
+            본문: Westminster Leningrad Codex (퍼블릭 도메인) · 형태소 정보: Open Scriptures Hebrew Bible (CC BY 4.0)
+          </footer>
+        </ProgressProvider>
+      </body>
     </html>
   )
 }

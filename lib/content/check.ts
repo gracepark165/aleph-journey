@@ -3,9 +3,9 @@ import { normalizeHebrew as norm } from '@/lib/hebrew/normalize'
 
 function missingFromBank(answer: string[], tokens: string[]): string[] {
   const bank = new Map<string, number>()
-  for (const t of tokens.map(norm)) bank.set(t, (bank.get(t) ?? 0) + 1)
+  for (const t of tokens.map(t => norm(t))) bank.set(t, (bank.get(t) ?? 0) + 1)
   const missing: string[] = []
-  for (const t of answer.map(norm)) {
+  for (const t of answer.map(t => norm(t))) {
     const n = bank.get(t) ?? 0
     if (n === 0) missing.push(t)
     else bank.set(t, n - 1)

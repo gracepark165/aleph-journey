@@ -1,1 +1,176 @@
+:root {
+  --bg: #f7f1e6;
+  --surface: #fffaf1;
+  --surface-2: #f0e6d4;
+  --text: #2b2118;
+  --muted: #74675a;
+  --border: #e2d5bf;
+  --accent: #9a5b1f;
+  --accent-text: #ffffff;
+  --good: #2f7a4d;
+  --good-bg: #e3f2e8;
+  --bad: #b23b2e;
+  --bad-bg: #fbe6e2;
+  --npc: #efe4cf;
+  --me: #f6d9b5;
+  --radius: 14px;
+  color-scheme: light;
+}
 
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b1713;
+    --surface: #25201a;
+    --surface-2: #2f2820;
+    --text: #f1e8da;
+    --muted: #b3a593;
+    --border: #3e352b;
+    --accent: #e0a35c;
+    --accent-text: #1b1713;
+    --good: #7fd09e;
+    --good-bg: #1f3428;
+    --bad: #f08c7e;
+    --bad-bg: #3b2320;
+    --npc: #2f2820;
+    --me: #4a3520;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #1b1713;
+  --surface: #25201a;
+  --surface-2: #2f2820;
+  --text: #f1e8da;
+  --muted: #b3a593;
+  --border: #3e352b;
+  --accent: #e0a35c;
+  --accent-text: #1b1713;
+  --good: #7fd09e;
+  --good-bg: #1f3428;
+  --bad: #f08c7e;
+  --bad-bg: #3b2320;
+  --npc: #2f2820;
+  --me: #4a3520;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+
+.wrap { max-width: 640px; margin: 0 auto; padding: 0 16px; }
+.hebrew { font-family: var(--font-hebrew), 'SBL Hebrew', 'Times New Roman', serif; font-size: 1.35em; line-height: 1.9; unicode-bidi: isolate; }
+.muted { color: var(--muted); }
+.center { text-align: center; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.site-header { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+.header-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 10px; }
+.brand { font-weight: 700; text-decoration: none; color: var(--accent); font-size: 1.1rem; }
+.stats { display: flex; gap: 10px; font-size: 0.95rem; min-height: 1.5em; }
+.stat { white-space: nowrap; }
+.nav { display: flex; gap: 16px; padding-bottom: 8px; font-size: 0.9rem; }
+.nav a { text-decoration: none; color: var(--muted); }
+.nav a:hover { color: var(--text); }
+main.wrap { padding-top: 20px; padding-bottom: 40px; min-height: 60vh; }
+.site-footer { font-size: 0.75rem; color: var(--muted); padding-bottom: 24px; border-top: 1px solid var(--border); padding-top: 12px; }
+
+.page-title { font-size: 1.5rem; margin: 4px 0; }
+.back { display: inline-block; text-decoration: none; color: var(--muted); font-size: 0.9rem; margin-bottom: 8px; }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+
+.btn {
+  display: inline-block; border: 0; border-radius: 999px; padding: 12px 22px; cursor: pointer;
+  background: var(--accent); color: var(--accent-text); font-weight: 700; text-decoration: none; text-align: center;
+}
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn.secondary { background: var(--surface-2); color: var(--text); }
+.btn.block { display: block; width: 100%; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* Journey map */
+.journey { list-style: none; padding: 0; margin: 20px 0; position: relative; }
+.journey::before { content: ''; position: absolute; left: 27px; top: 10px; bottom: 10px; border-left: 3px dashed var(--border); }
+.journey-stop { position: relative; margin-bottom: 14px; }
+.journey-card {
+  display: flex; align-items: center; gap: 14px; text-decoration: none;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px;
+}
+.journey-stop.locked .journey-card { opacity: 0.55; }
+.journey-step {
+  flex: none; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--accent); color: var(--accent-text); font-weight: 700; position: relative;
+}
+.journey-stop.locked .journey-step { background: var(--surface-2); color: var(--muted); }
+.journey-stop.done .journey-step { background: var(--good); color: var(--surface); }
+.journey-text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.journey-label { font-size: 0.75rem; color: var(--muted); }
+.journey-count { font-variant-numeric: tabular-nums; color: var(--muted); }
+
+.lesson-list { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 10px; }
+.lesson-card { display: flex; flex-direction: column; text-decoration: none; }
+.lesson-card.locked { opacity: 0.55; }
+.lesson-type { font-size: 0.75rem; color: var(--accent); font-weight: 700; }
+.lesson-state { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+
+/* Reading */
+.verse-ref { font-size: 0.85rem; color: var(--muted); }
+.verse-words { display: flex; flex-wrap: wrap; gap: 6px; direction: rtl; margin: 12px 0; }
+.word-btn {
+  border: 1px solid var(--border); background: var(--surface); border-radius: 10px; padding: 2px 10px; cursor: pointer;
+}
+.word-btn[aria-pressed="true"] { border-color: var(--accent); background: var(--surface-2); }
+.word-card dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 0; }
+.word-card dt { color: var(--muted); font-size: 0.85rem; }
+.word-card dd { margin: 0; }
+
+/* Quiz */
+.progress-bar { height: 8px; background: var(--surface-2); border-radius: 999px; overflow: hidden; margin: 8px 0 16px; }
+.progress-bar > span { display: block; height: 100%; background: var(--accent); transition: width 0.3s; }
+.choices { display: grid; gap: 8px; margin: 12px 0; }
+.choice {
+  text-align: start; border: 2px solid var(--border); background: var(--surface); border-radius: 12px; padding: 12px 14px; cursor: pointer;
+}
+.choice.correct { border-color: var(--good); background: var(--good-bg); }
+.choice.wrong { border-color: var(--bad); background: var(--bad-bg); }
+.choice:disabled { cursor: default; }
+.prompt-he { display: block; text-align: center; font-size: 2rem; margin: 8px 0; }
+.feedback { border-radius: 12px; padding: 10px 14px; margin: 10px 0; }
+.feedback.good { background: var(--good-bg); color: var(--good); }
+.feedback.bad { background: var(--bad-bg); color: var(--bad); }
+
+.token-line, .token-bank { display: flex; flex-wrap: wrap; gap: 6px; direction: rtl; min-height: 52px; padding: 8px; border-radius: 12px; }
+.token-line { border: 2px dashed var(--border); margin-bottom: 8px; }
+.token { border: 1px solid var(--border); background: var(--surface); border-radius: 10px; padding: 2px 12px; cursor: pointer; }
+.token:disabled { opacity: 0.4; cursor: default; }
+
+/* Roleplay */
+.lamps { display: flex; gap: 4px; font-size: 1.3rem; }
+.lamp.off { filter: grayscale(1); opacity: 0.3; }
+.mission-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 8px 0; }
+.chat { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+.narration { text-align: center; font-size: 0.9rem; color: var(--muted); font-style: italic; }
+.bubble { max-width: 88%; border-radius: 16px; padding: 10px 14px; }
+.bubble.npc { background: var(--npc); align-self: flex-start; border-bottom-left-radius: 4px; }
+.bubble.me { background: var(--me); align-self: flex-end; border-bottom-right-radius: 4px; }
+.bubble .speaker { font-size: 0.75rem; color: var(--muted); display: block; }
+.bubble .sub { font-size: 0.85rem; color: var(--muted); display: block; }
+.bubble-tools { display: flex; gap: 10px; margin-top: 4px; }
+.link-btn { background: none; border: 0; padding: 0; color: var(--accent); font-size: 0.8rem; cursor: pointer; }
+
+/* Vocab */
+.vocab-list { list-style: none; padding: 0; display: grid; gap: 8px; }
+.vocab-item { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+
+.complete { text-align: center; padding: 24px 0; }
+.complete .xp { font-size: 2rem; font-weight: 800; color: var(--accent); }
