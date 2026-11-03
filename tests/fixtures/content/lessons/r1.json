@@ -1,0 +1,3 @@
+{ "id": "r1", "type": "reading", "titleKo": "읽기", "verses": [
+  { "refKo": "창 24:17", "translationKo": "물을 주세요", "words": [
+    { "surface": "מַיִם", "lemmaId": "H4325", "translit": "마임", "glossKo": "물" } ] } ] }

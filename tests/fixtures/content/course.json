@@ -1,0 +1,2 @@
+{ "id": "c", "titleKo": "테스트 코스", "units": [
+  { "id": "u1", "titleKo": "유닛1", "mapLabelKo": "에덴", "lessonIds": ["r1", "rp1"] } ] }

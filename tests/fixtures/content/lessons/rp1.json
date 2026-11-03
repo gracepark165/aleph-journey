@@ -1,0 +1,7 @@
+{ "id": "rp1", "type": "roleplay", "titleKo": "롤플레이", "setupKo": "상황",
+  "character": { "nameKo": "리브가", "nameHe": "רִבְקָה" }, "startNodeId": "a",
+  "nodes": {
+    "a": { "id": "a", "narrationKo": "시작", "reply": { "mode": "choice", "options": [
+      { "id": "o1", "correct": true, "next": "b", "line": { "he": "נָא", "translit": "나", "ko": "부디", "lemmaIds": ["H4994"] } },
+      { "id": "o2", "correct": false, "feedbackKo": "아니에요", "line": { "he": "מַיִם", "translit": "마임", "ko": "물", "lemmaIds": ["H4325"] } } ] } },
+    "b": { "id": "b", "narrationKo": "끝", "end": true } } }
