@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Lesson content is read from content/ on the server; make sure deployments bundle it.
+  outputFileTracingIncludes: { "/**": ["./content/**/*"] },
 };
 
 export default nextConfig;

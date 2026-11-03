@@ -8,6 +8,12 @@ import { loadCourse, loadLesson, loadLexicon } from '@/lib/content/load'
 import { nextLessonId, unitOfLesson } from '@/lib/content/navigation'
 import type { Lexicon } from '@/lib/content/schema'
 
+/** Every lesson is prerendered at build time; unknown ids are 404 without touching the filesystem. */
+export const dynamicParams = false
+export function generateStaticParams() {
+  return loadCourse().units.flatMap(u => u.lessonIds.map(lessonId => ({ lessonId })))
+}
+
 export default async function LessonPage({ params }: { params: Promise<{ lessonId: string }> }) {
   const { lessonId } = await params
   const lesson = loadLesson(lessonId)

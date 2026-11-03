@@ -5,6 +5,11 @@ import { UnitLessons } from '@/components/UnitLessons'
 import { loadCourse, loadLesson } from '@/lib/content/load'
 import type { Lesson } from '@/lib/content/schema'
 
+export const dynamicParams = false
+export function generateStaticParams() {
+  return loadCourse().units.map(u => ({ unitId: u.id }))
+}
+
 export default async function UnitPage({ params }: { params: Promise<{ unitId: string }> }) {
   const { unitId } = await params
   const course = loadCourse()
