@@ -12,5 +12,14 @@ function cached<T>(key: string, f: () => T): T {
 
 export const loadCourse = (dir = DEFAULT_CONTENT_DIR): Course => cached(`course:${dir}`, () => readCourse(dir))
 export const loadLexicon = (dir = DEFAULT_CONTENT_DIR): Lexicon => cached(`lexicon:${dir}`, () => readLexicon(dir))
-export const loadLesson = (id: string, dir = DEFAULT_CONTENT_DIR): Lesson | null => cached(`lesson:${dir}:${id}`, () => readLesson(id, dir))
 export const loadAllLessons = (dir = DEFAULT_CONTENT_DIR): Lesson[] => cached(`all:${dir}`, () => readAllLessons(dir))
+
+/** In production, lessons are looked up in one memoized id→lesson map, so unknown ids never add cache entries. */
+export function loadLesson(id: string, dir = DEFAULT_CONTENT_DIR): Lesson | null {
+  if (!memo) return readLesson(id, dir)
+  const byId = cached(`byId:${dir}`, () => new Map(loadAllLessons(dir).map(l => [l.id, l])))
+  return byId.get(id) ?? null
+}
+
+/** Number of memoized content entries (diagnostics). */
+export const contentCacheSize = (): number => cache.size

@@ -86,4 +86,14 @@ describe('streak', () => {
     s = done(s, '2026-11-04')
     expect(s.streak.current).toBe(2)
   })
+  test('reset then grant is idempotent: reloading the same day keeps the new token', () => {
+    let s = done(emptySnapshot('2026-11-07'), '2026-11-07')
+    s = { ...startOfDay(s, '2026-11-07'), restTokens: 0 }
+    s = startOfDay(s, '2026-11-09')
+    s = startOfDay(s, '2026-11-09')
+    expect(s.restTokens).toBe(1)
+    s = done(s, '2026-11-09', quiz)
+    expect(s.restTokens).toBe(1)
+    expect(s.streak.current).toBe(1)
+  })
 })

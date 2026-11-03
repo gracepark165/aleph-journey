@@ -12,6 +12,7 @@ export function memoryStore(initial?: ProgressSnapshot) {
   const store: ProgressStore & { saves: number; current(): ProgressSnapshot } = {
     saves: 0,
     load: () => saved,
+    peek: () => saved,
     save: s => { saved = s; store.saves++ },
     current: () => saved,
   }

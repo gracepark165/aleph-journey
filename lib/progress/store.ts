@@ -6,6 +6,8 @@ export const STORAGE_KEY = 'aleph-journey:progress'
 export interface ProgressStore {
   load(today: string): ProgressSnapshot
   save(s: ProgressSnapshot): void
+  /** Latest valid saved snapshot, or null when nothing valid is readable (missing, corrupt, storage blocked). */
+  peek(): ProgressSnapshot | null
 }
 
 const DateStr = z.string().regex(/^\d{4}-\d{2}-\d{2}$/)
@@ -29,17 +31,19 @@ const SnapshotSchema = z.object({
 
 export function createLocalStore(storage?: Storage): ProgressStore {
   const get = () => storage ?? (typeof window !== 'undefined' ? window.localStorage : undefined)
+  const peek = (): ProgressSnapshot | null => {
+    try {
+      const raw = get()?.getItem(STORAGE_KEY)
+      if (!raw) return null
+      const parsed = SnapshotSchema.safeParse(JSON.parse(raw))
+      return parsed.success ? (parsed.data as ProgressSnapshot) : null
+    } catch {
+      return null
+    }
+  }
   return {
-    load(today) {
-      try {
-        const raw = get()?.getItem(STORAGE_KEY)
-        if (!raw) return emptySnapshot(today)
-        const parsed = SnapshotSchema.safeParse(JSON.parse(raw))
-        return parsed.success ? (parsed.data as ProgressSnapshot) : emptySnapshot(today)
-      } catch {
-        return emptySnapshot(today)
-      }
-    },
+    peek,
+    load: today => peek() ?? emptySnapshot(today),
     save(s) {
       try {
         get()?.setItem(STORAGE_KEY, JSON.stringify(s))

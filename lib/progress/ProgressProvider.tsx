@@ -5,7 +5,7 @@ import type { LessonType } from '@/lib/content/schema'
 import { seoulDate } from './dates'
 import { addLearned, recordReview } from './review'
 import { emptySnapshot, type ProgressSnapshot } from './snapshot'
-import { createLocalStore, type ProgressStore } from './store'
+import { createLocalStore, STORAGE_KEY, type ProgressStore } from './store'
 import { recordLessonComplete, startOfDay } from './streak'
 
 export type ProgressApi = {
@@ -32,6 +32,9 @@ export function ProgressProvider({ children, store, now = () => new Date() }: { 
     storeRef.current.save(next)
   }, [])
 
+  /** Latest progress: what another tab saved, else our in-memory copy (e.g. when storage is blocked). */
+  const latest = useCallback(() => storeRef.current.peek() ?? current.current, [])
+
   useEffect(() => {
     const day = seoulDate(nowRef.current())
     setToday(day)
@@ -39,17 +42,30 @@ export function ProgressProvider({ children, store, now = () => new Date() }: { 
     setReady(true)
   }, [commit])
 
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key !== null && e.key !== STORAGE_KEY) return
+      const fresh = storeRef.current.peek()
+      if (fresh) {
+        current.current = fresh
+        setSnapshot(fresh)
+      }
+    }
+    window.addEventListener('storage', onStorage)
+    return () => window.removeEventListener('storage', onStorage)
+  }, [])
+
   const completeLesson = useCallback<ProgressApi['completeLesson']>((lesson, result, learned = []) => {
     const t = nowRef.current()
     const day = seoulDate(t)
     setToday(day)
-    commit(addLearned(recordLessonComplete(current.current, lesson, result, day, t.toISOString()), learned, day))
-  }, [commit])
+    commit(addLearned(recordLessonComplete(latest(), lesson, result, day, t.toISOString()), learned, day))
+  }, [commit, latest])
 
   const reviewAnswered = useCallback<ProgressApi['reviewAnswered']>((lemmaId, correct) => {
     const day = seoulDate(nowRef.current())
-    commit(recordReview(current.current, lemmaId, correct, day))
-  }, [commit])
+    commit(recordReview(latest(), lemmaId, correct, day))
+  }, [commit, latest])
 
   const api = useMemo(() => ({ ready, snapshot, today, completeLesson, reviewAnswered }), [ready, snapshot, today, completeLesson, reviewAnswered])
   return <ProgressContext.Provider value={api}>{children}</ProgressContext.Provider>

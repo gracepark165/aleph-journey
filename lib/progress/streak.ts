@@ -19,7 +19,7 @@ export function startOfDay(s: ProgressSnapshot, today: string): ProgressSnapshot
     if (gap === 2 && next.restTokens > 0) {
       next = { ...next, restTokens: next.restTokens - 1, streak: { ...next.streak, lastActiveDate: addDays(today, -1) } }
     } else if (gap > 1) {
-      next = { ...next, streak: { ...next.streak, current: 0 } }
+      next = { ...next, streak: { ...next.streak, current: 0, lastActiveDate: null } }
     }
   }
   const week = isoWeek(today)
