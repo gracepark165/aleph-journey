@@ -4,6 +4,7 @@ import Link from 'next/link'
 import type { Course } from '@/lib/content/schema'
 import { useProgress } from '@/lib/progress/ProgressProvider'
 import { isUnitUnlocked } from '@/lib/progress/unlock'
+import { Illustration } from './Illustration'
 
 export function JourneyMap({ course }: { course: Course }) {
   const { snapshot } = useProgress()
@@ -21,6 +22,7 @@ export function JourneyMap({ course }: { course: Course }) {
               <strong>{unit.titleKo}</strong>
               {unit.refKo && <span className="muted">{unit.refKo}</span>}
             </span>
+            {unit.imageSrc && <Illustration src={unit.imageSrc} alt={unit.imageAltKo ?? unit.titleKo} className="journey-thumb" />}
             <span className="journey-count">{done}/{total}</span>
           </>
         )

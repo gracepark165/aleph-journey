@@ -19,7 +19,9 @@
         "rebekah-reading",
         "rebekah-quiz",
         "rebekah-roleplay"
-      ]
+      ],
+      "imageSrc": "/illustrations/rebekah-well.webp",
+      "imageAltKo": "우물에서 항아리에 물을 긷는 리브가"
     }
   ]
 }

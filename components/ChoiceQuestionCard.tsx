@@ -4,6 +4,7 @@ import { useState } from 'react'
 import type { ChoiceQuestion } from '@/lib/content/schema'
 import { gradeChoiceQuestion } from '@/lib/grader/rules'
 import { HebrewText } from './HebrewText'
+import { ZoeFeedback } from './Zoe'
 
 export function ChoiceQuestionCard({ question, onAnswered }: { question: ChoiceQuestion; onAnswered(correct: boolean): void }) {
   const [picked, setPicked] = useState<number | null>(null)
@@ -29,9 +30,9 @@ export function ChoiceQuestionCard({ question, onAnswered }: { question: ChoiceQ
         })}
       </div>
       {answered && (
-        <p className={`feedback ${correct ? 'good' : 'bad'}`} role="status">
+        <ZoeFeedback good={correct}>
           {correct ? '정답!' : `아쉬워요. 정답은 "${question.choices[question.answerIndex]}"예요.`}
-        </p>
+        </ZoeFeedback>
       )}
     </section>
   )

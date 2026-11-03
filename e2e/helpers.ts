@@ -17,7 +17,7 @@ export async function buildTokens(page: Page, tokens: string[]) {
 
 /** Plays the whole course from a fresh state; leaves the page on the roleplay success screen. */
 export async function playThrough(page: Page, { roleplayMistake = true } = {}) {
-  await page.goto('/')
+  await page.goto('/journey')
   await page.getByRole('link', { name: /알파벳 첫걸음/ }).click()
   await page.getByRole('link', { name: /첫 다섯 글자/ }).click()
   await answerChoices(page, ['알레프', '베트', '기멜', '달레트', '헤'])

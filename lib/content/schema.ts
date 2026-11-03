@@ -2,6 +2,8 @@ import { z } from 'zod'
 
 const LemmaId = z.string().regex(/^H\d+$/, 'lemmaId must look like H1234')
 const Id = z.string().min(1)
+/** Illustrations ship with the app under public/illustrations. */
+const IllustrationSrc = z.string().regex(/^\/illustrations\/[a-z0-9-]+\.(webp|png|jpg)$/, 'image must live in /illustrations/')
 
 export const HebrewLineSchema = z.object({
   he: z.string().min(1),
@@ -25,6 +27,8 @@ export const UnitSchema = z.object({
   refKo: z.string().optional(),
   mapLabelKo: z.string(),
   lessonIds: z.array(Id).min(1),
+  imageSrc: IllustrationSrc.optional(),
+  imageAltKo: z.string().optional(),
 })
 export const CourseSchema = z.object({ id: Id, titleKo: z.string(), units: z.array(UnitSchema).min(1) })
 
@@ -101,7 +105,7 @@ export const RoleplayLessonSchema = z.object({
   type: z.literal('roleplay'),
   titleKo: z.string(),
   setupKo: z.string(),
-  character: z.object({ nameKo: z.string(), nameHe: z.string() }),
+  character: z.object({ nameKo: z.string(), nameHe: z.string(), avatarSrc: IllustrationSrc.optional() }),
   startNodeId: Id,
   nodes: z.record(Id, ScriptNodeSchema),
 })

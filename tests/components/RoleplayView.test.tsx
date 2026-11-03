@@ -83,4 +83,17 @@ describe('RoleplayView', () => {
     await userEvent.click(within(npc).getByRole('button', { name: '해석' }))
     expect(within(npc).getByText('마시십시오, 내 주여')).toBeInTheDocument()
   })
+  test('npc bubble shows the character avatar', async () => {
+    view()
+    await userEvent.click(option(/메아트 마임$/))
+    await userEvent.click(screen.getByRole('button', { name: '계속' }))
+    const npc = screen.getByRole('article', { name: '리브가의 말' })
+    expect(within(npc).getByRole('img', { name: '리브가' })).toHaveAttribute('src', '/illustrations/rebekah-face.webp')
+  })
+  test('wrong answer feedback comes with Zoe', async () => {
+    view()
+    await userEvent.click(option(/알 야다/))
+    expect(screen.getByRole('status')).toHaveTextContent(/그녀의 손 위에/)
+    expect(screen.getByTestId('zoe-feedback')).toBeInTheDocument()
+  })
 })

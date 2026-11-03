@@ -24,4 +24,8 @@ describe('JourneyMap', () => {
     expect(screen.getByRole('link', { name: /알파벳 첫걸음/ })).toHaveTextContent('1/1')
     expect(screen.getByRole('link', { name: /우물가의 리브가/ })).toHaveTextContent('0/3')
   })
+  test('units with an illustration show it', async () => {
+    renderWithProgress(<JourneyMap course={course} />)
+    expect(await screen.findByRole('img', { name: '우물에서 항아리에 물을 긷는 리브가' })).toBeInTheDocument()
+  })
 })

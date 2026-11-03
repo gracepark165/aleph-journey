@@ -1,3 +1,4 @@
+import fs from 'node:fs'
 import { describe, expect, test } from 'vitest'
 import { checkContent } from '@/lib/content/check'
 import { readAllLessons, readCourse, readLexicon } from '@/lib/content/read-files'
@@ -26,5 +27,14 @@ describe('shipped content', () => {
       return nexts.size >= 2
     })
     expect(branching.length).toBeGreaterThanOrEqual(1)
+  })
+  test('every referenced illustration exists in public/', () => {
+    const srcs = [
+      ...course.units.flatMap(u => (u.imageSrc ? [u.imageSrc] : [])),
+      ...lessons.flatMap(l => (l.type === 'roleplay' && l.character.avatarSrc ? [l.character.avatarSrc] : [])),
+    ]
+    expect(srcs).toContain('/illustrations/rebekah-well.webp')
+    expect(srcs).toContain('/illustrations/rebekah-face.webp')
+    for (const s of srcs) expect(fs.existsSync(`public${s}`), s).toBe(true)
   })
 })

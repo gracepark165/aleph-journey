@@ -5,7 +5,8 @@
   "setupKo": "당신은 아브라함의 종입니다. 나홀의 성 우물가에서 물 항아리를 어깨에 멘 소녀를 만났습니다.",
   "character": {
     "nameKo": "리브가",
-    "nameHe": "רִבְקָה"
+    "nameHe": "רִבְקָה",
+    "avatarSrc": "/illustrations/rebekah-face.webp"
   },
   "startNodeId": "intro",
   "nodes": {

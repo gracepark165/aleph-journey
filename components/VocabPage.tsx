@@ -6,6 +6,7 @@ import { useProgress } from '@/lib/progress/ProgressProvider'
 import { dueReviews } from '@/lib/progress/review'
 import { HebrewText } from './HebrewText'
 import { ReviewSession } from './ReviewSession'
+import { ZoeSays } from './Zoe'
 
 export function VocabPage({ lexicon }: { lexicon: Lexicon }) {
   const { snapshot, today, ready } = useProgress()
@@ -24,7 +25,7 @@ export function VocabPage({ lexicon }: { lexicon: Lexicon }) {
         <button type="button" className="btn" disabled={due.length === 0} onClick={() => setSession(due.map(r => r.lemmaId))}>복습 시작</button>
       </section>
       {learned.length === 0 ? (
-        <p className="muted center" style={{ marginTop: 20 }}>아직 배운 단어가 없어요. 첫 레슨을 시작해 보세요!</p>
+        <div style={{ marginTop: 20 }}><ZoeSays>아직 배운 단어가 없어요. 첫 레슨을 시작해 보세요!</ZoeSays></div>
       ) : (
         <ul className="vocab-list" style={{ marginTop: 16 }}>
           {learned.map(r => {

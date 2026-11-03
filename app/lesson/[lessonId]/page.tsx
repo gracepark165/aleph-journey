@@ -26,7 +26,7 @@ export default async function LessonPage({ params }: { params: Promise<{ lessonI
   } else if (lesson.type === 'quiz') {
     view = <QuizView lesson={lesson} {...common} />
   } else {
-    view = <RoleplayView lesson={lesson} {...common} />
+    view = <RoleplayView lesson={lesson} sceneImageSrc={unit.imageSrc} {...common} />
   }
 
   return (

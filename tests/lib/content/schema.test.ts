@@ -41,4 +41,15 @@ describe('content schema', () => {
     const r = clone(r1) as any; r.verses[0].words[0].lemmaId = 'water'
     expect(LessonSchema.safeParse(r).success).toBe(false)
   })
+  test('unit image and character avatar are optional illustration paths', () => {
+    const c = clone(course) as any
+    c.units[0].imageSrc = '/illustrations/rebekah-well.webp'
+    c.units[0].imageAltKo = '우물가의 리브가'
+    expect(CourseSchema.parse(c).units[0].imageSrc).toBe('/illustrations/rebekah-well.webp')
+    c.units[0].imageSrc = 'https://evil.example/x.png'
+    expect(CourseSchema.safeParse(c).success).toBe(false)
+    const r = clone(rp1) as any
+    r.character.avatarSrc = '/illustrations/rebekah-face.webp'
+    expect(LessonSchema.parse(r).type).toBe('roleplay')
+  })
 })

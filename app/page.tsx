@@ -1,13 +1,7 @@
-import { JourneyMap } from '@/components/JourneyMap'
-import { loadCourse } from '@/lib/content/load'
+import { TodayHome } from '@/components/TodayHome'
+import { loadAllLessons, loadCourse } from '@/lib/content/load'
 
 export default function Home() {
-  const course = loadCourse()
-  return (
-    <>
-      <h1 className="page-title">{course.titleKo}</h1>
-      <p className="muted">장면을 하나씩 지나며 히브리어 성경을 읽어 보세요.</p>
-      <JourneyMap course={course} />
-    </>
-  )
+  const lessons = loadAllLessons().map(l => ({ id: l.id, type: l.type, titleKo: l.titleKo }))
+  return <TodayHome course={loadCourse()} lessons={lessons} />
 }

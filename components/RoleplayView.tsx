@@ -10,6 +10,7 @@ import { HebrewText } from './HebrewText'
 import { LampMeter } from './LampMeter'
 import { LessonComplete } from './LessonComplete'
 import { TokenPicker } from './TokenPicker'
+import { ZoeFeedback } from './Zoe'
 
 type Phase =
   | { kind: 'answer' }
@@ -18,11 +19,11 @@ type Phase =
 
 const ME = '나'
 
-function NodeLines({ node, npcName }: { node: ScriptNode; npcName: string }) {
+function NodeLines({ node, npcName, avatarSrc }: { node: ScriptNode; npcName: string; avatarSrc?: string }) {
   return (
     <>
       {node.narrationKo && <p className="narration">{node.narrationKo}</p>}
-      {node.npc && <ChatBubble line={node.npc} speaker={npcName} side="npc" />}
+      {node.npc && <ChatBubble line={node.npc} speaker={npcName} side="npc" avatarSrc={avatarSrc} />}
     </>
   )
 }
@@ -31,7 +32,7 @@ function blocksLine(reply: BlocksReply, picked: number[]): HebrewLine {
   return { he: picked.map(i => reply.tokens[i]).join(' '), translit: '', ko: '', lemmaIds: reply.lemmaIds }
 }
 
-export function RoleplayView({ lesson, unitId, nextLessonId }: { lesson: RoleplayLesson; unitId: string; nextLessonId?: string }) {
+export function RoleplayView({ lesson, unitId, nextLessonId, sceneImageSrc }: { lesson: RoleplayLesson; unitId: string; nextLessonId?: string; sceneImageSrc?: string }) {
   const [mission, setMission] = useState<MissionState>(() => startMission(lesson))
   const [myLines, setMyLines] = useState<HebrewLine[]>([])
   const [phase, setPhase] = useState<Phase>({ kind: 'answer' })
@@ -39,6 +40,7 @@ export function RoleplayView({ lesson, unitId, nextLessonId }: { lesson: Rolepla
   const busy = useRef(false) // guards against double taps before re-render
   const { finish, xpGained } = useLessonFinish(lesson)
   const npcName = lesson.character.nameKo
+  const avatarSrc = lesson.character.avatarSrc
 
   useEffect(() => {
     if (mission.status === 'won') {
@@ -87,16 +89,18 @@ export function RoleplayView({ lesson, unitId, nextLessonId }: { lesson: Rolepla
         <h1 className="page-title">{lesson.titleKo}</h1>
         <LampMeter lamps={mission.lamps} />
       </div>
-      <p className="card">{lesson.setupKo}</p>
+      <div className={`scene-card ${sceneImageSrc ? 'has-image' : ''}`} style={sceneImageSrc ? { backgroundImage: `url(${sceneImageSrc})` } : undefined}>
+        <p>{lesson.setupKo}</p>
+      </div>
 
       <div className="chat" aria-live="polite">
         {mission.history.map((id, i) => (
           <div key={`${id}-${i}`} className="chat" style={{ margin: 0 }}>
-            <NodeLines node={lesson.nodes[id]} npcName={npcName} />
+            <NodeLines node={lesson.nodes[id]} npcName={npcName} avatarSrc={avatarSrc} />
             {myLines[i] && <ChatBubble line={myLines[i]} speaker={ME} side="me" />}
           </div>
         ))}
-        <NodeLines node={node} npcName={npcName} />
+        <NodeLines node={node} npcName={npcName} avatarSrc={avatarSrc} />
         {phase.kind === 'right' && <ChatBubble line={phase.line} speaker={ME} side="me" />}
       </div>
 
@@ -126,13 +130,13 @@ export function RoleplayView({ lesson, unitId, nextLessonId }: { lesson: Rolepla
             )}
           {phase.kind === 'right' && (
             <>
-              <p className="feedback good" role="status">좋아요!</p>
+              <ZoeFeedback good>좋아요!</ZoeFeedback>
               <button type="button" className="btn block" onClick={proceed}>계속</button>
             </>
           )}
           {phase.kind === 'wrong' && (
             <>
-              <p className="feedback bad" role="status">{phase.feedbackKo}</p>
+              <ZoeFeedback good={false}>{phase.feedbackKo}</ZoeFeedback>
               <button type="button" className="btn block" onClick={retry}>다시</button>
             </>
           )}
