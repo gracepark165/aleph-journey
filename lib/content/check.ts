@@ -1,7 +1,5 @@
 import type { Course, Lesson, Lexicon, RoleplayLesson } from './schema'
-
-/** Placeholder normalization; replaced by normalizeHebrew in Task 5. */
-const norm = (s: string) => s.replace(/\s+/g, ' ').trim()
+import { normalizeHebrew as norm } from '@/lib/hebrew/normalize'
 
 function missingFromBank(answer: string[], tokens: string[]): string[] {
   const bank = new Map<string, number>()
@@ -44,7 +42,7 @@ function checkRoleplay(l: RoleplayLesson, err: (m: string) => void) {
     if (n.reply?.mode === 'choice' && !n.reply.options.some(o => o.correct)) err(`노드 ${n.id}에 정답 옵션이 없습니다`)
     if (n.reply?.mode === 'blocks') {
       for (const a of n.reply.accepted) {
-        const miss = missingFromBank(a.split(/\s+/).filter(Boolean), n.reply.tokens)
+        const miss = missingFromBank(norm(a).split(' '), n.reply.tokens)
         if (miss.length) err(`노드 ${n.id}의 정답 "${a}"에 블록에 없는 토큰이 있습니다: ${miss.join(', ')}`)
       }
     }
