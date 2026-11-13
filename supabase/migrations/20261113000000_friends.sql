@@ -73,6 +73,14 @@ create function public.previous_week() returns text
   as $$ select to_char((now() at time zone 'Asia/Seoul') - interval '7 days', 'IYYY-"W"IW') $$;
 
 -- Internal helpers (not exposed)
+create function public.snapshot_xp(s jsonb) returns int
+  language sql immutable
+  as $$
+    select case when jsonb_typeof(s->'xp') = 'number'
+      then least(greatest(floor((s->>'xp')::numeric), 0), 2147483647)::int
+      else 0 end
+  $$;
+
 create function public.gen_friend_code() returns text
   language plpgsql volatile
   set search_path = public
@@ -213,7 +221,7 @@ begin
   select m.m,
          p.nickname,
          p.avatar_id,
-         coalesce((pr.snapshot->>'xp')::int, 0),
+         snapshot_xp(pr.snapshot),
          coalesce(w.xp, 0),
          coalesce(w.streak, 0),
          m.m = uid,
@@ -229,11 +237,12 @@ end $$;
 create function public.create_transfer_ticket() returns text
   language plpgsql security definer set search_path = public
 as $$
-declare uid uuid := require_uid(); t text := '';
+declare uid uuid := require_uid(); t text;
 begin
-  for i in 1..32 loop
-    t := t || substr('abcdefghijklmnopqrstuvwxyz0123456789', 1 + floor(random() * 36)::int, 1);
-  end loop;
+  if not coalesce((select u.is_anonymous from auth.users u where u.id = uid), false) then
+    raise exception 'not_guest' using errcode = 'P0001';
+  end if;
+  t := replace(gen_random_uuid()::text, '-', '');
   delete from transfer_tickets where guest_id = uid or expires_at < now();
   insert into transfer_tickets(ticket, guest_id, expires_at)
     values (t, uid, now() + interval '10 minutes');
@@ -279,7 +288,7 @@ end $$;
 
 -- Only signed-in users may call the RPCs.
 revoke all on function
-  public.current_week(), public.previous_week(), public.gen_friend_code(), public.require_uid(),
+  public.current_week(), public.previous_week(), public.gen_friend_code(), public.require_uid(), public.snapshot_xp(jsonb),
   public.ensure_profile(text, text), public.update_profile(text, text),
   public.profile_by_code(text), public.add_friend(text), public.remove_friend(uuid),
   public.record_xp(text, int, int), public.friend_leaderboard(text),

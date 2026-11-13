@@ -151,6 +151,33 @@ begin
   reset role;
 end $$;
 
+-- malformed snapshots must not break the leaderboard
+do $$
+declare a uuid := uid_of('a'); b uuid := uid_of('b'); n int; x int; v text;
+begin
+  foreach v in array array['"abc"', '12.5', '99999999999'] loop
+    reset role;
+    update progress set snapshot = format('{"xp": %s}', v)::jsonb where user_id = b;
+    perform as_user(a);
+    select count(*) into n from friend_leaderboard(current_week());
+    assert n = 2, 'board intact for xp ' || v;
+    select total_xp into x from friend_leaderboard(current_week()) where user_id = b;
+    assert x = case v when '"abc"' then 0 when '12.5' then 12 else 2147483647 end,
+      'total_xp for ' || v || ' = ' || x;
+  end loop;
+  reset role;
+end $$;
+
+-- transfer tickets are guest-only
+do $$
+declare c uuid := uid_of('c');
+begin
+  update auth.users set is_anonymous = false where id = c;
+  perform as_user(c);
+  assert err_of('select create_transfer_ticket()') = 'not_guest', 'non-guest refused';
+  reset role;
+end $$;
+
 -- guest transfer
 do $$
 declare
