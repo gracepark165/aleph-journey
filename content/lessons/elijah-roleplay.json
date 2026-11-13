@@ -1,0 +1,133 @@
+{
+  "id": "elijah-roleplay",
+  "type": "roleplay",
+  "titleKo": "미션: 물과 빵을 청하라",
+  "setupKo": "당신은 선지자 엘리야입니다. 가뭄 속에 사르밧 성문에 이르니, 한 과부가 나뭇가지를 줍고 있어요.",
+  "character": {
+    "nameKo": "과부",
+    "nameHe": "אַלְמָנָה"
+  },
+  "startNodeId": "intro",
+  "nodes": {
+    "intro": {
+      "id": "intro",
+      "narrationKo": "과부를 불러 물을 청하세요.",
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "water",
+            "line": {
+              "he": "קְחִי נָא לִי מְעַט מַיִם בַּכְּלִי",
+              "translit": "케히 나 리 메아트 마임 바켈리",
+              "ko": "그릇에 물을 조금 가져다주시오.",
+              "lemmaIds": [
+                "H3627",
+                "H3947",
+                "H4325",
+                "H4592",
+                "H4994",
+                "H9001"
+              ]
+            },
+            "correct": true,
+            "next": "goes"
+          },
+          {
+            "id": "widow",
+            "line": {
+              "he": "אִשָּׁה אַלְמָנָה",
+              "translit": "이샤 알마나",
+              "ko": "과부인 여인",
+              "lemmaIds": [
+                "H490",
+                "H802"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "그녀를 설명하는 말이에요. 무엇을 청할지 말해 보세요."
+          },
+          {
+            "id": "wood",
+            "line": {
+              "he": "עֵצִים",
+              "translit": "에침",
+              "ko": "나뭇가지들",
+              "lemmaIds": [
+                "H6086"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "'나뭇가지들'이에요. 엘리야는 물을 청했어요."
+          }
+        ]
+      }
+    },
+    "goes": {
+      "id": "goes",
+      "narrationKo": "과부가 물을 가지러 갑니다. 그녀를 다시 불러 세우세요.",
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "bread",
+            "line": {
+              "he": "לִקְחִי נָא לִי פַּת לֶחֶם בְּיָדֵךְ",
+              "translit": "리크히 나 리 파트 레헴 베야데크",
+              "ko": "당신 손에 빵 한 조각도 가져다주시오.",
+              "lemmaIds": [
+                "H3027",
+                "H3899",
+                "H3947",
+                "H4994",
+                "H6595",
+                "H9001"
+              ]
+            },
+            "correct": true,
+            "next": "piece"
+          },
+          {
+            "id": "again-water",
+            "line": {
+              "he": "מְעַט מַיִם",
+              "translit": "메아트 마임",
+              "ko": "물 조금",
+              "lemmaIds": [
+                "H4325",
+                "H4592"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "물은 이미 청했어요. 이번에는 빵을 청해 보세요."
+          }
+        ]
+      }
+    },
+    "piece": {
+      "id": "piece",
+      "reply": {
+        "mode": "blocks",
+        "promptKo": "짧게 다시 말해 보세요. '빵 한 조각'",
+        "tokens": [
+          "לֶחֶם",
+          "פַּת",
+          "מַיִם"
+        ],
+        "accepted": [
+          "פַּת לֶחֶם"
+        ],
+        "next": "end",
+        "lemmaIds": [
+          "H3899",
+          "H6595"
+        ]
+      }
+    },
+    "end": {
+      "id": "end",
+      "narrationKo": "과부는 \"통에 가루 한 줌밖에 없다\"고 대답합니다(왕상 17:12). 기적의 이야기가 시작돼요. 미션 완료!",
+      "end": true
+    }
+  }
+}

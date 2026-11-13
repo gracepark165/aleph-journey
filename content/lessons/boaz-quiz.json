@@ -1,0 +1,80 @@
+{
+  "id": "boaz-quiz",
+  "type": "quiz",
+  "titleKo": "단어 연습",
+  "questions": [
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "עִמָּכֶם",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "너희와 함께",
+        "그에게",
+        "우리에게"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H5973"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "יְבָרֶכְךָ",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "당신에게 복 주시기를",
+        "당신을 부르시기를",
+        "당신을 아시기를"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H1288"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "לַקּוֹצְרִים",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "추수하는 자들에게",
+        "양 치는 자들에게",
+        "선원들에게"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H7114"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "בָּא",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "왔다",
+        "갔다",
+        "누웠다"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H935"
+    },
+    {
+      "kind": "order",
+      "promptKo": "'여호와께서 너희와 함께'를 어순대로 배열하세요",
+      "tokens": [
+        "עִמָּכֶם",
+        "לוֹ",
+        "יְהוָה"
+      ],
+      "answer": [
+        "יְהוָה",
+        "עִמָּכֶם"
+      ],
+      "lemmaIds": [
+        "H3068",
+        "H5973"
+      ]
+    }
+  ]
+}

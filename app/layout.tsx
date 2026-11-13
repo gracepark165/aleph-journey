@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </header>
           <main className="wrap">{children}</main>
           <footer className="wrap site-footer">
-            본문: Westminster Leningrad Codex (퍼블릭 도메인) · 형태소 정보: Open Scriptures Hebrew Bible (CC BY 4.0)
+            본문: Westminster Leningrad Codex (퍼블릭 도메인) · 형태소 정보: Open Scriptures Hebrew Bible (CC BY 4.0) · 사전 원형: Strong&apos;s Hebrew Dictionary, Open Scriptures (CC BY-SA)
           </footer>
           <TabBar />
         </ProgressProvider>

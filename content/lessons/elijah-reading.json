@@ -1,0 +1,257 @@
+{
+  "id": "elijah-reading",
+  "type": "reading",
+  "titleKo": "본문 읽기: 사르밧의 과부",
+  "verses": [
+    {
+      "refKo": "열왕기상 17:10",
+      "translationKo": "그가 일어나 사르밧으로 가서 성문에 이르렀는데, 보라, 거기에 한 과부가 나뭇가지를 줍고 있었다. 그가 그녀를 불러 말했다. \"그릇에 물을 조금 가져다주시오. 마시려 하오.\"",
+      "words": [
+        {
+          "surface": "וַיָּקָם",
+          "lemmaId": "H6965",
+          "translit": "바야캄",
+          "glossKo": "그리고 그가 일어났다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "וַיֵּלֶךְ",
+          "lemmaId": "H3212",
+          "translit": "바옐레크",
+          "glossKo": "그리고 그가 갔다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "צָרְפַתָה",
+          "lemmaId": "H6886",
+          "translit": "차르파타",
+          "glossKo": "사르밧으로",
+          "grammarKo": "고유명사 + 방향 접미사(~로)"
+        },
+        {
+          "surface": "וַיָּבֹא",
+          "lemmaId": "H935",
+          "translit": "바야보",
+          "glossKo": "그리고 그가 이르렀다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "אֶל",
+          "lemmaId": "H413",
+          "translit": "엘",
+          "glossKo": "~에",
+          "grammarKo": "전치사"
+        },
+        {
+          "surface": "פֶּתַח",
+          "lemmaId": "H6607",
+          "translit": "페타흐",
+          "glossKo": "문",
+          "grammarKo": "명사 남성 단수 연계형"
+        },
+        {
+          "surface": "הָעִיר",
+          "lemmaId": "H5892",
+          "translit": "하이르",
+          "glossKo": "그 성",
+          "grammarKo": "정관사 + 명사 여성 단수"
+        },
+        {
+          "surface": "וְהִנֵּה",
+          "lemmaId": "H2009",
+          "translit": "베히네",
+          "glossKo": "그리고 보라",
+          "grammarKo": "접속사 וְ + \"보라\"(히네)"
+        },
+        {
+          "surface": "שָׁם",
+          "lemmaId": "H8033",
+          "translit": "샴",
+          "glossKo": "거기에",
+          "grammarKo": "부사"
+        },
+        {
+          "surface": "אִשָּׁה",
+          "lemmaId": "H802",
+          "translit": "이샤",
+          "glossKo": "한 여인",
+          "grammarKo": "명사 여성 단수"
+        },
+        {
+          "surface": "אַלְמָנָה",
+          "lemmaId": "H490",
+          "translit": "알마나",
+          "glossKo": "과부",
+          "grammarKo": "명사 여성 단수"
+        },
+        {
+          "surface": "מְקֹשֶׁשֶׁת",
+          "lemmaId": "H7197",
+          "translit": "메코셰셰트",
+          "glossKo": "줍고 있었다",
+          "grammarKo": "포엘 분사 여성 단수 연계형"
+        },
+        {
+          "surface": "עֵצִים",
+          "lemmaId": "H6086",
+          "translit": "에침",
+          "glossKo": "나뭇가지들을",
+          "grammarKo": "명사 남성 복수"
+        },
+        {
+          "surface": "וַיִּקְרָא",
+          "lemmaId": "H7121",
+          "translit": "바이크라",
+          "glossKo": "그리고 그가 불렀다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "אֵלֶיהָ",
+          "lemmaId": "H413",
+          "translit": "엘레하",
+          "glossKo": "그녀에게",
+          "grammarKo": "전치사 + 3인칭 여성 단수 접미사"
+        },
+        {
+          "surface": "וַיֹּאמַר",
+          "lemmaId": "H559",
+          "translit": "바요마르",
+          "glossKo": "그리고 그가 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "קְחִי",
+          "lemmaId": "H3947",
+          "translit": "케히",
+          "glossKo": "가져오라",
+          "grammarKo": "칼 명령형 2인칭 여성 단수"
+        },
+        {
+          "surface": "נָא",
+          "lemmaId": "H4994",
+          "translit": "나",
+          "glossKo": "부디",
+          "grammarKo": "간청 불변화사"
+        },
+        {
+          "surface": "לִי",
+          "lemmaId": "H9001",
+          "translit": "리",
+          "glossKo": "나에게",
+          "grammarKo": "전치사 + 1인칭 공성 단수 접미사"
+        },
+        {
+          "surface": "מְעַט",
+          "lemmaId": "H4592",
+          "translit": "메아트",
+          "glossKo": "조금의",
+          "grammarKo": "명사 남성 단수 연계형"
+        },
+        {
+          "surface": "מַיִם",
+          "lemmaId": "H4325",
+          "translit": "마임",
+          "glossKo": "물",
+          "grammarKo": "명사 남성 복수"
+        },
+        {
+          "surface": "בַּכְּלִי",
+          "lemmaId": "H3627",
+          "translit": "바켈리",
+          "glossKo": "그릇에",
+          "grammarKo": "전치사 + 정관사 + 명사 남성 단수"
+        },
+        {
+          "surface": "וְאֶשְׁתֶּה",
+          "lemmaId": "H8354",
+          "translit": "베에슈테",
+          "glossKo": "그러면 내가 마시겠다",
+          "grammarKo": "접속사 וְ + 칼 청유형 1인칭 공성 단수"
+        }
+      ]
+    },
+    {
+      "refKo": "열왕기상 17:11",
+      "translationKo": "그녀가 가지러 가는데, 그가 그녀를 불러 말했다. \"당신 손에 빵 한 조각도 가져다주시오.\"",
+      "words": [
+        {
+          "surface": "וַתֵּלֶךְ",
+          "lemmaId": "H3212",
+          "translit": "바텔레크",
+          "glossKo": "그리고 그녀가 갔다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 여성 단수"
+        },
+        {
+          "surface": "לָקַחַת",
+          "lemmaId": "H3947",
+          "translit": "라카하트",
+          "glossKo": "가지러",
+          "grammarKo": "전치사 + 칼 부정사 연계형"
+        },
+        {
+          "surface": "וַיִּקְרָא",
+          "lemmaId": "H7121",
+          "translit": "바이크라",
+          "glossKo": "그리고 그가 불렀다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "אֵלֶיהָ",
+          "lemmaId": "H413",
+          "translit": "엘레하",
+          "glossKo": "그녀에게",
+          "grammarKo": "전치사 + 3인칭 여성 단수 접미사"
+        },
+        {
+          "surface": "וַיֹּאמַר",
+          "lemmaId": "H559",
+          "translit": "바요마르",
+          "glossKo": "그리고 그가 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "לִקְחִי",
+          "lemmaId": "H3947",
+          "translit": "리크히",
+          "glossKo": "가져오라",
+          "grammarKo": "칼 명령형 2인칭 여성 단수"
+        },
+        {
+          "surface": "נָא",
+          "lemmaId": "H4994",
+          "translit": "나",
+          "glossKo": "부디",
+          "grammarKo": "간청 불변화사"
+        },
+        {
+          "surface": "לִי",
+          "lemmaId": "H9001",
+          "translit": "리",
+          "glossKo": "나에게",
+          "grammarKo": "전치사 + 1인칭 공성 단수 접미사"
+        },
+        {
+          "surface": "פַּת",
+          "lemmaId": "H6595",
+          "translit": "파트",
+          "glossKo": "한 조각",
+          "grammarKo": "명사 여성 단수 연계형"
+        },
+        {
+          "surface": "לֶחֶם",
+          "lemmaId": "H3899",
+          "translit": "레헴",
+          "glossKo": "빵",
+          "grammarKo": "명사 양성 단수"
+        },
+        {
+          "surface": "בְּיָדֵךְ",
+          "lemmaId": "H3027",
+          "translit": "베야데크",
+          "glossKo": "네 손에",
+          "grammarKo": "전치사 + 명사 양성 단수 연계형 + 2인칭 여성 단수 접미사"
+        }
+      ]
+    }
+  ]
+}

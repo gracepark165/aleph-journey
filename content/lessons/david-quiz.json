@@ -1,0 +1,83 @@
+{
+  "id": "david-quiz",
+  "type": "quiz",
+  "titleKo": "단어 연습",
+  "questions": [
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "מִי",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "누구",
+        "무엇",
+        "어디"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H4310"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "הַנָּעַר",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "소년아",
+        "왕이여",
+        "형제들아"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H5288"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "עַבְדְּךָ",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "당신의 종",
+        "당신의 아들",
+        "당신의 백성"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H5650"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "בֶּן",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "~의 아들",
+        "~의 딸",
+        "~의 형제"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H1121"
+    },
+    {
+      "kind": "order",
+      "promptKo": "'누구의 아들이냐 너는'을 어순대로 배열하세요",
+      "tokens": [
+        "אַתָּה",
+        "יִשַׁי",
+        "בֶּן",
+        "מִי"
+      ],
+      "answer": [
+        "בֶּן",
+        "מִי",
+        "אַתָּה"
+      ],
+      "lemmaIds": [
+        "H1121",
+        "H4310",
+        "H859"
+      ]
+    }
+  ]
+}

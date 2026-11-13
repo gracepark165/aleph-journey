@@ -1,0 +1,166 @@
+{
+  "id": "samuel-reading",
+  "type": "reading",
+  "titleKo": "본문 읽기: 부르심을 듣는 사무엘",
+  "verses": [
+    {
+      "refKo": "사무엘상 3:4",
+      "translationKo": "여호와께서 사무엘을 부르시자, 그가 말했다. \"제가 여기 있습니다.\"",
+      "words": [
+        {
+          "surface": "וַיִּקְרָא",
+          "lemmaId": "H7121",
+          "translit": "바이크라",
+          "glossKo": "그리고 부르셨다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "יְהוָה",
+          "lemmaId": "H3068",
+          "translit": "아도나이",
+          "glossKo": "여호와",
+          "grammarKo": "고유명사"
+        },
+        {
+          "surface": "אֶל",
+          "lemmaId": "H413",
+          "translit": "엘",
+          "glossKo": "~에게",
+          "grammarKo": "전치사"
+        },
+        {
+          "surface": "שְׁמוּאֵל",
+          "lemmaId": "H8050",
+          "translit": "셰무엘",
+          "glossKo": "사무엘",
+          "grammarKo": "고유명사"
+        },
+        {
+          "surface": "וַיֹּאמֶר",
+          "lemmaId": "H559",
+          "translit": "바요메르",
+          "glossKo": "그리고 그가 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "הִנֵּנִי",
+          "lemmaId": "H2005",
+          "translit": "히네니",
+          "glossKo": "내가 여기 있습니다",
+          "grammarKo": "\"보라\"(히네) + 1인칭 공성 단수 접미사"
+        }
+      ]
+    },
+    {
+      "refKo": "사무엘상 3:5",
+      "translationKo": "그가 엘리에게 달려가 말했다. \"제가 여기 있습니다. 저를 부르셨지요?\" 엘리가 말했다. \"나는 부르지 않았다. 돌아가 누워라.\" 그는 가서 누웠다.",
+      "words": [
+        {
+          "surface": "וַיָּרָץ",
+          "lemmaId": "H7323",
+          "translit": "바야라츠",
+          "glossKo": "그리고 그가 달려갔다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "אֶל",
+          "lemmaId": "H413",
+          "translit": "엘",
+          "glossKo": "~에게",
+          "grammarKo": "전치사"
+        },
+        {
+          "surface": "עֵלִי",
+          "lemmaId": "H5941",
+          "translit": "엘리",
+          "glossKo": "엘리",
+          "grammarKo": "고유명사"
+        },
+        {
+          "surface": "וַיֹּאמֶר",
+          "lemmaId": "H559",
+          "translit": "바요메르",
+          "glossKo": "그리고 그가 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "הִנְנִי",
+          "lemmaId": "H2005",
+          "translit": "힌니",
+          "glossKo": "내가 여기 있습니다",
+          "grammarKo": "\"보라\"(히네) + 1인칭 공성 단수 접미사"
+        },
+        {
+          "surface": "כִּי",
+          "lemmaId": "H3588",
+          "translit": "키",
+          "glossKo": "왜냐하면",
+          "grammarKo": "접속사"
+        },
+        {
+          "surface": "קָרָאתָ",
+          "lemmaId": "H7121",
+          "translit": "카라타",
+          "glossKo": "당신이 부르셨다",
+          "grammarKo": "칼 완료 2인칭 남성 단수"
+        },
+        {
+          "surface": "לִּי",
+          "lemmaId": "H9001",
+          "translit": "리",
+          "glossKo": "나를",
+          "grammarKo": "전치사 + 1인칭 공성 단수 접미사"
+        },
+        {
+          "surface": "וַיֹּאמֶר",
+          "lemmaId": "H559",
+          "translit": "바요메르",
+          "glossKo": "그리고 그가 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "לֹא",
+          "lemmaId": "H3808",
+          "translit": "로",
+          "glossKo": "아니다",
+          "grammarKo": "부정어"
+        },
+        {
+          "surface": "קָרָאתִי",
+          "lemmaId": "H7121",
+          "translit": "카라티",
+          "glossKo": "내가 불렀다",
+          "grammarKo": "칼 완료 1인칭 공성 단수"
+        },
+        {
+          "surface": "שׁוּב",
+          "lemmaId": "H7725",
+          "translit": "슈브",
+          "glossKo": "돌아가라",
+          "grammarKo": "칼 명령형 2인칭 남성 단수"
+        },
+        {
+          "surface": "שְׁכָב",
+          "lemmaId": "H7901",
+          "translit": "셰카브",
+          "glossKo": "누워라",
+          "grammarKo": "칼 명령형 2인칭 남성 단수"
+        },
+        {
+          "surface": "וַיֵּלֶךְ",
+          "lemmaId": "H3212",
+          "translit": "바옐레크",
+          "glossKo": "그리고 그가 갔다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "וַיִּשְׁכָּב",
+          "lemmaId": "H7901",
+          "translit": "바이슈카브",
+          "glossKo": "그리고 그가 누웠다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        }
+      ]
+    }
+  ]
+}

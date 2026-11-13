@@ -1,0 +1,80 @@
+{
+  "id": "elijah-quiz",
+  "type": "quiz",
+  "titleKo": "단어 연습",
+  "questions": [
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "אַלְמָנָה",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "과부",
+        "소년",
+        "여종"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H490"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "קְחִי",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "가져오라",
+        "돌아가라",
+        "누워라"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H3947"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "לֶחֶם",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "빵",
+        "물",
+        "그릇"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H3899"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "בַּכְּלִי",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "그릇에",
+        "손에",
+        "들판에서"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H3627"
+    },
+    {
+      "kind": "order",
+      "promptKo": "'빵 한 조각'을 어순대로 배열하세요",
+      "tokens": [
+        "לֶחֶם",
+        "מַיִם",
+        "פַּת"
+      ],
+      "answer": [
+        "פַּת",
+        "לֶחֶם"
+      ],
+      "lemmaIds": [
+        "H3899",
+        "H6595"
+      ]
+    }
+  ]
+}

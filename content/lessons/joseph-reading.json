@@ -1,0 +1,166 @@
+{
+  "id": "joseph-reading",
+  "type": "reading",
+  "titleKo": "본문 읽기: 형들을 찾는 요셉",
+  "verses": [
+    {
+      "refKo": "창세기 37:15",
+      "translationKo": "한 사람이 그를 만났는데, 보니 그가 들판에서 헤매고 있었다. 그 사람이 그에게 물었다. \"무엇을 찾고 있느냐?\"",
+      "words": [
+        {
+          "surface": "וַיִּמְצָאֵהוּ",
+          "lemmaId": "H4672",
+          "translit": "바이므차에후",
+          "glossKo": "그리고 그를 만났다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수 + 3인칭 남성 단수 접미사"
+        },
+        {
+          "surface": "אִישׁ",
+          "lemmaId": "H376",
+          "translit": "이쉬",
+          "glossKo": "한 사람이",
+          "grammarKo": "명사 남성 단수"
+        },
+        {
+          "surface": "וְהִנֵּה",
+          "lemmaId": "H2009",
+          "translit": "베히네",
+          "glossKo": "그리고 보라",
+          "grammarKo": "접속사 וְ + \"보라\"(히네)"
+        },
+        {
+          "surface": "תֹעֶה",
+          "lemmaId": "H8582",
+          "translit": "토에",
+          "glossKo": "헤매고 있다",
+          "grammarKo": "칼 분사 남성 단수"
+        },
+        {
+          "surface": "בַּשָּׂדֶה",
+          "lemmaId": "H7704",
+          "translit": "바사데",
+          "glossKo": "들판에서",
+          "grammarKo": "전치사 + 정관사 + 명사 남성 단수"
+        },
+        {
+          "surface": "וַיִּשְׁאָלֵהוּ",
+          "lemmaId": "H7592",
+          "translit": "바이슈알레후",
+          "glossKo": "그리고 그에게 물었다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수 + 3인칭 남성 단수 접미사"
+        },
+        {
+          "surface": "הָאִישׁ",
+          "lemmaId": "H376",
+          "translit": "하이쉬",
+          "glossKo": "그 사람이",
+          "grammarKo": "정관사 + 명사 남성 단수"
+        },
+        {
+          "surface": "לֵאמֹר",
+          "lemmaId": "H559",
+          "translit": "레모르",
+          "glossKo": "말하기를",
+          "grammarKo": "전치사 + 칼 부정사 연계형"
+        },
+        {
+          "surface": "מַה",
+          "lemmaId": "H4100",
+          "translit": "마",
+          "glossKo": "무엇을",
+          "grammarKo": "의문사"
+        },
+        {
+          "surface": "תְּבַקֵּשׁ",
+          "lemmaId": "H1245",
+          "translit": "테바케쉬",
+          "glossKo": "네가 찾느냐",
+          "grammarKo": "피엘 미완료 2인칭 남성 단수"
+        }
+      ]
+    },
+    {
+      "refKo": "창세기 37:16",
+      "translationKo": "그가 말했다. \"제 형들을 찾고 있어요. 그들이 어디에서 양을 치고 있는지 부디 알려 주세요.\"",
+      "words": [
+        {
+          "surface": "וַיֹּאמֶר",
+          "lemmaId": "H559",
+          "translit": "바요메르",
+          "glossKo": "그리고 그가 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "אֶת",
+          "lemmaId": "H853",
+          "translit": "에트",
+          "glossKo": "(목적어 표시)",
+          "grammarKo": "목적격 표지"
+        },
+        {
+          "surface": "אַחַי",
+          "lemmaId": "H251",
+          "translit": "아하이",
+          "glossKo": "나의 형들",
+          "grammarKo": "명사 남성 복수 연계형 + 1인칭 공성 단수 접미사"
+        },
+        {
+          "surface": "אָנֹכִי",
+          "lemmaId": "H595",
+          "translit": "아노키",
+          "glossKo": "나는",
+          "grammarKo": "인칭대명사 1인칭 공성 단수"
+        },
+        {
+          "surface": "מְבַקֵּשׁ",
+          "lemmaId": "H1245",
+          "translit": "메바케쉬",
+          "glossKo": "찾고 있다",
+          "grammarKo": "피엘 분사 남성 단수"
+        },
+        {
+          "surface": "הַגִּידָה",
+          "lemmaId": "H5046",
+          "translit": "하기다",
+          "glossKo": "알려 주세요",
+          "grammarKo": "히필 명령형 2인칭 남성 단수 + 강조 접미사"
+        },
+        {
+          "surface": "נָּא",
+          "lemmaId": "H4994",
+          "translit": "나",
+          "glossKo": "부디",
+          "grammarKo": "간청 불변화사"
+        },
+        {
+          "surface": "לִי",
+          "lemmaId": "H9001",
+          "translit": "리",
+          "glossKo": "나에게",
+          "grammarKo": "전치사 + 1인칭 공성 단수 접미사"
+        },
+        {
+          "surface": "אֵיפֹה",
+          "lemmaId": "H375",
+          "translit": "에포",
+          "glossKo": "어디에서",
+          "grammarKo": "의문사"
+        },
+        {
+          "surface": "הֵם",
+          "lemmaId": "H1992",
+          "translit": "헴",
+          "glossKo": "그들이",
+          "grammarKo": "인칭대명사 3인칭 남성 복수"
+        },
+        {
+          "surface": "רֹעִים",
+          "lemmaId": "H7462",
+          "translit": "로임",
+          "glossKo": "(양을) 치고 있다",
+          "grammarKo": "칼 분사 남성 복수"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "id": "boaz-reading",
+  "type": "reading",
+  "titleKo": "본문 읽기: 보아스의 밭",
+  "verses": [
+    {
+      "refKo": "룻기 2:4",
+      "translationKo": "보라, 보아스가 베들레헴에서 와서 추수하는 사람들에게 말했다. \"여호와께서 여러분과 함께하시기를!\" 그들이 그에게 말했다. \"여호와께서 당신에게 복 주시기를!\"",
+      "words": [
+        {
+          "surface": "וְהִנֵּה",
+          "lemmaId": "H2009",
+          "translit": "베히네",
+          "glossKo": "그리고 보라",
+          "grammarKo": "접속사 וְ + \"보라\"(히네)"
+        },
+        {
+          "surface": "בֹעַז",
+          "lemmaId": "H1162",
+          "translit": "보아즈",
+          "glossKo": "보아스",
+          "grammarKo": "고유명사"
+        },
+        {
+          "surface": "בָּא",
+          "lemmaId": "H935",
+          "translit": "바",
+          "glossKo": "왔다",
+          "grammarKo": "칼 분사 남성 단수"
+        },
+        {
+          "surface": "מִבֵּית",
+          "lemmaId": "H1035",
+          "translit": "미베이트",
+          "glossKo": "베이트(집)에서",
+          "grammarKo": "전치사 + 고유명사"
+        },
+        {
+          "surface": "לֶחֶם",
+          "lemmaId": "H1035",
+          "translit": "레헴",
+          "glossKo": "레헴(베들레헴)",
+          "grammarKo": "고유명사"
+        },
+        {
+          "surface": "וַיֹּאמֶר",
+          "lemmaId": "H559",
+          "translit": "바요메르",
+          "glossKo": "그리고 그가 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "לַקּוֹצְרִים",
+          "lemmaId": "H7114",
+          "translit": "라코츠림",
+          "glossKo": "추수하는 자들에게",
+          "grammarKo": "전치사 + 정관사 + 칼 분사 남성 복수"
+        },
+        {
+          "surface": "יְהוָה",
+          "lemmaId": "H3068",
+          "translit": "아도나이",
+          "glossKo": "여호와",
+          "grammarKo": "고유명사"
+        },
+        {
+          "surface": "עִמָּכֶם",
+          "lemmaId": "H5973",
+          "translit": "임마켐",
+          "glossKo": "너희와 함께",
+          "grammarKo": "전치사 + 2인칭 남성 복수 접미사"
+        },
+        {
+          "surface": "וַיֹּאמְרוּ",
+          "lemmaId": "H559",
+          "translit": "바요메루",
+          "glossKo": "그리고 그들이 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 복수"
+        },
+        {
+          "surface": "לוֹ",
+          "lemmaId": "H9001",
+          "translit": "로",
+          "glossKo": "그에게",
+          "grammarKo": "전치사 + 3인칭 남성 단수 접미사"
+        },
+        {
+          "surface": "יְבָרֶכְךָ",
+          "lemmaId": "H1288",
+          "translit": "예바레크하",
+          "glossKo": "당신에게 복 주시기를",
+          "grammarKo": "피엘 미완료 3인칭 남성 단수 + 2인칭 남성 단수 접미사"
+        },
+        {
+          "surface": "יְהוָה",
+          "lemmaId": "H3068",
+          "translit": "아도나이",
+          "glossKo": "여호와",
+          "grammarKo": "고유명사"
+        }
+      ]
+    }
+  ]
+}

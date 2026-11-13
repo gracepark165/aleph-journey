@@ -1,0 +1,143 @@
+{
+  "id": "boaz-roleplay",
+  "type": "roleplay",
+  "titleKo": "미션: 일꾼들에게 인사하라",
+  "setupKo": "당신은 보아스입니다. 베들레헴에서 추수가 한창인 당신의 밭으로 왔어요.",
+  "character": {
+    "nameKo": "일꾼들",
+    "nameHe": "קוֹצְרִים",
+    "avatarSrc": "/illustrations/reaper-face.webp"
+  },
+  "startNodeId": "intro",
+  "nodes": {
+    "intro": {
+      "id": "intro",
+      "narrationKo": "일꾼들에게 먼저 인사하세요.",
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "greet",
+            "line": {
+              "he": "יְהוָה עִמָּכֶם",
+              "translit": "아도나이 임마켐",
+              "ko": "여호와께서 여러분과 함께하시기를!",
+              "lemmaIds": [
+                "H3068",
+                "H5973"
+              ]
+            },
+            "correct": true,
+            "next": "bless"
+          },
+          {
+            "id": "bless-wrong",
+            "line": {
+              "he": "יְבָרֶכְךָ יְהוָה",
+              "translit": "예바레크하 아도나이",
+              "ko": "여호와께서 당신에게 복 주시기를!",
+              "lemmaIds": [
+                "H1288",
+                "H3068"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "그건 일꾼들이 보아스에게 하는 대답이에요."
+          },
+          {
+            "id": "came",
+            "line": {
+              "he": "בָּא מִבֵּית לֶחֶם",
+              "translit": "바 미베이트 레헴",
+              "ko": "베들레헴에서 왔다",
+              "lemmaIds": [
+                "H1035",
+                "H935"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "이야기를 설명하는 말이에요. 인사를 건네 보세요."
+          }
+        ]
+      }
+    },
+    "bless": {
+      "id": "bless",
+      "npc": {
+        "he": "יְבָרֶכְךָ יְהוָה",
+        "translit": "예바레크하 아도나이",
+        "ko": "여호와께서 당신에게 복 주시기를!",
+        "lemmaIds": [
+          "H1288",
+          "H3068"
+        ]
+      },
+      "reply": {
+        "mode": "blocks",
+        "promptKo": "다음 날 아침, 다시 인사해 보세요.",
+        "tokens": [
+          "עִמָּכֶם",
+          "יְהוָה",
+          "לוֹ"
+        ],
+        "accepted": [
+          "יְהוָה עִמָּכֶם"
+        ],
+        "next": "again",
+        "lemmaIds": [
+          "H3068",
+          "H5973"
+        ]
+      }
+    },
+    "again": {
+      "id": "again",
+      "npc": {
+        "he": "יְבָרֶכְךָ יְהוָה",
+        "translit": "예바레크하 아도나이",
+        "ko": "여호와께서 당신에게 복 주시기를!",
+        "lemmaIds": [
+          "H1288",
+          "H3068"
+        ]
+      },
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "smile",
+            "line": {
+              "he": "יְהוָה עִמָּכֶם",
+              "translit": "아도나이 임마켐",
+              "ko": "여호와께서 여러분과 함께!",
+              "lemmaIds": [
+                "H3068",
+                "H5973"
+              ]
+            },
+            "correct": true,
+            "next": "end"
+          },
+          {
+            "id": "to-him",
+            "line": {
+              "he": "לוֹ",
+              "translit": "로",
+              "ko": "그에게",
+              "lemmaIds": [
+                "H9001"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "'그에게'라는 뜻이에요. 인사로 답해 보세요."
+          }
+        ]
+      }
+    },
+    "end": {
+      "id": "end",
+      "narrationKo": "밭 한쪽에서 이삭을 줍는 낯선 여인이 보입니다. 바로 룻이에요(룻 2:5). 미션 완료!",
+      "end": true
+    }
+  }
+}

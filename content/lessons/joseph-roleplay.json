@@ -1,0 +1,139 @@
+{
+  "id": "joseph-roleplay",
+  "type": "roleplay",
+  "titleKo": "미션: 형들이 있는 곳을 물어라",
+  "setupKo": "당신은 요셉입니다. 아버지의 심부름으로 형들을 찾아 세겜 들판을 헤매고 있어요.",
+  "character": {
+    "nameKo": "들판의 사람",
+    "nameHe": "אִישׁ"
+  },
+  "startNodeId": "intro",
+  "nodes": {
+    "intro": {
+      "id": "intro",
+      "narrationKo": "한 사람이 다가와 묻습니다.",
+      "npc": {
+        "he": "מַה תְּבַקֵּשׁ",
+        "translit": "마 테바케쉬",
+        "ko": "무엇을 찾고 있느냐?",
+        "lemmaIds": [
+          "H1245",
+          "H4100"
+        ]
+      },
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "brothers",
+            "line": {
+              "he": "אֶת אַחַי אָנֹכִי מְבַקֵּשׁ",
+              "translit": "에트 아하이 아노키 메바케쉬",
+              "ko": "제 형들을 찾고 있어요.",
+              "lemmaIds": [
+                "H1245",
+                "H251",
+                "H595",
+                "H853"
+              ]
+            },
+            "correct": true,
+            "next": "nod"
+          },
+          {
+            "id": "lost",
+            "line": {
+              "he": "תֹעֶה בַּשָּׂדֶה",
+              "translit": "토에 바사데",
+              "ko": "들판에서 헤매고 있다",
+              "lemmaIds": [
+                "H7704",
+                "H8582"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "이건 이야기를 설명하는 말이에요. 누구를 찾는지 대답하세요."
+          },
+          {
+            "id": "what",
+            "line": {
+              "he": "מַה תְּבַקֵּשׁ",
+              "translit": "마 테바케쉬",
+              "ko": "무엇을 찾느냐?",
+              "lemmaIds": [
+                "H1245",
+                "H4100"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "그 사람이 한 질문을 그대로 돌려줬어요. 대답해 보세요."
+          }
+        ]
+      }
+    },
+    "nod": {
+      "id": "nod",
+      "narrationKo": "그 사람이 무언가 아는 듯한 표정입니다.",
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "tell",
+            "line": {
+              "he": "הַגִּידָה נָּא לִי",
+              "translit": "하기다 나 리",
+              "ko": "부디 제게 알려 주세요.",
+              "lemmaIds": [
+                "H4994",
+                "H5046",
+                "H9001"
+              ]
+            },
+            "correct": true,
+            "next": "where"
+          },
+          {
+            "id": "i",
+            "line": {
+              "he": "אָנֹכִי",
+              "translit": "아노키",
+              "ko": "나는",
+              "lemmaIds": [
+                "H595"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "'나는'만으로는 부탁이 되지 않아요. '알려 주세요'라고 청해 보세요."
+          }
+        ]
+      }
+    },
+    "where": {
+      "id": "where",
+      "reply": {
+        "mode": "blocks",
+        "promptKo": "형들이 어디에서 양을 치고 있는지 물어보세요.",
+        "tokens": [
+          "רֹעִים",
+          "הֵם",
+          "אֵיפֹה",
+          "אִישׁ"
+        ],
+        "accepted": [
+          "אֵיפֹה הֵם רֹעִים"
+        ],
+        "next": "end",
+        "lemmaIds": [
+          "H1992",
+          "H375",
+          "H7462"
+        ]
+      }
+    },
+    "end": {
+      "id": "end",
+      "narrationKo": "그 사람은 형들이 도단으로 갔다고 알려 줍니다(창 37:17). 미션 완료!",
+      "end": true
+    }
+  }
+}

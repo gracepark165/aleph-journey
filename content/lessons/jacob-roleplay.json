@@ -1,0 +1,238 @@
+{
+  "id": "jacob-roleplay",
+  "type": "roleplay",
+  "titleKo": "미션: 라반의 소식을 물어라",
+  "setupKo": "당신은 야곱입니다. 먼 길을 걸어 하란 근처 우물에 이르렀어요. 양 떼 곁에 목자들이 앉아 있습니다.",
+  "character": {
+    "nameKo": "목자들",
+    "nameHe": "רֹעִים",
+    "avatarSrc": "/illustrations/shepherd-face.webp"
+  },
+  "startNodeId": "intro",
+  "nodes": {
+    "intro": {
+      "id": "intro",
+      "narrationKo": "목자들에게 먼저 말을 걸어 보세요.",
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "ask",
+            "line": {
+              "he": "אַחַי מֵאַיִן אַתֶּם",
+              "translit": "아하이 메아인 아템",
+              "ko": "내 형제들이여, 어디에서 오셨소?",
+              "lemmaIds": [
+                "H251",
+                "H370",
+                "H859"
+              ]
+            },
+            "correct": true,
+            "next": "from-haran"
+          },
+          {
+            "id": "know",
+            "line": {
+              "he": "יָדָעְנוּ",
+              "translit": "야다누",
+              "ko": "우리가 안다",
+              "lemmaIds": [
+                "H3045"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "'우리가 안다'는 목자들이 할 대답이에요."
+          },
+          {
+            "id": "rachel",
+            "line": {
+              "he": "רָחֵל בִּתּוֹ",
+              "translit": "라헬 비토",
+              "ko": "그의 딸 라헬",
+              "lemmaIds": [
+                "H1323",
+                "H7354"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "아직 라헬을 모르는 때예요. 어디서 왔는지부터 물어보세요."
+          }
+        ]
+      }
+    },
+    "from-haran": {
+      "id": "from-haran",
+      "npc": {
+        "he": "מֵחָרָן אֲנָחְנוּ",
+        "translit": "메하란 아나흐누",
+        "ko": "우리는 하란에서 왔소.",
+        "lemmaIds": [
+          "H2771",
+          "H587"
+        ]
+      },
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "laban-full",
+            "line": {
+              "he": "הַיְדַעְתֶּם אֶת לָבָן בֶּן נָחוֹר",
+              "translit": "하예다템 에트 라반 벤 나호르",
+              "ko": "나홀의 아들 라반을 아시오?",
+              "lemmaIds": [
+                "H1121",
+                "H3045",
+                "H3837",
+                "H5152",
+                "H853"
+              ]
+            },
+            "correct": true,
+            "next": "we-know"
+          },
+          {
+            "id": "laban-short",
+            "line": {
+              "he": "הַיְדַעְתֶּם אֶת לָבָן",
+              "translit": "하예다템 에트 라반",
+              "ko": "라반을 아시오?",
+              "lemmaIds": [
+                "H3045",
+                "H3837",
+                "H853"
+              ]
+            },
+            "correct": true,
+            "next": "we-know-nod"
+          },
+          {
+            "id": "flock",
+            "line": {
+              "he": "עִם הַצֹּאן",
+              "translit": "임 하촌",
+              "ko": "양 떼와 함께",
+              "lemmaIds": [
+                "H5973",
+                "H6629"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "'양 떼와 함께'라는 뜻이에요. 라반을 아는지 물어보세요."
+          }
+        ]
+      }
+    },
+    "we-know": {
+      "id": "we-know",
+      "npc": {
+        "he": "יָדָעְנוּ",
+        "translit": "야다누",
+        "ko": "우리가 알지요.",
+        "lemmaIds": [
+          "H3045"
+        ]
+      },
+      "reply": {
+        "mode": "blocks",
+        "promptKo": "라반이 평안한지 물어보세요.",
+        "tokens": [
+          "לוֹ",
+          "הֲשָׁלוֹם",
+          "בִּתּוֹ"
+        ],
+        "accepted": [
+          "הֲשָׁלוֹם לוֹ"
+        ],
+        "next": "rachel-comes",
+        "lemmaIds": [
+          "H7965",
+          "H9001"
+        ]
+      }
+    },
+    "we-know-nod": {
+      "id": "we-know-nod",
+      "narrationKo": "목자들이 서로 마주 보며 고개를 끄덕입니다.",
+      "npc": {
+        "he": "יָדָעְנוּ",
+        "translit": "야다누",
+        "ko": "우리가 알지요.",
+        "lemmaIds": [
+          "H3045"
+        ]
+      },
+      "reply": {
+        "mode": "blocks",
+        "promptKo": "라반이 평안한지 물어보세요.",
+        "tokens": [
+          "לוֹ",
+          "הֲשָׁלוֹם",
+          "בִּתּוֹ"
+        ],
+        "accepted": [
+          "הֲשָׁלוֹם לוֹ"
+        ],
+        "next": "rachel-comes",
+        "lemmaIds": [
+          "H7965",
+          "H9001"
+        ]
+      }
+    },
+    "rachel-comes": {
+      "id": "rachel-comes",
+      "npc": {
+        "he": "שָׁלוֹם וְהִנֵּה רָחֵל בִּתּוֹ בָּאָה עִם הַצֹּאן",
+        "translit": "샬롬 베히네 라헬 비토 바아 임 하촌",
+        "ko": "평안하오. 저기 보시오, 그의 딸 라헬이 양 떼와 함께 오고 있소.",
+        "lemmaIds": [
+          "H1323",
+          "H2009",
+          "H5973",
+          "H6629",
+          "H7354",
+          "H7965",
+          "H935"
+        ]
+      },
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "peace",
+            "line": {
+              "he": "שָׁלוֹם",
+              "translit": "샬롬",
+              "ko": "평안!",
+              "lemmaIds": [
+                "H7965"
+              ]
+            },
+            "correct": true,
+            "next": "end"
+          },
+          {
+            "id": "where",
+            "line": {
+              "he": "מֵאַיִן",
+              "translit": "메아인",
+              "ko": "어디에서?",
+              "lemmaIds": [
+                "H370"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "라헬이 바로 저기 오고 있어요. 반갑게 인사해 보세요."
+          }
+        ]
+      }
+    },
+    "end": {
+      "id": "end",
+      "narrationKo": "라헬이 양 떼를 몰고 우물로 다가옵니다(창 29:6). 미션 완료!",
+      "end": true
+    }
+  }
+}

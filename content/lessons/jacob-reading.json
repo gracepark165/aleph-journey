@@ -1,0 +1,235 @@
+{
+  "id": "jacob-reading",
+  "type": "reading",
+  "titleKo": "본문 읽기: 하란의 우물가",
+  "verses": [
+    {
+      "refKo": "창세기 29:4",
+      "translationKo": "야곱이 그들에게 말했다. \"내 형제들이여, 어디에서 오셨소?\" 그들이 말했다. \"우리는 하란에서 왔소.\"",
+      "words": [
+        {
+          "surface": "וַיֹּאמֶר",
+          "lemmaId": "H559",
+          "translit": "바요메르",
+          "glossKo": "그리고 그가 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "לָהֶם",
+          "lemmaId": "H9001",
+          "translit": "라헴",
+          "glossKo": "그들에게",
+          "grammarKo": "전치사 + 3인칭 남성 복수 접미사"
+        },
+        {
+          "surface": "יַעֲקֹב",
+          "lemmaId": "H3290",
+          "translit": "야아코브",
+          "glossKo": "야곱",
+          "grammarKo": "고유명사"
+        },
+        {
+          "surface": "אַחַי",
+          "lemmaId": "H251",
+          "translit": "아하이",
+          "glossKo": "나의 형제들아",
+          "grammarKo": "명사 남성 복수 연계형 + 1인칭 공성 단수 접미사"
+        },
+        {
+          "surface": "מֵאַיִן",
+          "lemmaId": "H370",
+          "translit": "메아인",
+          "glossKo": "어디에서",
+          "grammarKo": "전치사 + 의문사"
+        },
+        {
+          "surface": "אַתֶּם",
+          "lemmaId": "H859",
+          "translit": "아템",
+          "glossKo": "너희는",
+          "grammarKo": "인칭대명사 2인칭 남성 복수"
+        },
+        {
+          "surface": "וַיֹּאמְרוּ",
+          "lemmaId": "H559",
+          "translit": "바요메루",
+          "glossKo": "그리고 그들이 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 복수"
+        },
+        {
+          "surface": "מֵחָרָן",
+          "lemmaId": "H2771",
+          "translit": "메하란",
+          "glossKo": "하란에서",
+          "grammarKo": "전치사 + 고유명사"
+        },
+        {
+          "surface": "אֲנָחְנוּ",
+          "lemmaId": "H587",
+          "translit": "아나흐누",
+          "glossKo": "우리는",
+          "grammarKo": "인칭대명사 1인칭 공성 복수"
+        }
+      ]
+    },
+    {
+      "refKo": "창세기 29:5",
+      "translationKo": "그가 그들에게 말했다. \"나홀의 아들 라반을 아시오?\" 그들이 말했다. \"우리가 알지요.\"",
+      "words": [
+        {
+          "surface": "וַיֹּאמֶר",
+          "lemmaId": "H559",
+          "translit": "바요메르",
+          "glossKo": "그리고 그가 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "לָהֶם",
+          "lemmaId": "H9001",
+          "translit": "라헴",
+          "glossKo": "그들에게",
+          "grammarKo": "전치사 + 3인칭 남성 복수 접미사"
+        },
+        {
+          "surface": "הַיְדַעְתֶּם",
+          "lemmaId": "H3045",
+          "translit": "하예다템",
+          "glossKo": "너희가 아느냐",
+          "grammarKo": "의문사 + 칼 완료 2인칭 남성 복수"
+        },
+        {
+          "surface": "אֶת",
+          "lemmaId": "H853",
+          "translit": "에트",
+          "glossKo": "(목적어 표시)",
+          "grammarKo": "목적격 표지"
+        },
+        {
+          "surface": "לָבָן",
+          "lemmaId": "H3837",
+          "translit": "라반",
+          "glossKo": "라반",
+          "grammarKo": "고유명사"
+        },
+        {
+          "surface": "בֶּן",
+          "lemmaId": "H1121",
+          "translit": "벤",
+          "glossKo": "~의 아들",
+          "grammarKo": "명사 남성 단수 연계형"
+        },
+        {
+          "surface": "נָחוֹר",
+          "lemmaId": "H5152",
+          "translit": "나호르",
+          "glossKo": "나홀",
+          "grammarKo": "고유명사"
+        },
+        {
+          "surface": "וַיֹּאמְרוּ",
+          "lemmaId": "H559",
+          "translit": "바요메루",
+          "glossKo": "그리고 그들이 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 복수"
+        },
+        {
+          "surface": "יָדָעְנוּ",
+          "lemmaId": "H3045",
+          "translit": "야다누",
+          "glossKo": "우리가 안다",
+          "grammarKo": "칼 완료 1인칭 공성 복수"
+        }
+      ]
+    },
+    {
+      "refKo": "창세기 29:6",
+      "translationKo": "그가 그들에게 말했다. \"그가 평안하오?\" 그들이 말했다. \"평안하오. 저기 보시오, 그의 딸 라헬이 양 떼와 함께 오고 있소.\"",
+      "words": [
+        {
+          "surface": "וַיֹּאמֶר",
+          "lemmaId": "H559",
+          "translit": "바요메르",
+          "glossKo": "그리고 그가 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "לָהֶם",
+          "lemmaId": "H9001",
+          "translit": "라헴",
+          "glossKo": "그들에게",
+          "grammarKo": "전치사 + 3인칭 남성 복수 접미사"
+        },
+        {
+          "surface": "הֲשָׁלוֹם",
+          "lemmaId": "H7965",
+          "translit": "하샬롬",
+          "glossKo": "평안하냐?",
+          "grammarKo": "의문사 + 명사 남성 단수"
+        },
+        {
+          "surface": "לוֹ",
+          "lemmaId": "H9001",
+          "translit": "로",
+          "glossKo": "그에게",
+          "grammarKo": "전치사 + 3인칭 남성 단수 접미사"
+        },
+        {
+          "surface": "וַיֹּאמְרוּ",
+          "lemmaId": "H559",
+          "translit": "바요메루",
+          "glossKo": "그리고 그들이 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 복수"
+        },
+        {
+          "surface": "שָׁלוֹם",
+          "lemmaId": "H7965",
+          "translit": "샬롬",
+          "glossKo": "평안하다",
+          "grammarKo": "명사 남성 단수"
+        },
+        {
+          "surface": "וְהִנֵּה",
+          "lemmaId": "H2009",
+          "translit": "베히네",
+          "glossKo": "그리고 보라",
+          "grammarKo": "접속사 וְ + \"보라\"(히네)"
+        },
+        {
+          "surface": "רָחֵל",
+          "lemmaId": "H7354",
+          "translit": "라헬",
+          "glossKo": "라헬",
+          "grammarKo": "고유명사"
+        },
+        {
+          "surface": "בִּתּוֹ",
+          "lemmaId": "H1323",
+          "translit": "비토",
+          "glossKo": "그의 딸",
+          "grammarKo": "명사 여성 단수 연계형 + 3인칭 남성 단수 접미사"
+        },
+        {
+          "surface": "בָּאָה",
+          "lemmaId": "H935",
+          "translit": "바아",
+          "glossKo": "오고 있다",
+          "grammarKo": "칼 분사 여성 단수"
+        },
+        {
+          "surface": "עִם",
+          "lemmaId": "H5973",
+          "translit": "임",
+          "glossKo": "~와 함께",
+          "grammarKo": "전치사"
+        },
+        {
+          "surface": "הַצֹּאן",
+          "lemmaId": "H6629",
+          "translit": "하촌",
+          "glossKo": "그 양 떼",
+          "grammarKo": "정관사 + 명사 양성 단수"
+        }
+      ]
+    }
+  ]
+}

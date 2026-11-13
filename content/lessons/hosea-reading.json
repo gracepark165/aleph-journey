@@ -1,0 +1,83 @@
+{
+  "id": "hosea-reading",
+  "type": "reading",
+  "titleKo": "본문 읽기: 여호와께로 돌아가자",
+  "verses": [
+    {
+      "refKo": "호세아 6:1",
+      "translationKo": "오라, 우리가 여호와께로 돌아가자. 그가 찢으셨으나 우리를 낫게 하실 것이요, 그가 치셨으나 우리를 싸매실 것이다.",
+      "words": [
+        {
+          "surface": "לְכוּ",
+          "lemmaId": "H3212",
+          "translit": "레쿠",
+          "glossKo": "오라",
+          "grammarKo": "칼 명령형 2인칭 남성 복수"
+        },
+        {
+          "surface": "וְנָשׁוּבָה",
+          "lemmaId": "H7725",
+          "translit": "베나슈바",
+          "glossKo": "그리고 우리가 돌아가자",
+          "grammarKo": "접속사 וְ + 칼 청유형 1인칭 공성 복수"
+        },
+        {
+          "surface": "אֶל",
+          "lemmaId": "H413",
+          "translit": "엘",
+          "glossKo": "~에게",
+          "grammarKo": "전치사"
+        },
+        {
+          "surface": "יְהוָה",
+          "lemmaId": "H3068",
+          "translit": "아도나이",
+          "glossKo": "여호와",
+          "grammarKo": "고유명사"
+        },
+        {
+          "surface": "כִּי",
+          "lemmaId": "H3588",
+          "translit": "키",
+          "glossKo": "왜냐하면",
+          "grammarKo": "접속사"
+        },
+        {
+          "surface": "הוּא",
+          "lemmaId": "H1931",
+          "translit": "후",
+          "glossKo": "그가",
+          "grammarKo": "인칭대명사 3인칭 남성 단수"
+        },
+        {
+          "surface": "טָרָף",
+          "lemmaId": "H2963",
+          "translit": "타라프",
+          "glossKo": "찢으셨다",
+          "grammarKo": "칼 완료 3인칭 남성 단수"
+        },
+        {
+          "surface": "וְיִרְפָּאֵנוּ",
+          "lemmaId": "H7495",
+          "translit": "베이르파에누",
+          "glossKo": "그리고 우리를 낫게 하실 것이다",
+          "grammarKo": "접속사 וְ + 칼 미완료 3인칭 남성 단수 + 1인칭 공성 복수 접미사"
+        },
+        {
+          "surface": "יַךְ",
+          "lemmaId": "H5221",
+          "translit": "야크",
+          "glossKo": "치셨다",
+          "grammarKo": "히필 미완료 3인칭 남성 단수"
+        },
+        {
+          "surface": "וְיַחְבְּשֵׁנוּ",
+          "lemmaId": "H2280",
+          "translit": "베야흐베셰누",
+          "glossKo": "그리고 우리를 싸매실 것이다",
+          "grammarKo": "접속사 וְ + 칼 미완료 3인칭 남성 단수 + 1인칭 공성 복수 접미사"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "id": "ruth-reading",
+  "type": "reading",
+  "titleKo": "본문 읽기: 룻의 고백",
+  "verses": [
+    {
+      "refKo": "룻기 1:16",
+      "translationKo": "룻이 말했다. \"저더러 어머니를 떠나 돌아가라고 강권하지 마세요. 어머니가 가시는 곳에 저도 가고, 어머니가 머무시는 곳에 저도 머물겠어요. 어머니의 백성이 저의 백성이고, 어머니의 하나님이 저의 하나님이에요.\"",
+      "words": [
+        {
+          "surface": "וַתֹּאמֶר",
+          "lemmaId": "H559",
+          "translit": "바토메르",
+          "glossKo": "그리고 그녀가 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 여성 단수"
+        },
+        {
+          "surface": "רוּת",
+          "lemmaId": "H7327",
+          "translit": "루트",
+          "glossKo": "룻",
+          "grammarKo": "고유명사"
+        },
+        {
+          "surface": "אַל",
+          "lemmaId": "H408",
+          "translit": "알",
+          "glossKo": "~하지 마세요",
+          "grammarKo": "부정어"
+        },
+        {
+          "surface": "תִּפְגְּעִי",
+          "lemmaId": "H6293",
+          "translit": "티프게이",
+          "glossKo": "강권하다",
+          "grammarKo": "칼 지시형 2인칭 여성 단수"
+        },
+        {
+          "surface": "בִי",
+          "lemmaId": "H9002",
+          "translit": "비",
+          "glossKo": "나에게",
+          "grammarKo": "전치사 + 1인칭 공성 단수 접미사"
+        },
+        {
+          "surface": "לְעָזְבֵךְ",
+          "lemmaId": "H5800",
+          "translit": "레오즈베크",
+          "glossKo": "당신을 떠나라고",
+          "grammarKo": "전치사 + 칼 부정사 연계형 + 2인칭 여성 단수 접미사"
+        },
+        {
+          "surface": "לָשׁוּב",
+          "lemmaId": "H7725",
+          "translit": "라슈브",
+          "glossKo": "돌아가라고",
+          "grammarKo": "전치사 + 칼 부정사 연계형"
+        },
+        {
+          "surface": "מֵאַחֲרָיִךְ",
+          "lemmaId": "H310",
+          "translit": "메아하라이크",
+          "glossKo": "당신 뒤에서",
+          "grammarKo": "전치사 + 전치사 + 2인칭 여성 단수 접미사"
+        },
+        {
+          "surface": "כִּי",
+          "lemmaId": "H3588",
+          "translit": "키",
+          "glossKo": "왜냐하면",
+          "grammarKo": "접속사"
+        },
+        {
+          "surface": "אֶל",
+          "lemmaId": "H413",
+          "translit": "엘",
+          "glossKo": "~로",
+          "grammarKo": "전치사"
+        },
+        {
+          "surface": "אֲשֶׁר",
+          "lemmaId": "H834",
+          "translit": "아셰르",
+          "glossKo": "~하는 곳",
+          "grammarKo": "관계사"
+        },
+        {
+          "surface": "תֵּלְכִי",
+          "lemmaId": "H3212",
+          "translit": "텔레키",
+          "glossKo": "당신이 가는",
+          "grammarKo": "칼 미완료 2인칭 여성 단수"
+        },
+        {
+          "surface": "אֵלֵךְ",
+          "lemmaId": "H3212",
+          "translit": "엘레크",
+          "glossKo": "내가 가겠습니다",
+          "grammarKo": "칼 미완료 1인칭 공성 단수"
+        },
+        {
+          "surface": "וּבַאֲשֶׁר",
+          "lemmaId": "H834",
+          "translit": "우바아셰르",
+          "glossKo": "그리고 ~하는 곳에서",
+          "grammarKo": "접속사 וְ + 전치사 + 관계사"
+        },
+        {
+          "surface": "תָּלִינִי",
+          "lemmaId": "H3885",
+          "translit": "탈리니",
+          "glossKo": "당신이 머무는",
+          "grammarKo": "칼 미완료 2인칭 여성 단수"
+        },
+        {
+          "surface": "אָלִין",
+          "lemmaId": "H3885",
+          "translit": "알린",
+          "glossKo": "내가 머물겠습니다",
+          "grammarKo": "칼 미완료 1인칭 공성 단수"
+        },
+        {
+          "surface": "עַמֵּךְ",
+          "lemmaId": "H5971",
+          "translit": "아메크",
+          "glossKo": "당신의 백성이",
+          "grammarKo": "명사 남성 단수 연계형 + 2인칭 여성 단수 접미사"
+        },
+        {
+          "surface": "עַמִּי",
+          "lemmaId": "H5971",
+          "translit": "아미",
+          "glossKo": "나의 백성",
+          "grammarKo": "명사 남성 단수 연계형 + 1인칭 공성 단수 접미사"
+        },
+        {
+          "surface": "וֵאלֹהַיִךְ",
+          "lemmaId": "H430",
+          "translit": "벨로하이크",
+          "glossKo": "그리고 당신의 하나님이",
+          "grammarKo": "접속사 וְ + 명사 남성 복수 연계형 + 2인칭 여성 단수 접미사"
+        },
+        {
+          "surface": "אֱלֹהָי",
+          "lemmaId": "H430",
+          "translit": "엘로하이",
+          "glossKo": "나의 하나님",
+          "grammarKo": "명사 남성 복수 연계형 + 1인칭 공성 단수 접미사"
+        }
+      ]
+    }
+  ]
+}

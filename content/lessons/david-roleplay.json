@@ -1,0 +1,129 @@
+{
+  "id": "david-roleplay",
+  "type": "roleplay",
+  "titleKo": "미션: 왕에게 자신을 소개하라",
+  "setupKo": "당신은 다윗입니다. 골리앗을 쓰러뜨린 뒤 사울 왕 앞에 섰어요.",
+  "character": {
+    "nameKo": "사울 왕",
+    "nameHe": "שָׁאוּל",
+    "avatarSrc": "/illustrations/saul-face.webp"
+  },
+  "startNodeId": "intro",
+  "nodes": {
+    "intro": {
+      "id": "intro",
+      "npc": {
+        "he": "בֶּן מִי אַתָּה הַנָּעַר",
+        "translit": "벤 미 아타 한나아르",
+        "ko": "소년아, 너는 누구의 아들이냐?",
+        "lemmaIds": [
+          "H1121",
+          "H4310",
+          "H5288",
+          "H859"
+        ]
+      },
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "jesse",
+            "line": {
+              "he": "בֶּן עַבְדְּךָ יִשַׁי",
+              "translit": "벤 아브데카 이샤이",
+              "ko": "당신의 종 이새의 아들입니다.",
+              "lemmaIds": [
+                "H1121",
+                "H3448",
+                "H5650"
+              ]
+            },
+            "correct": true,
+            "next": "smile"
+          },
+          {
+            "id": "jesse-full",
+            "line": {
+              "he": "בֶּן עַבְדְּךָ יִשַׁי בֵּית הַלַּחְמִי",
+              "translit": "벤 아브데카 이샤이 베이트 할라흐미",
+              "ko": "베들레헴 사람, 당신의 종 이새의 아들입니다.",
+              "lemmaIds": [
+                "H1022",
+                "H1121",
+                "H3448",
+                "H5650"
+              ]
+            },
+            "correct": true,
+            "next": "smile-full"
+          },
+          {
+            "id": "hebrew",
+            "line": {
+              "he": "עִבְרִי אָנֹכִי",
+              "translit": "이브리 아노키",
+              "ko": "나는 히브리 사람입니다",
+              "lemmaIds": [
+                "H5680",
+                "H595"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "그건 요나가 선원들에게 한 대답이에요. 아버지의 이름을 말해 보세요."
+          }
+        ]
+      }
+    },
+    "smile": {
+      "id": "smile",
+      "narrationKo": "사울 왕이 다윗의 어깨에 손을 얹습니다.",
+      "reply": {
+        "mode": "blocks",
+        "promptKo": "다시 한번 또박또박 대답해 보세요.",
+        "tokens": [
+          "יִשַׁי",
+          "עַבְדְּךָ",
+          "בֶּן",
+          "דָּוִד"
+        ],
+        "accepted": [
+          "בֶּן עַבְדְּךָ יִשַׁי"
+        ],
+        "next": "end",
+        "lemmaIds": [
+          "H1121",
+          "H3448",
+          "H5650"
+        ]
+      }
+    },
+    "smile-full": {
+      "id": "smile-full",
+      "narrationKo": "사울 왕이 베들레헴이라는 말에 고개를 끄덕입니다.",
+      "reply": {
+        "mode": "blocks",
+        "promptKo": "아버지의 이름을 다시 말해 보세요.",
+        "tokens": [
+          "יִשַׁי",
+          "עַבְדְּךָ",
+          "בֶּן",
+          "דָּוִד"
+        ],
+        "accepted": [
+          "בֶּן עַבְדְּךָ יִשַׁי"
+        ],
+        "next": "end",
+        "lemmaIds": [
+          "H1121",
+          "H3448",
+          "H5650"
+        ]
+      }
+    },
+    "end": {
+      "id": "end",
+      "narrationKo": "그날부터 사울은 다윗을 곁에 두었습니다(삼상 18:2). 미션 완료!",
+      "end": true
+    }
+  }
+}

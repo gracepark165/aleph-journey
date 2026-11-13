@@ -1,0 +1,79 @@
+{
+  "id": "ruth-quiz",
+  "type": "quiz",
+  "titleKo": "단어 연습",
+  "questions": [
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "אֵלֵךְ",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "내가 가겠습니다",
+        "내가 머물겠습니다",
+        "내가 돌아가겠습니다"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H3212"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "עַמִּי",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "나의 백성",
+        "나의 하나님",
+        "나의 형제"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H5971"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "אָלִין",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "내가 머물겠습니다",
+        "내가 가겠습니다",
+        "내가 부르겠습니다"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H3885"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "אֱלֹהָי",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "나의 하나님",
+        "나의 백성",
+        "나의 땅"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H430"
+    },
+    {
+      "kind": "order",
+      "promptKo": "'당신의 백성이 나의 백성'을 어순대로 배열하세요",
+      "tokens": [
+        "עַמִּי",
+        "אֱלֹהָי",
+        "עַמֵּךְ"
+      ],
+      "answer": [
+        "עַמֵּךְ",
+        "עַמִּי"
+      ],
+      "lemmaIds": [
+        "H5971"
+      ]
+    }
+  ]
+}

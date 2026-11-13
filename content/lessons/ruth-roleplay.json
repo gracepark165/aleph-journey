@@ -1,0 +1,159 @@
+{
+  "id": "ruth-roleplay",
+  "type": "roleplay",
+  "titleKo": "미션: 나오미를 따라가겠다고 고백하라",
+  "setupKo": "당신은 모압 여인 룻입니다. 시어머니 나오미가 고향 베들레헴으로 떠나려 해요.",
+  "character": {
+    "nameKo": "나오미",
+    "nameHe": "נָעֳמִי",
+    "avatarSrc": "/illustrations/naomi-face.webp"
+  },
+  "startNodeId": "intro",
+  "nodes": {
+    "intro": {
+      "id": "intro",
+      "narrationKo": "나오미가 말합니다. \"내 딸아, 너도 네 백성에게로 돌아가거라.\"",
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "dont",
+            "line": {
+              "he": "אַל תִּפְגְּעִי בִי",
+              "translit": "알 티프게이 비",
+              "ko": "저에게 강권하지 마세요.",
+              "lemmaIds": [
+                "H408",
+                "H6293",
+                "H9002"
+              ]
+            },
+            "correct": true,
+            "next": "follow"
+          },
+          {
+            "id": "return",
+            "line": {
+              "he": "לָשׁוּב",
+              "translit": "라슈브",
+              "ko": "돌아가라고",
+              "lemmaIds": [
+                "H7725"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "'돌아가라고'는 나오미의 권유예요. 룻은 반대로 대답했어요."
+          },
+          {
+            "id": "god",
+            "line": {
+              "he": "אֱלֹהָי",
+              "translit": "엘로하이",
+              "ko": "나의 하나님",
+              "lemmaIds": [
+                "H430"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "좋은 고백이지만 아직 이르러요. 먼저 강권하지 말아 달라고 해 보세요."
+          }
+        ]
+      }
+    },
+    "follow": {
+      "id": "follow",
+      "narrationKo": "나오미가 조용히 룻을 바라봅니다.",
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "go",
+            "line": {
+              "he": "אֶל אֲשֶׁר תֵּלְכִי אֵלֵךְ",
+              "translit": "엘 아셰르 텔레키 엘레크",
+              "ko": "어머니가 가시는 곳에 저도 가겠어요.",
+              "lemmaIds": [
+                "H3212",
+                "H413",
+                "H834"
+              ]
+            },
+            "correct": true,
+            "next": "people"
+          },
+          {
+            "id": "stay",
+            "line": {
+              "he": "וּבַאֲשֶׁר תָּלִינִי אָלִין",
+              "translit": "우바아셰르 탈리니 알린",
+              "ko": "어머니가 머무시는 곳에 저도 머물겠어요.",
+              "lemmaIds": [
+                "H3885",
+                "H834"
+              ]
+            },
+            "correct": true,
+            "next": "people-stay"
+          },
+          {
+            "id": "leave",
+            "line": {
+              "he": "לְעָזְבֵךְ",
+              "translit": "레오즈베크",
+              "ko": "당신을 떠나라고",
+              "lemmaIds": [
+                "H5800"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "'당신을 떠나라고'예요. 룻은 떠나지 않겠다고 했지요."
+          }
+        ]
+      }
+    },
+    "people": {
+      "id": "people",
+      "reply": {
+        "mode": "blocks",
+        "promptKo": "고백을 이어 가세요. '당신의 백성이 나의 백성'",
+        "tokens": [
+          "עַמִּי",
+          "עַמֵּךְ",
+          "אֱלֹהָי"
+        ],
+        "accepted": [
+          "עַמֵּךְ עַמִּי"
+        ],
+        "next": "end",
+        "lemmaIds": [
+          "H5971"
+        ]
+      }
+    },
+    "people-stay": {
+      "id": "people-stay",
+      "narrationKo": "룻의 목소리가 떨리지만 단단합니다.",
+      "reply": {
+        "mode": "blocks",
+        "promptKo": "고백을 이어 가세요. '당신의 백성이 나의 백성'",
+        "tokens": [
+          "עַמִּי",
+          "עַמֵּךְ",
+          "אֱלֹהָי"
+        ],
+        "accepted": [
+          "עַמֵּךְ עַמִּי"
+        ],
+        "next": "end",
+        "lemmaIds": [
+          "H5971"
+        ]
+      }
+    },
+    "end": {
+      "id": "end",
+      "narrationKo": "나오미는 룻이 굳게 결심한 것을 보고 더 말하지 않았습니다(룻 1:18). 미션 완료!",
+      "end": true
+    }
+  }
+}

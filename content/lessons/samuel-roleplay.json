@@ -1,0 +1,139 @@
+{
+  "id": "samuel-roleplay",
+  "type": "roleplay",
+  "titleKo": "미션: 부르는 소리에 대답하라",
+  "setupKo": "당신은 어린 사무엘입니다. 실로의 성전에서 잠들었는데, 누군가 \"사무엘아!\" 하고 부르는 소리가 들려요.",
+  "character": {
+    "nameKo": "엘리",
+    "nameHe": "עֵלִי",
+    "avatarSrc": "/illustrations/eli-face.webp"
+  },
+  "startNodeId": "intro",
+  "nodes": {
+    "intro": {
+      "id": "intro",
+      "narrationKo": "부르는 소리에 대답하세요.",
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "here",
+            "line": {
+              "he": "הִנֵּנִי",
+              "translit": "히네니",
+              "ko": "제가 여기 있습니다.",
+              "lemmaIds": [
+                "H2005"
+              ]
+            },
+            "correct": true,
+            "next": "run"
+          },
+          {
+            "id": "not-called",
+            "line": {
+              "he": "לֹא קָרָאתִי",
+              "translit": "로 카라티",
+              "ko": "나는 부르지 않았다",
+              "lemmaIds": [
+                "H3808",
+                "H7121"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "그건 엘리가 할 말이에요."
+          },
+          {
+            "id": "lie",
+            "line": {
+              "he": "שְׁכָב",
+              "translit": "셰카브",
+              "ko": "누워라",
+              "lemmaIds": [
+                "H7901"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "'누워라'는 명령이에요. 부르는 소리에 대답해 보세요."
+          }
+        ]
+      }
+    },
+    "run": {
+      "id": "run",
+      "narrationKo": "당신은 엘리에게 달려갑니다.",
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "you-called",
+            "line": {
+              "he": "הִנְנִי כִּי קָרָאתָ לִּי",
+              "translit": "힌니 키 카라타 리",
+              "ko": "제가 여기 있습니다. 저를 부르셨지요?",
+              "lemmaIds": [
+                "H2005",
+                "H3588",
+                "H7121",
+                "H9001"
+              ]
+            },
+            "correct": true,
+            "next": "eli"
+          },
+          {
+            "id": "who",
+            "line": {
+              "he": "בֶּן מִי אַתָּה",
+              "translit": "벤 미 아타",
+              "ko": "너는 누구의 아들이냐?",
+              "lemmaIds": [
+                "H1121",
+                "H4310",
+                "H859"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "그건 사울 왕이 다윗에게 한 질문이에요."
+          }
+        ]
+      }
+    },
+    "eli": {
+      "id": "eli",
+      "npc": {
+        "he": "לֹא קָרָאתִי שׁוּב שְׁכָב",
+        "translit": "로 카라티 슈브 셰카브",
+        "ko": "나는 부르지 않았다. 돌아가 누워라.",
+        "lemmaIds": [
+          "H3808",
+          "H7121",
+          "H7725",
+          "H7901"
+        ]
+      },
+      "reply": {
+        "mode": "blocks",
+        "promptKo": "엘리의 말을 따라 해 보세요. '돌아가 누워라'",
+        "tokens": [
+          "שְׁכָב",
+          "שׁוּב",
+          "הִנֵּנִי"
+        ],
+        "accepted": [
+          "שׁוּב שְׁכָב"
+        ],
+        "next": "end",
+        "lemmaIds": [
+          "H7725",
+          "H7901"
+        ]
+      }
+    },
+    "end": {
+      "id": "end",
+      "narrationKo": "사무엘은 돌아가 누웠습니다(삼상 3:5). 그 부르심은 다시 찾아옵니다. 미션 완료!",
+      "end": true
+    }
+  }
+}

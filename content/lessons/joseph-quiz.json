@@ -1,0 +1,80 @@
+{
+  "id": "joseph-quiz",
+  "type": "quiz",
+  "titleKo": "단어 연습",
+  "questions": [
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "בַּשָּׂדֶה",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "들판에서",
+        "성문에서",
+        "우물에서"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H7704"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "תְּבַקֵּשׁ",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "네가 찾느냐",
+        "네가 아느냐",
+        "네가 가느냐"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H1245"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "אַחַי",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "나의 형들",
+        "나의 딸",
+        "나의 백성"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H251"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "אֵיפֹה",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "어디에서",
+        "누가",
+        "언제"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H375"
+    },
+    {
+      "kind": "order",
+      "promptKo": "'무엇을 네가 찾느냐'를 어순대로 배열하세요",
+      "tokens": [
+        "תְּבַקֵּשׁ",
+        "אִישׁ",
+        "מַה"
+      ],
+      "answer": [
+        "מַה",
+        "תְּבַקֵּשׁ"
+      ],
+      "lemmaIds": [
+        "H1245",
+        "H4100"
+      ]
+    }
+  ]
+}

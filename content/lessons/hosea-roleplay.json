@@ -1,0 +1,146 @@
+{
+  "id": "hosea-roleplay",
+  "type": "roleplay",
+  "titleKo": "미션: 이웃과 함께 돌아가자",
+  "setupKo": "호세아 시대, 하나님을 떠난 이스라엘은 상처투성이가 되었어요. 당신의 이웃이 다가와 말을 겁니다.",
+  "character": {
+    "nameKo": "이웃",
+    "nameHe": "שָׁכֵן"
+  },
+  "startNodeId": "intro",
+  "nodes": {
+    "intro": {
+      "id": "intro",
+      "npc": {
+        "he": "לְכוּ וְנָשׁוּבָה אֶל יְהוָה",
+        "translit": "레쿠 베나슈바 엘 아도나이",
+        "ko": "오라, 우리가 여호와께로 돌아가자.",
+        "lemmaIds": [
+          "H3068",
+          "H3212",
+          "H413",
+          "H7725"
+        ]
+      },
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "heal",
+            "line": {
+              "he": "כִּי הוּא טָרָף וְיִרְפָּאֵנוּ",
+              "translit": "키 후 타라프 베이르파에누",
+              "ko": "그가 찢으셨으나 우리를 낫게 하실 거예요.",
+              "lemmaIds": [
+                "H1931",
+                "H2963",
+                "H3588",
+                "H7495"
+              ]
+            },
+            "correct": true,
+            "next": "bind"
+          },
+          {
+            "id": "lie",
+            "line": {
+              "he": "שׁוּב שְׁכָב",
+              "translit": "슈브 셰카브",
+              "ko": "돌아가 누워라",
+              "lemmaIds": [
+                "H7725",
+                "H7901"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "엘리가 사무엘에게 한 말이에요. 여기서 돌아갈 곳은 잠자리가 아니에요."
+          },
+          {
+            "id": "no",
+            "line": {
+              "he": "לֹא",
+              "translit": "로",
+              "ko": "아니다",
+              "lemmaIds": [
+                "H3808"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "이웃은 함께 돌아가자고 해요. 왜 돌아가야 하는지 대답해 보세요."
+          }
+        ]
+      }
+    },
+    "bind": {
+      "id": "bind",
+      "narrationKo": "이웃이 고개를 끄덕이며 손을 내밉니다.",
+      "reply": {
+        "mode": "blocks",
+        "promptKo": "이어서 고백하세요. '그가 치셨으나 우리를 싸매실 것이다'",
+        "tokens": [
+          "וְיַחְבְּשֵׁנוּ",
+          "יַךְ",
+          "טָרָף"
+        ],
+        "accepted": [
+          "יַךְ וְיַחְבְּשֵׁנוּ"
+        ],
+        "next": "together",
+        "lemmaIds": [
+          "H2280",
+          "H5221"
+        ]
+      }
+    },
+    "together": {
+      "id": "together",
+      "npc": {
+        "he": "לְכוּ וְנָשׁוּבָה",
+        "translit": "레쿠 베나슈바",
+        "ko": "오라, 돌아가자!",
+        "lemmaIds": [
+          "H3212",
+          "H7725"
+        ]
+      },
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "yes",
+            "line": {
+              "he": "וְנָשׁוּבָה אֶל יְהוָה",
+              "translit": "베나슈바 엘 아도나이",
+              "ko": "여호와께로 돌아가요!",
+              "lemmaIds": [
+                "H3068",
+                "H413",
+                "H7725"
+              ]
+            },
+            "correct": true,
+            "next": "end"
+          },
+          {
+            "id": "he",
+            "line": {
+              "he": "הוּא",
+              "translit": "후",
+              "ko": "그가",
+              "lemmaIds": [
+                "H1931"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "'그가'만으로는 대답이 되지 않아요."
+          }
+        ]
+      }
+    },
+    "end": {
+      "id": "end",
+      "narrationKo": "두 사람이 함께 여호와께로 돌아가는 길에 오릅니다(호 6:1). 미션 완료!",
+      "end": true
+    }
+  }
+}

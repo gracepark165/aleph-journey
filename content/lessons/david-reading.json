@@ -1,0 +1,111 @@
+{
+  "id": "david-reading",
+  "type": "reading",
+  "titleKo": "본문 읽기: 왕 앞의 다윗",
+  "verses": [
+    {
+      "refKo": "사무엘상 17:58",
+      "translationKo": "사울이 그에게 말했다. \"소년아, 너는 누구의 아들이냐?\" 다윗이 말했다. \"베들레헴 사람, 당신의 종 이새의 아들입니다.\"",
+      "words": [
+        {
+          "surface": "וַיֹּאמֶר",
+          "lemmaId": "H559",
+          "translit": "바요메르",
+          "glossKo": "그리고 그가 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "אֵלָיו",
+          "lemmaId": "H413",
+          "translit": "엘라브",
+          "glossKo": "그에게",
+          "grammarKo": "전치사 + 3인칭 남성 단수 접미사"
+        },
+        {
+          "surface": "שָׁאוּל",
+          "lemmaId": "H7586",
+          "translit": "샤울",
+          "glossKo": "사울",
+          "grammarKo": "고유명사"
+        },
+        {
+          "surface": "בֶּן",
+          "lemmaId": "H1121",
+          "translit": "벤",
+          "glossKo": "~의 아들",
+          "grammarKo": "명사 남성 단수 연계형"
+        },
+        {
+          "surface": "מִי",
+          "lemmaId": "H4310",
+          "translit": "미",
+          "glossKo": "누구",
+          "grammarKo": "의문사"
+        },
+        {
+          "surface": "אַתָּה",
+          "lemmaId": "H859",
+          "translit": "아타",
+          "glossKo": "너는",
+          "grammarKo": "인칭대명사 2인칭 남성 단수"
+        },
+        {
+          "surface": "הַנָּעַר",
+          "lemmaId": "H5288",
+          "translit": "한나아르",
+          "glossKo": "소년아",
+          "grammarKo": "정관사 + 명사 남성 단수"
+        },
+        {
+          "surface": "וַיֹּאמֶר",
+          "lemmaId": "H559",
+          "translit": "바요메르",
+          "glossKo": "그리고 그가 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "דָּוִד",
+          "lemmaId": "H1732",
+          "translit": "다비드",
+          "glossKo": "다윗",
+          "grammarKo": "고유명사"
+        },
+        {
+          "surface": "בֶּן",
+          "lemmaId": "H1121",
+          "translit": "벤",
+          "glossKo": "~의 아들",
+          "grammarKo": "명사 남성 단수 연계형"
+        },
+        {
+          "surface": "עַבְדְּךָ",
+          "lemmaId": "H5650",
+          "translit": "아브데카",
+          "glossKo": "당신의 종",
+          "grammarKo": "명사 남성 단수 연계형 + 2인칭 남성 단수 접미사"
+        },
+        {
+          "surface": "יִשַׁי",
+          "lemmaId": "H3448",
+          "translit": "이샤이",
+          "glossKo": "이새",
+          "grammarKo": "고유명사"
+        },
+        {
+          "surface": "בֵּית",
+          "lemmaId": "H1022",
+          "translit": "베이트",
+          "glossKo": "베이트(베들레헴)",
+          "grammarKo": "족속 명사 남성 단수"
+        },
+        {
+          "surface": "הַלַּחְמִי",
+          "lemmaId": "H1022",
+          "translit": "할라흐미",
+          "glossKo": "라흐미 사람",
+          "grammarKo": "족속 명사 남성 단수"
+        }
+      ]
+    }
+  ]
+}

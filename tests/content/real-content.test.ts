@@ -11,12 +11,19 @@ describe('shipped content', () => {
   test('passes integrity checks', () => {
     expect(checkContent(course, lessons, lexicon)).toEqual([])
   })
-  test('has the planned units and lesson order', () => {
-    expect(course.id).toBe('genesis-intro')
-    expect(course.units.map(u => [u.id, u.lessonIds])).toEqual([
-      ['unit-0-alefbet', ['alef-bet-1']],
-      ['unit-1-rebekah', ['rebekah-reading', 'rebekah-quiz', 'rebekah-roleplay']],
+  test('has the alphabet unit and ten scripture units, each reading → quiz → roleplay', () => {
+    expect(course.units.map(u => u.id)).toEqual([
+      'unit-0-alefbet', 'unit-1-rebekah', 'unit-2-jacob', 'unit-3-joseph', 'unit-4-ruth', 'unit-5-boaz',
+      'unit-6-samuel', 'unit-7-david', 'unit-8-elijah', 'unit-9-hosea', 'unit-10-jonah',
     ])
+    for (const u of course.units.slice(1)) {
+      const types = u.lessonIds.map(id => lessons.find(l => l.id === id)?.type)
+      expect(types, u.id).toEqual(['reading', 'quiz', 'roleplay'])
+    }
+  })
+  test('every roleplay character with an avatar and every illustrated unit has its picture', () => {
+    const withImage = course.units.filter(u => u.imageSrc).map(u => u.id)
+    expect(withImage).toEqual(['unit-1-rebekah', 'unit-2-jacob', 'unit-4-ruth', 'unit-5-boaz', 'unit-6-samuel', 'unit-7-david'])
   })
   test('roleplay has a choice node that branches on two correct options', () => {
     const rp = lessons.find(l => l.id === 'rebekah-roleplay')

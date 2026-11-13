@@ -1,6 +1,6 @@
 {
   "id": "genesis-intro",
-  "titleKo": "창세기 입문",
+  "titleKo": "구약 장면 여행",
   "units": [
     {
       "id": "unit-0-alefbet",
@@ -22,6 +22,115 @@
       ],
       "imageSrc": "/illustrations/rebekah-well.webp",
       "imageAltKo": "우물에서 항아리에 물을 긷는 리브가"
+    },
+    {
+      "id": "unit-2-jacob",
+      "titleKo": "하란의 우물가",
+      "refKo": "창세기 29:4-6",
+      "mapLabelKo": "하란",
+      "lessonIds": [
+        "jacob-reading",
+        "jacob-quiz",
+        "jacob-roleplay"
+      ],
+      "imageSrc": "/illustrations/jacob-shepherds.webp",
+      "imageAltKo": "우물가에서 목자들과 이야기하는 야곱"
+    },
+    {
+      "id": "unit-3-joseph",
+      "titleKo": "형들을 찾는 요셉",
+      "refKo": "창세기 37:15-16",
+      "mapLabelKo": "세겜 들판",
+      "lessonIds": [
+        "joseph-reading",
+        "joseph-quiz",
+        "joseph-roleplay"
+      ]
+    },
+    {
+      "id": "unit-4-ruth",
+      "titleKo": "룻의 고백",
+      "refKo": "룻기 1:16",
+      "mapLabelKo": "모압 길",
+      "lessonIds": [
+        "ruth-reading",
+        "ruth-quiz",
+        "ruth-roleplay"
+      ],
+      "imageSrc": "/illustrations/ruth-naomi.webp",
+      "imageAltKo": "두 손을 맞잡고 마주 본 룻과 나오미"
+    },
+    {
+      "id": "unit-5-boaz",
+      "titleKo": "보아스의 밭",
+      "refKo": "룻기 2:4",
+      "mapLabelKo": "베들레헴",
+      "lessonIds": [
+        "boaz-reading",
+        "boaz-quiz",
+        "boaz-roleplay"
+      ],
+      "imageSrc": "/illustrations/boaz-field.webp",
+      "imageAltKo": "추수하는 밭에서 이삭을 든 룻에게 손을 내미는 보아스"
+    },
+    {
+      "id": "unit-6-samuel",
+      "titleKo": "부르심을 듣는 사무엘",
+      "refKo": "사무엘상 3:4-5",
+      "mapLabelKo": "실로",
+      "lessonIds": [
+        "samuel-reading",
+        "samuel-quiz",
+        "samuel-roleplay"
+      ],
+      "imageSrc": "/illustrations/samuel-eli.webp",
+      "imageAltKo": "등불 곁에서 엘리를 올려다보는 어린 사무엘"
+    },
+    {
+      "id": "unit-7-david",
+      "titleKo": "왕 앞의 다윗",
+      "refKo": "사무엘상 17:58",
+      "mapLabelKo": "엘라 골짜기",
+      "lessonIds": [
+        "david-reading",
+        "david-quiz",
+        "david-roleplay"
+      ],
+      "imageSrc": "/illustrations/saul-david.webp",
+      "imageAltKo": "다윗의 어깨에 손을 얹고 웃는 사울 왕"
+    },
+    {
+      "id": "unit-8-elijah",
+      "titleKo": "사르밧의 과부",
+      "refKo": "열왕기상 17:10-11",
+      "mapLabelKo": "사르밧",
+      "lessonIds": [
+        "elijah-reading",
+        "elijah-quiz",
+        "elijah-roleplay"
+      ]
+    },
+    {
+      "id": "unit-9-hosea",
+      "titleKo": "여호와께로 돌아가자",
+      "refKo": "호세아 6:1",
+      "mapLabelKo": "사마리아",
+      "lessonIds": [
+        "hosea-reading",
+        "hosea-quiz",
+        "hosea-roleplay"
+      ]
+    },
+    {
+      "id": "unit-10-jonah",
+      "titleKo": "폭풍 속의 요나",
+      "refKo": "요나 1:8-9",
+      "mapLabelKo": "욥바 앞바다",
+      "lessonIds": [
+        "jonah-reading",
+        "jonah-quiz",
+        "jonah-roleplay"
+      ]
     }
   ]
 }

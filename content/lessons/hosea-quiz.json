@@ -1,0 +1,80 @@
+{
+  "id": "hosea-quiz",
+  "type": "quiz",
+  "titleKo": "단어 연습",
+  "questions": [
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "לְכוּ",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "오라(가자)",
+        "누워라",
+        "가져오라"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H3212"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "וְנָשׁוּבָה",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "우리가 돌아가자",
+        "우리가 알자",
+        "우리가 머물자"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H7725"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "וְיִרְפָּאֵנוּ",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "그가 우리를 낫게 하실 것이다",
+        "그가 우리를 부르실 것이다",
+        "그가 우리에게 복 주실 것이다"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H7495"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "יַךְ",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "치셨다",
+        "찢으셨다",
+        "만드셨다"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H5221"
+    },
+    {
+      "kind": "order",
+      "promptKo": "'오라, 우리가 돌아가자'를 어순대로 배열하세요",
+      "tokens": [
+        "וְנָשׁוּבָה",
+        "הוּא",
+        "לְכוּ"
+      ],
+      "answer": [
+        "לְכוּ",
+        "וְנָשׁוּבָה"
+      ],
+      "lemmaIds": [
+        "H3212",
+        "H7725"
+      ]
+    }
+  ]
+}

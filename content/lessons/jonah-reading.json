@@ -1,0 +1,271 @@
+{
+  "id": "jonah-reading",
+  "type": "reading",
+  "titleKo": "본문 읽기: 폭풍 속의 요나",
+  "verses": [
+    {
+      "refKo": "요나 1:8",
+      "translationKo": "그들이 그에게 말했다. \"누구 때문에 이 재앙이 우리에게 닥쳤는지 우리에게 알려 다오. 네 일은 무엇이냐? 어디에서 왔느냐? 네 나라는 어디이며, 어느 민족이냐?\"",
+      "words": [
+        {
+          "surface": "וַיֹּאמְרוּ",
+          "lemmaId": "H559",
+          "translit": "바요메루",
+          "glossKo": "그리고 그들이 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 복수"
+        },
+        {
+          "surface": "אֵלָיו",
+          "lemmaId": "H413",
+          "translit": "엘라브",
+          "glossKo": "그에게",
+          "grammarKo": "전치사 + 3인칭 남성 단수 접미사"
+        },
+        {
+          "surface": "הַגִּידָה",
+          "lemmaId": "H5046",
+          "translit": "하기다",
+          "glossKo": "알려 달라",
+          "grammarKo": "히필 명령형 2인칭 남성 단수 + 강조 접미사"
+        },
+        {
+          "surface": "נָּא",
+          "lemmaId": "H4994",
+          "translit": "나",
+          "glossKo": "부디",
+          "grammarKo": "간청 불변화사"
+        },
+        {
+          "surface": "לָנוּ",
+          "lemmaId": "H9001",
+          "translit": "라누",
+          "glossKo": "우리에게",
+          "grammarKo": "전치사 + 1인칭 공성 복수 접미사"
+        },
+        {
+          "surface": "בַּאֲשֶׁר",
+          "lemmaId": "H834",
+          "translit": "바아셰르",
+          "glossKo": "~때문에",
+          "grammarKo": "전치사 + 관계사"
+        },
+        {
+          "surface": "לְמִי",
+          "lemmaId": "H4310",
+          "translit": "레미",
+          "glossKo": "누구로 인해",
+          "grammarKo": "전치사 + 의문사"
+        },
+        {
+          "surface": "הָרָעָה",
+          "lemmaId": "H7451",
+          "translit": "하라아",
+          "glossKo": "재앙",
+          "grammarKo": "정관사 + 명사 여성 단수"
+        },
+        {
+          "surface": "הַזֹּאת",
+          "lemmaId": "H2063",
+          "translit": "하조트",
+          "glossKo": "이",
+          "grammarKo": "정관사 + 지시대명사 여성 단수"
+        },
+        {
+          "surface": "לָנוּ",
+          "lemmaId": "H9001",
+          "translit": "라누",
+          "glossKo": "우리에게",
+          "grammarKo": "전치사 + 1인칭 공성 복수 접미사"
+        },
+        {
+          "surface": "מַה",
+          "lemmaId": "H4100",
+          "translit": "마",
+          "glossKo": "무엇이냐",
+          "grammarKo": "의문사"
+        },
+        {
+          "surface": "מְּלַאכְתְּךָ",
+          "lemmaId": "H4399",
+          "translit": "멜라크테카",
+          "glossKo": "너의 일",
+          "grammarKo": "명사 여성 단수 연계형 + 2인칭 남성 단수 접미사"
+        },
+        {
+          "surface": "וּמֵאַיִן",
+          "lemmaId": "H370",
+          "translit": "우메아인",
+          "glossKo": "그리고 어디에서",
+          "grammarKo": "접속사 וְ + 전치사 + 의문사"
+        },
+        {
+          "surface": "תָּבוֹא",
+          "lemmaId": "H935",
+          "translit": "타보",
+          "glossKo": "네가 왔느냐",
+          "grammarKo": "칼 미완료 2인칭 남성 단수"
+        },
+        {
+          "surface": "מָה",
+          "lemmaId": "H4100",
+          "translit": "마",
+          "glossKo": "무엇이냐",
+          "grammarKo": "의문사"
+        },
+        {
+          "surface": "אַרְצֶךָ",
+          "lemmaId": "H776",
+          "translit": "아르체카",
+          "glossKo": "너의 땅",
+          "grammarKo": "명사 양성 단수 연계형 + 2인칭 남성 단수 접미사"
+        },
+        {
+          "surface": "וְאֵי",
+          "lemmaId": "H335",
+          "translit": "베에이",
+          "glossKo": "그리고 어느",
+          "grammarKo": "접속사 וְ + 의문사"
+        },
+        {
+          "surface": "מִזֶּה",
+          "lemmaId": "H2088",
+          "translit": "미제",
+          "glossKo": "이것(어느 쪽)에서",
+          "grammarKo": "전치사 + 지시대명사 남성 단수"
+        },
+        {
+          "surface": "עַם",
+          "lemmaId": "H5971",
+          "translit": "암",
+          "glossKo": "백성",
+          "grammarKo": "명사 남성 단수"
+        },
+        {
+          "surface": "אָתָּה",
+          "lemmaId": "H859",
+          "translit": "아타",
+          "glossKo": "너는",
+          "grammarKo": "인칭대명사 2인칭 남성 단수"
+        }
+      ]
+    },
+    {
+      "refKo": "요나 1:9",
+      "translationKo": "그가 그들에게 말했다. \"나는 히브리 사람입니다. 나는 바다와 마른 땅을 지으신 하늘의 하나님 여호와를 경외합니다.\"",
+      "words": [
+        {
+          "surface": "וַיֹּאמֶר",
+          "lemmaId": "H559",
+          "translit": "바요메르",
+          "glossKo": "그리고 그가 말했다",
+          "grammarKo": "접속사 וְ + 칼 와우 연속법 3인칭 남성 단수"
+        },
+        {
+          "surface": "אֲלֵיהֶם",
+          "lemmaId": "H413",
+          "translit": "알레헴",
+          "glossKo": "그들에게",
+          "grammarKo": "전치사 + 3인칭 남성 복수 접미사"
+        },
+        {
+          "surface": "עִבְרִי",
+          "lemmaId": "H5680",
+          "translit": "이브리",
+          "glossKo": "히브리 사람",
+          "grammarKo": "족속 명사 남성 단수"
+        },
+        {
+          "surface": "אָנֹכִי",
+          "lemmaId": "H595",
+          "translit": "아노키",
+          "glossKo": "나는",
+          "grammarKo": "인칭대명사 1인칭 공성 단수"
+        },
+        {
+          "surface": "וְאֶת",
+          "lemmaId": "H853",
+          "translit": "베에트",
+          "glossKo": "그리고 (목적어 표시)",
+          "grammarKo": "접속사 וְ + 목적격 표지"
+        },
+        {
+          "surface": "יְהוָה",
+          "lemmaId": "H3068",
+          "translit": "아도나이",
+          "glossKo": "여호와",
+          "grammarKo": "고유명사"
+        },
+        {
+          "surface": "אֱלֹהֵי",
+          "lemmaId": "H430",
+          "translit": "엘로헤이",
+          "glossKo": "~의 하나님",
+          "grammarKo": "명사 남성 복수 연계형"
+        },
+        {
+          "surface": "הַשָּׁמַיִם",
+          "lemmaId": "H8064",
+          "translit": "하샤마임",
+          "glossKo": "그 하늘",
+          "grammarKo": "정관사 + 명사 남성 복수"
+        },
+        {
+          "surface": "אֲנִי",
+          "lemmaId": "H589",
+          "translit": "아니",
+          "glossKo": "나는",
+          "grammarKo": "인칭대명사 1인칭 공성 단수"
+        },
+        {
+          "surface": "יָרֵא",
+          "lemmaId": "H3373",
+          "translit": "야레",
+          "glossKo": "경외한다",
+          "grammarKo": "칼 완료 3인칭 남성 단수"
+        },
+        {
+          "surface": "אֲשֶׁר",
+          "lemmaId": "H834",
+          "translit": "아셰르",
+          "glossKo": "~한 분",
+          "grammarKo": "관계사"
+        },
+        {
+          "surface": "עָשָׂה",
+          "lemmaId": "H6213",
+          "translit": "아사",
+          "glossKo": "만드셨다",
+          "grammarKo": "칼 완료 3인칭 남성 단수"
+        },
+        {
+          "surface": "אֶת",
+          "lemmaId": "H853",
+          "translit": "에트",
+          "glossKo": "(목적어 표시)",
+          "grammarKo": "목적격 표지"
+        },
+        {
+          "surface": "הַיָּם",
+          "lemmaId": "H3220",
+          "translit": "하얌",
+          "glossKo": "그 바다",
+          "grammarKo": "정관사 + 명사 남성 단수"
+        },
+        {
+          "surface": "וְאֶת",
+          "lemmaId": "H853",
+          "translit": "베에트",
+          "glossKo": "그리고 (목적어 표시)",
+          "grammarKo": "접속사 וְ + 목적격 표지"
+        },
+        {
+          "surface": "הַיַּבָּשָׁה",
+          "lemmaId": "H3004",
+          "translit": "하야바샤",
+          "glossKo": "그 마른 땅",
+          "grammarKo": "정관사 + 명사 여성 단수"
+        }
+      ]
+    }
+  ]
+}

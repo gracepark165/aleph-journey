@@ -1,0 +1,80 @@
+{
+  "id": "jonah-quiz",
+  "type": "quiz",
+  "titleKo": "단어 연습",
+  "questions": [
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "עִבְרִי",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "히브리 사람",
+        "베들레헴 사람",
+        "하란 사람"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H5680"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "הַיָּם",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "그 바다",
+        "그 하늘",
+        "그 땅"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H3220"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "אַרְצֶךָ",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "너의 땅",
+        "너의 일",
+        "너의 백성"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H776"
+    },
+    {
+      "kind": "choice",
+      "prompt": {
+        "he": "יָרֵא",
+        "ko": "이 단어의 뜻은?"
+      },
+      "choices": [
+        "경외한다",
+        "안다",
+        "찾는다"
+      ],
+      "answerIndex": 0,
+      "lemmaId": "H3373"
+    },
+    {
+      "kind": "order",
+      "promptKo": "'히브리 사람 (이다) 나는'을 어순대로 배열하세요",
+      "tokens": [
+        "אָנֹכִי",
+        "הַיָּם",
+        "עִבְרִי"
+      ],
+      "answer": [
+        "עִבְרִי",
+        "אָנֹכִי"
+      ],
+      "lemmaIds": [
+        "H5680",
+        "H595"
+      ]
+    }
+  ]
+}

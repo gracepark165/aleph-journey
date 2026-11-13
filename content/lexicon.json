@@ -1,24 +1,80 @@
 {
-  "H7323": {
-    "id": "H7323",
-    "lemma": "רוּץ",
-    "translit": "루츠",
-    "glossKo": "달리다",
-    "posKo": "동사"
-  },
-  "H5650": {
-    "id": "H5650",
-    "lemma": "עֶבֶד",
-    "translit": "에베드",
-    "glossKo": "종, 하인",
+  "H113": {
+    "id": "H113",
+    "lemma": "אָדוֹן",
+    "translit": "아돈",
+    "glossKo": "주인, 주",
     "posKo": "명사"
   },
-  "H7125": {
-    "id": "H7125",
-    "lemma": "קִרְאָה",
-    "translit": "키르아",
-    "glossKo": "맞으러 (לִקְרַאת: ~를 맞으러)",
-    "posKo": "명사(전치사적 용법)"
+  "H251": {
+    "id": "H251",
+    "lemma": "אָח",
+    "translit": "아흐",
+    "glossKo": "형제",
+    "posKo": "명사"
+  },
+  "H310": {
+    "id": "H310",
+    "lemma": "אַחַר",
+    "translit": "아하르",
+    "glossKo": "뒤, ~후에",
+    "posKo": "전치사"
+  },
+  "H335": {
+    "id": "H335",
+    "lemma": "אַי",
+    "translit": "에이",
+    "glossKo": "어디, 어느",
+    "posKo": "의문사"
+  },
+  "H370": {
+    "id": "H370",
+    "lemma": "אַיִן",
+    "translit": "아인",
+    "glossKo": "어디 (מֵאַיִן: 어디에서)",
+    "posKo": "의문사"
+  },
+  "H375": {
+    "id": "H375",
+    "lemma": "אֵיפֹה",
+    "translit": "에포",
+    "glossKo": "어디",
+    "posKo": "의문사"
+  },
+  "H376": {
+    "id": "H376",
+    "lemma": "אִישׁ",
+    "translit": "이쉬",
+    "glossKo": "사람, 남자",
+    "posKo": "명사"
+  },
+  "H408": {
+    "id": "H408",
+    "lemma": "אַל",
+    "translit": "알",
+    "glossKo": "~하지 마라",
+    "posKo": "부정어"
+  },
+  "H413": {
+    "id": "H413",
+    "lemma": "אֵל",
+    "translit": "엘",
+    "glossKo": "~에게, ~로",
+    "posKo": "전치사"
+  },
+  "H430": {
+    "id": "H430",
+    "lemma": "אֱלֹהִים",
+    "translit": "엘로힘",
+    "glossKo": "하나님",
+    "posKo": "명사"
+  },
+  "H490": {
+    "id": "H490",
+    "lemma": "אַלְמָנָה",
+    "translit": "알마나",
+    "glossKo": "과부",
+    "posKo": "명사"
   },
   "H559": {
     "id": "H559",
@@ -27,11 +83,368 @@
     "glossKo": "말하다",
     "posKo": "동사"
   },
+  "H587": {
+    "id": "H587",
+    "lemma": "אֲנַחְנוּ",
+    "translit": "아나흐누",
+    "glossKo": "우리",
+    "posKo": "대명사"
+  },
+  "H589": {
+    "id": "H589",
+    "lemma": "אֲנִי",
+    "translit": "아니",
+    "glossKo": "나",
+    "posKo": "대명사"
+  },
+  "H595": {
+    "id": "H595",
+    "lemma": "אָנֹכִי",
+    "translit": "아노키",
+    "glossKo": "나",
+    "posKo": "대명사"
+  },
+  "H776": {
+    "id": "H776",
+    "lemma": "אֶרֶץ",
+    "translit": "에레츠",
+    "glossKo": "땅, 나라",
+    "posKo": "명사"
+  },
+  "H802": {
+    "id": "H802",
+    "lemma": "אִשָּׁה",
+    "translit": "이샤",
+    "glossKo": "여인, 아내",
+    "posKo": "명사"
+  },
+  "H834": {
+    "id": "H834",
+    "lemma": "אֲשֶׁר",
+    "translit": "아셰르",
+    "glossKo": "~하는 (관계사)",
+    "posKo": "관계사"
+  },
+  "H853": {
+    "id": "H853",
+    "lemma": "אֵת",
+    "translit": "에트",
+    "glossKo": "(목적어 표시)",
+    "posKo": "불변화사"
+  },
+  "H859": {
+    "id": "H859",
+    "lemma": "אַתָּה",
+    "translit": "아타",
+    "glossKo": "너, 당신",
+    "posKo": "대명사"
+  },
+  "H935": {
+    "id": "H935",
+    "lemma": "בּוֹא",
+    "translit": "보",
+    "glossKo": "오다, 들어가다",
+    "posKo": "동사"
+  },
+  "H1022": {
+    "id": "H1022",
+    "lemma": "בֵּית הַלַּחְמִי",
+    "translit": "베이트 할라흐미",
+    "glossKo": "베들레헴 사람",
+    "posKo": "족속 명사"
+  },
+  "H1035": {
+    "id": "H1035",
+    "lemma": "בֵּית לֶחֶם",
+    "translit": "베이트 레헴",
+    "glossKo": "베들레헴 (빵집)",
+    "posKo": "고유명사"
+  },
+  "H1121": {
+    "id": "H1121",
+    "lemma": "בֵּן",
+    "translit": "벤",
+    "glossKo": "아들",
+    "posKo": "명사"
+  },
+  "H1162": {
+    "id": "H1162",
+    "lemma": "בֹּעַז",
+    "translit": "보아즈",
+    "glossKo": "보아스",
+    "posKo": "고유명사"
+  },
+  "H1245": {
+    "id": "H1245",
+    "lemma": "בָּקַשׁ",
+    "translit": "비케쉬",
+    "glossKo": "찾다",
+    "posKo": "동사"
+  },
+  "H1288": {
+    "id": "H1288",
+    "lemma": "בָרַךְ",
+    "translit": "바라크",
+    "glossKo": "복 주다",
+    "posKo": "동사"
+  },
+  "H1323": {
+    "id": "H1323",
+    "lemma": "בַּת",
+    "translit": "바트",
+    "glossKo": "딸",
+    "posKo": "명사"
+  },
   "H1572": {
     "id": "H1572",
     "lemma": "גָּמָא",
     "translit": "가마",
     "glossKo": "마시다 (히필: 마시게 하다)",
+    "posKo": "동사"
+  },
+  "H1732": {
+    "id": "H1732",
+    "lemma": "דָּוִד",
+    "translit": "다비드",
+    "glossKo": "다윗",
+    "posKo": "고유명사"
+  },
+  "H1931": {
+    "id": "H1931",
+    "lemma": "הוּא",
+    "translit": "후",
+    "glossKo": "그 (남성)",
+    "posKo": "대명사"
+  },
+  "H1992": {
+    "id": "H1992",
+    "lemma": "הֵם",
+    "translit": "헴",
+    "glossKo": "그들",
+    "posKo": "대명사"
+  },
+  "H2005": {
+    "id": "H2005",
+    "lemma": "הֵן",
+    "translit": "헨",
+    "glossKo": "보라! (הִנֵּנִי: 내가 여기 있습니다)",
+    "posKo": "불변화사"
+  },
+  "H2009": {
+    "id": "H2009",
+    "lemma": "הִנֵּה",
+    "translit": "히네",
+    "glossKo": "보라!",
+    "posKo": "불변화사"
+  },
+  "H2063": {
+    "id": "H2063",
+    "lemma": "זֹאת",
+    "translit": "조트",
+    "glossKo": "이것 (여성)",
+    "posKo": "대명사"
+  },
+  "H2088": {
+    "id": "H2088",
+    "lemma": "זֶה",
+    "translit": "제",
+    "glossKo": "이것 (남성)",
+    "posKo": "대명사"
+  },
+  "H2280": {
+    "id": "H2280",
+    "lemma": "חָבַשׁ",
+    "translit": "하바쉬",
+    "glossKo": "싸매다",
+    "posKo": "동사"
+  },
+  "H2771": {
+    "id": "H2771",
+    "lemma": "חָרָן",
+    "translit": "하란",
+    "glossKo": "하란 (지명)",
+    "posKo": "고유명사"
+  },
+  "H2963": {
+    "id": "H2963",
+    "lemma": "טָרַף",
+    "translit": "타라프",
+    "glossKo": "찢다",
+    "posKo": "동사"
+  },
+  "H3004": {
+    "id": "H3004",
+    "lemma": "יַבָּשָׁה",
+    "translit": "야바샤",
+    "glossKo": "마른 땅",
+    "posKo": "명사"
+  },
+  "H3027": {
+    "id": "H3027",
+    "lemma": "יָד",
+    "translit": "야드",
+    "glossKo": "손",
+    "posKo": "명사"
+  },
+  "H3045": {
+    "id": "H3045",
+    "lemma": "יָדַע",
+    "translit": "야다",
+    "glossKo": "알다",
+    "posKo": "동사"
+  },
+  "H3068": {
+    "id": "H3068",
+    "lemma": "יְהוָה",
+    "translit": "아도나이",
+    "glossKo": "여호와 (하나님의 이름, 전통적으로 \"아도나이\"로 읽음)",
+    "posKo": "고유명사"
+  },
+  "H3212": {
+    "id": "H3212",
+    "lemma": "יָלַךְ",
+    "translit": "할라크",
+    "glossKo": "가다",
+    "posKo": "동사"
+  },
+  "H3220": {
+    "id": "H3220",
+    "lemma": "יָם",
+    "translit": "얌",
+    "glossKo": "바다",
+    "posKo": "명사"
+  },
+  "H3290": {
+    "id": "H3290",
+    "lemma": "יַעֲקֹב",
+    "translit": "야아코브",
+    "glossKo": "야곱",
+    "posKo": "고유명사"
+  },
+  "H3373": {
+    "id": "H3373",
+    "lemma": "יָרֵא",
+    "translit": "야레",
+    "glossKo": "두려워하다, 경외하다",
+    "posKo": "형용사/동사"
+  },
+  "H3381": {
+    "id": "H3381",
+    "lemma": "יָרַד",
+    "translit": "야라드",
+    "glossKo": "내려가다 (히필: 내리다)",
+    "posKo": "동사"
+  },
+  "H3448": {
+    "id": "H3448",
+    "lemma": "יִשַׁי",
+    "translit": "이샤이",
+    "glossKo": "이새",
+    "posKo": "고유명사"
+  },
+  "H3537": {
+    "id": "H3537",
+    "lemma": "כַּד",
+    "translit": "카드",
+    "glossKo": "항아리",
+    "posKo": "명사"
+  },
+  "H3588": {
+    "id": "H3588",
+    "lemma": "כִּי",
+    "translit": "키",
+    "glossKo": "왜냐하면, ~이므로",
+    "posKo": "접속사"
+  },
+  "H3627": {
+    "id": "H3627",
+    "lemma": "כְּלִי",
+    "translit": "켈리",
+    "glossKo": "그릇, 도구",
+    "posKo": "명사"
+  },
+  "H3808": {
+    "id": "H3808",
+    "lemma": "לֹא",
+    "translit": "로",
+    "glossKo": "아니다",
+    "posKo": "부정어"
+  },
+  "H3837": {
+    "id": "H3837",
+    "lemma": "לָבָן",
+    "translit": "라반",
+    "glossKo": "라반",
+    "posKo": "고유명사"
+  },
+  "H3885": {
+    "id": "H3885",
+    "lemma": "לוּן",
+    "translit": "룬",
+    "glossKo": "밤을 지내다, 머물다",
+    "posKo": "동사"
+  },
+  "H3899": {
+    "id": "H3899",
+    "lemma": "לֶחֶם",
+    "translit": "레헴",
+    "glossKo": "빵, 양식",
+    "posKo": "명사"
+  },
+  "H3947": {
+    "id": "H3947",
+    "lemma": "לָקַח",
+    "translit": "라카흐",
+    "glossKo": "가져가다, 취하다",
+    "posKo": "동사"
+  },
+  "H4100": {
+    "id": "H4100",
+    "lemma": "מָה",
+    "translit": "마",
+    "glossKo": "무엇",
+    "posKo": "의문사"
+  },
+  "H4116": {
+    "id": "H4116",
+    "lemma": "מָהַר",
+    "translit": "마하르",
+    "glossKo": "서두르다",
+    "posKo": "동사"
+  },
+  "H4310": {
+    "id": "H4310",
+    "lemma": "מִי",
+    "translit": "미",
+    "glossKo": "누구",
+    "posKo": "의문사"
+  },
+  "H4325": {
+    "id": "H4325",
+    "lemma": "מַיִם",
+    "translit": "마임",
+    "glossKo": "물",
+    "posKo": "명사"
+  },
+  "H4399": {
+    "id": "H4399",
+    "lemma": "מְלָאכָה",
+    "translit": "멜라카",
+    "glossKo": "일, 업무",
+    "posKo": "명사"
+  },
+  "H4592": {
+    "id": "H4592",
+    "lemma": "מְעַט",
+    "translit": "메아트",
+    "glossKo": "조금, 적은 것",
+    "posKo": "명사"
+  },
+  "H4672": {
+    "id": "H4672",
+    "lemma": "מָצָא",
+    "translit": "마차",
+    "glossKo": "찾아내다, 만나다",
     "posKo": "동사"
   },
   "H4994": {
@@ -41,54 +454,61 @@
     "glossKo": "부디, 제발",
     "posKo": "불변화사"
   },
-  "H4592": {
-    "id": "H4592",
-    "lemma": "מְעַט",
-    "translit": "메아트",
-    "glossKo": "조금, 적은 것",
-    "posKo": "명사"
-  },
-  "H4325": {
-    "id": "H4325",
-    "lemma": "מַיִם",
-    "translit": "마임",
-    "glossKo": "물",
-    "posKo": "명사"
-  },
-  "H3537": {
-    "id": "H3537",
-    "lemma": "כַּד",
-    "translit": "카드",
-    "glossKo": "항아리",
-    "posKo": "명사"
-  },
-  "H8354": {
-    "id": "H8354",
-    "lemma": "שָׁתָה",
-    "translit": "샤타",
-    "glossKo": "마시다",
+  "H5046": {
+    "id": "H5046",
+    "lemma": "נָגַד",
+    "translit": "히기드",
+    "glossKo": "알리다",
     "posKo": "동사"
   },
-  "H113": {
-    "id": "H113",
-    "lemma": "אָדוֹן",
-    "translit": "아돈",
-    "glossKo": "주인, 주",
+  "H5152": {
+    "id": "H5152",
+    "lemma": "נָחוֹר",
+    "translit": "나호르",
+    "glossKo": "나홀",
+    "posKo": "고유명사"
+  },
+  "H5221": {
+    "id": "H5221",
+    "lemma": "נָכָה",
+    "translit": "나카",
+    "glossKo": "치다",
+    "posKo": "동사"
+  },
+  "H5288": {
+    "id": "H5288",
+    "lemma": "נַעַר",
+    "translit": "나아르",
+    "glossKo": "소년, 젊은이",
     "posKo": "명사"
   },
-  "H4116": {
-    "id": "H4116",
-    "lemma": "מָהַר",
-    "translit": "마하르",
-    "glossKo": "서두르다",
+  "H5650": {
+    "id": "H5650",
+    "lemma": "עֶבֶד",
+    "translit": "에베드",
+    "glossKo": "종, 하인",
+    "posKo": "명사"
+  },
+  "H5680": {
+    "id": "H5680",
+    "lemma": "עִבְרִי",
+    "translit": "이브리",
+    "glossKo": "히브리 사람",
+    "posKo": "족속 명사"
+  },
+  "H5800": {
+    "id": "H5800",
+    "lemma": "עָזַב",
+    "translit": "아자브",
+    "glossKo": "떠나다, 버리다",
     "posKo": "동사"
   },
-  "H3381": {
-    "id": "H3381",
-    "lemma": "יָרַד",
-    "translit": "야라드",
-    "glossKo": "내려가다 (히필: 내리다)",
-    "posKo": "동사"
+  "H5892": {
+    "id": "H5892",
+    "lemma": "עִיר",
+    "translit": "이르",
+    "glossKo": "성, 도시",
+    "posKo": "명사"
   },
   "H5921": {
     "id": "H5921",
@@ -97,11 +517,214 @@
     "glossKo": "~위에",
     "posKo": "전치사"
   },
-  "H3027": {
-    "id": "H3027",
-    "lemma": "יָד",
-    "translit": "야드",
-    "glossKo": "손",
+  "H5941": {
+    "id": "H5941",
+    "lemma": "עֵלִי",
+    "translit": "엘리",
+    "glossKo": "엘리",
+    "posKo": "고유명사"
+  },
+  "H5971": {
+    "id": "H5971",
+    "lemma": "עַם",
+    "translit": "암",
+    "glossKo": "백성",
+    "posKo": "명사"
+  },
+  "H5973": {
+    "id": "H5973",
+    "lemma": "עִם",
+    "translit": "임",
+    "glossKo": "~와 함께",
+    "posKo": "전치사"
+  },
+  "H6086": {
+    "id": "H6086",
+    "lemma": "עֵץ",
+    "translit": "에츠",
+    "glossKo": "나무",
+    "posKo": "명사"
+  },
+  "H6213": {
+    "id": "H6213",
+    "lemma": "עָשָׂה",
+    "translit": "아사",
+    "glossKo": "만들다, 하다",
+    "posKo": "동사"
+  },
+  "H6293": {
+    "id": "H6293",
+    "lemma": "פָּגַע",
+    "translit": "파가",
+    "glossKo": "마주치다, 강권하다",
+    "posKo": "동사"
+  },
+  "H6595": {
+    "id": "H6595",
+    "lemma": "פַּת",
+    "translit": "파트",
+    "glossKo": "조각",
+    "posKo": "명사"
+  },
+  "H6607": {
+    "id": "H6607",
+    "lemma": "פֶּתַח",
+    "translit": "페타흐",
+    "glossKo": "문, 입구",
+    "posKo": "명사"
+  },
+  "H6629": {
+    "id": "H6629",
+    "lemma": "צֹאן",
+    "translit": "촌",
+    "glossKo": "양 떼",
+    "posKo": "명사"
+  },
+  "H6886": {
+    "id": "H6886",
+    "lemma": "צָרְפַת",
+    "translit": "차르파트",
+    "glossKo": "사르밧 (지명)",
+    "posKo": "고유명사"
+  },
+  "H6965": {
+    "id": "H6965",
+    "lemma": "קוּם",
+    "translit": "쿰",
+    "glossKo": "일어나다",
+    "posKo": "동사"
+  },
+  "H7114": {
+    "id": "H7114",
+    "lemma": "קָצַר",
+    "translit": "카차르",
+    "glossKo": "추수하다",
+    "posKo": "동사"
+  },
+  "H7121": {
+    "id": "H7121",
+    "lemma": "קָרָא",
+    "translit": "카라",
+    "glossKo": "부르다",
+    "posKo": "동사"
+  },
+  "H7125": {
+    "id": "H7125",
+    "lemma": "קִרְאָה",
+    "translit": "키르아",
+    "glossKo": "맞으러 (לִקְרַאת: ~를 맞으러)",
+    "posKo": "명사(전치사적 용법)"
+  },
+  "H7197": {
+    "id": "H7197",
+    "lemma": "קָשַׁשׁ",
+    "translit": "카샤쉬",
+    "glossKo": "줍다, 모으다",
+    "posKo": "동사"
+  },
+  "H7323": {
+    "id": "H7323",
+    "lemma": "רוּץ",
+    "translit": "루츠",
+    "glossKo": "달리다",
+    "posKo": "동사"
+  },
+  "H7327": {
+    "id": "H7327",
+    "lemma": "רוּת",
+    "translit": "루트",
+    "glossKo": "룻",
+    "posKo": "고유명사"
+  },
+  "H7354": {
+    "id": "H7354",
+    "lemma": "רָחֵל",
+    "translit": "라헬",
+    "glossKo": "라헬",
+    "posKo": "고유명사"
+  },
+  "H7451": {
+    "id": "H7451",
+    "lemma": "רַע",
+    "translit": "라",
+    "glossKo": "악, 재앙",
+    "posKo": "명사"
+  },
+  "H7462": {
+    "id": "H7462",
+    "lemma": "רָעָה",
+    "translit": "라아",
+    "glossKo": "(양을) 치다",
+    "posKo": "동사"
+  },
+  "H7495": {
+    "id": "H7495",
+    "lemma": "רָפָא",
+    "translit": "라파",
+    "glossKo": "고치다, 낫게 하다",
+    "posKo": "동사"
+  },
+  "H7586": {
+    "id": "H7586",
+    "lemma": "שָׁאוּל",
+    "translit": "샤울",
+    "glossKo": "사울",
+    "posKo": "고유명사"
+  },
+  "H7592": {
+    "id": "H7592",
+    "lemma": "שָׁאַל",
+    "translit": "샤알",
+    "glossKo": "묻다",
+    "posKo": "동사"
+  },
+  "H7704": {
+    "id": "H7704",
+    "lemma": "שָׂדֶה",
+    "translit": "사데",
+    "glossKo": "들판",
+    "posKo": "명사"
+  },
+  "H7725": {
+    "id": "H7725",
+    "lemma": "שׁוּב",
+    "translit": "슈브",
+    "glossKo": "돌아가다, 돌아오다",
+    "posKo": "동사"
+  },
+  "H7901": {
+    "id": "H7901",
+    "lemma": "שָׁכַב",
+    "translit": "샤카브",
+    "glossKo": "눕다",
+    "posKo": "동사"
+  },
+  "H7965": {
+    "id": "H7965",
+    "lemma": "שָׁלוֹם",
+    "translit": "샬롬",
+    "glossKo": "평안, 안녕",
+    "posKo": "명사"
+  },
+  "H8033": {
+    "id": "H8033",
+    "lemma": "שָׁם",
+    "translit": "샴",
+    "glossKo": "거기에",
+    "posKo": "부사"
+  },
+  "H8050": {
+    "id": "H8050",
+    "lemma": "שְׁמוּאֵל",
+    "translit": "셰무엘",
+    "glossKo": "사무엘",
+    "posKo": "고유명사"
+  },
+  "H8064": {
+    "id": "H8064",
+    "lemma": "שָׁמַיִם",
+    "translit": "샤마임",
+    "glossKo": "하늘",
     "posKo": "명사"
   },
   "H8248": {
@@ -110,5 +733,33 @@
     "translit": "샤카",
     "glossKo": "마시게 하다",
     "posKo": "동사"
+  },
+  "H8354": {
+    "id": "H8354",
+    "lemma": "שָׁתָה",
+    "translit": "샤타",
+    "glossKo": "마시다",
+    "posKo": "동사"
+  },
+  "H8582": {
+    "id": "H8582",
+    "lemma": "תָּעָה",
+    "translit": "타아",
+    "glossKo": "헤매다",
+    "posKo": "동사"
+  },
+  "H9001": {
+    "id": "H9001",
+    "lemma": "לְ",
+    "translit": "레",
+    "glossKo": "~에게, ~을 위해 (접두 전치사 לְ)",
+    "posKo": "전치사"
+  },
+  "H9002": {
+    "id": "H9002",
+    "lemma": "בְּ",
+    "translit": "베",
+    "glossKo": "~안에, ~에게 (접두 전치사 בְּ)",
+    "posKo": "전치사"
   }
 }

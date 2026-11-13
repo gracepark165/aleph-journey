@@ -1,0 +1,149 @@
+{
+  "id": "jonah-roleplay",
+  "type": "roleplay",
+  "titleKo": "미션: 선원들에게 정체를 밝혀라",
+  "setupKo": "당신은 요나입니다. 다시스로 가는 배에 탔는데, 큰 폭풍이 몰아칩니다. 선원들이 당신을 흔들어 깨워요.",
+  "character": {
+    "nameKo": "선원들",
+    "nameHe": "מַלָּחִים"
+  },
+  "startNodeId": "intro",
+  "nodes": {
+    "intro": {
+      "id": "intro",
+      "npc": {
+        "he": "מַה מְּלַאכְתְּךָ וּמֵאַיִן תָּבוֹא",
+        "translit": "마 멜라크테카 우메아인 타보",
+        "ko": "네 일은 무엇이며, 어디에서 왔느냐?",
+        "lemmaIds": [
+          "H370",
+          "H4100",
+          "H4399",
+          "H935"
+        ]
+      },
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "hebrew",
+            "line": {
+              "he": "עִבְרִי אָנֹכִי",
+              "translit": "이브리 아노키",
+              "ko": "나는 히브리 사람입니다.",
+              "lemmaIds": [
+                "H5680",
+                "H595"
+              ]
+            },
+            "correct": true,
+            "next": "fear"
+          },
+          {
+            "id": "haran",
+            "line": {
+              "he": "מֵחָרָן אֲנָחְנוּ",
+              "translit": "메하란 아나흐누",
+              "ko": "우리는 하란에서 왔소",
+              "lemmaIds": [
+                "H2771",
+                "H587"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "그건 야곱이 만난 목자들의 대답이에요."
+          },
+          {
+            "id": "peace",
+            "line": {
+              "he": "שָׁלוֹם",
+              "translit": "샬롬",
+              "ko": "평안",
+              "lemmaIds": [
+                "H7965"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "폭풍 한가운데서 \"평안\"이라니요! 정체를 밝혀 보세요."
+          }
+        ]
+      }
+    },
+    "fear": {
+      "id": "fear",
+      "npc": {
+        "he": "וְאֵי מִזֶּה עַם אָתָּה",
+        "translit": "베에이 미제 암 아타",
+        "ko": "너는 어느 민족이냐?",
+        "lemmaIds": [
+          "H2088",
+          "H335",
+          "H5971",
+          "H859"
+        ]
+      },
+      "reply": {
+        "mode": "blocks",
+        "promptKo": "누구를 경외하는지 말하세요. '나는 경외합니다'",
+        "tokens": [
+          "יָרֵא",
+          "אֲנִי",
+          "הַיָּם"
+        ],
+        "accepted": [
+          "אֲנִי יָרֵא"
+        ],
+        "next": "maker",
+        "lemmaIds": [
+          "H3373",
+          "H589"
+        ]
+      }
+    },
+    "maker": {
+      "id": "maker",
+      "narrationKo": "선원들이 숨을 죽이고 듣습니다.",
+      "reply": {
+        "mode": "choice",
+        "options": [
+          {
+            "id": "sea",
+            "line": {
+              "he": "אֲשֶׁר עָשָׂה אֶת הַיָּם וְאֶת הַיַּבָּשָׁה",
+              "translit": "아셰르 아사 에트 하얌 베에트 하야바샤",
+              "ko": "바다와 마른 땅을 지으신 분이에요.",
+              "lemmaIds": [
+                "H3004",
+                "H3220",
+                "H6213",
+                "H834",
+                "H853"
+              ]
+            },
+            "correct": true,
+            "next": "end"
+          },
+          {
+            "id": "evil",
+            "line": {
+              "he": "הָרָעָה הַזֹּאת",
+              "translit": "하라아 하조트",
+              "ko": "이 재앙",
+              "lemmaIds": [
+                "H2063",
+                "H7451"
+              ]
+            },
+            "correct": false,
+            "feedbackKo": "재앙이 아니라 하나님이 무엇을 지으셨는지 말해 보세요."
+          }
+        ]
+      }
+    },
+    "end": {
+      "id": "end",
+      "narrationKo": "선원들은 크게 두려워했습니다(욘 1:10). 이야기는 큰 물고기로 이어져요. 미션 완료!",
+      "end": true
+    }
+  }
+}
