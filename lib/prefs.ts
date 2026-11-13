@@ -2,6 +2,8 @@
 export const INTRO_SEEN_KEY = 'aleph-journey:intro-seen'
 export const REVIEW_MODE_KEY = 'aleph-journey:unlock-all'
 export const PROFILE_KEY = 'aleph-journey:profile'
+/** Guest transfer ticket kept in sessionStorage across the Kakao redirect. */
+export const TICKET_KEY = 'aleph-journey:ticket'
 
 export function readJson(key: string): unknown {
   try {

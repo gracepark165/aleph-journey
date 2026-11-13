@@ -427,3 +427,15 @@ main.wrap { padding-block: 8px 40px; min-height: 60vh; }
 .invite-landing .btn, .invite-landing .invite { width: 100%; }
 .invite-avatar { width: 96px; height: 96px; }
 .invite-name { margin: 0; overflow-wrap: anywhere; }
+
+/* account (profile page) */
+.account-section { display: flex; flex-direction: column; gap: 10px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border); }
+.account-section h2 { margin: 0; }
+.account-section p { margin: 0; }
+/* Kakao brand rule: yellow container, 85% black label. */
+.btn.kakao-btn { background: #FEE500; color: rgba(0, 0, 0, 0.85); }
+.btn.danger { background: var(--bad); color: var(--accent-text); }
+.account-delete { align-self: flex-start; color: var(--bad); }
+.account-confirm { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border-radius: 14px; background: var(--bad-bg); color: var(--bad); }
+.account-confirm-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.account-confirm-actions .btn { flex: 1 1 120px; }

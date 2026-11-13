@@ -1,0 +1,187 @@
+import { createClient } from '@supabase/supabase-js'
+import type { Profile } from '@/lib/profile'
+import { PROFILE_KEY, TICKET_KEY } from '@/lib/prefs'
+import type { ProgressSnapshot } from '@/lib/progress/snapshot'
+import { CloudError, type CloudApi, type CloudErrorCode, type CloudProfile, type CloudUser, type FriendSummary, type LeaderboardRow } from './types'
+
+const KAKAO_SCOPES = 'profile_nickname profile_image'
+const KNOWN: CloudErrorCode[] = ['not_found', 'self', 'already', 'invalid_ticket', 'not_guest']
+
+type Ticket = { ticket: string; guestId: string }
+type ProfileRow = { nickname: string | null; avatar_id: string | null; friend_code: string }
+type FriendRow = { user_id: string; nickname: string | null; avatar_id: string | null }
+type CodeRow = { nickname: string | null; avatar_id: string | null; is_me: boolean }
+type BoardRow = FriendRow & { total_xp: number; week_xp: number; streak: number; is_me: boolean; crown: boolean }
+
+/** Maps a supabase-js error (or thrown value) to a CloudError. `status` is the response status when known. */
+function toCloudError(e: unknown, status?: number): CloudError {
+  if (e instanceof CloudError) return e
+  if (e instanceof TypeError) return new CloudError('network', e.message)
+  const err = (e ?? {}) as { message?: unknown; status?: unknown; name?: unknown }
+  const message = typeof err.message === 'string' ? err.message : ''
+  if (KNOWN.includes(message as CloudErrorCode)) return new CloudError(message as CloudErrorCode)
+  if (status === 0 || err.status === 0 || err.name === 'AuthRetryableFetchError') return new CloudError('network', message)
+  return new CloudError('unknown', message || 'unknown')
+}
+
+const toProfile = (row: ProfileRow, fallback: Profile): CloudProfile => ({
+  nickname: row.nickname ?? fallback.nickname,
+  avatarId: row.avatar_id ?? fallback.avatarId,
+  friendCode: row.friend_code,
+})
+const toFriend = (r: FriendRow): FriendSummary => ({ userId: r.user_id, nickname: r.nickname ?? '', avatarId: r.avatar_id ?? '' })
+
+function readTicket(): Ticket | null {
+  try {
+    const t = JSON.parse(window.sessionStorage.getItem(TICKET_KEY) ?? 'null') as Ticket | null
+    return t && typeof t.ticket === 'string' && typeof t.guestId === 'string' ? t : null
+  } catch {
+    return null
+  }
+}
+function writeTicket(t: Ticket): void {
+  try { window.sessionStorage.setItem(TICKET_KEY, JSON.stringify(t)) } catch { /* storage blocked: no merge after login */ }
+}
+function clearTicket(): void {
+  try { window.sessionStorage.removeItem(TICKET_KEY) } catch { /* storage blocked */ }
+}
+
+/** The real backend: Supabase auth (anonymous + Kakao) and the RPCs in supabase/migrations. Uses only the anon key. */
+export function createSupabaseCloudApi(url: string, anonKey: string): CloudApi {
+  const sb = createClient(url, anonKey, {
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+  })
+
+  async function call<T>(fn: string, args?: Record<string, unknown>): Promise<T> {
+    let res: { data: unknown; error: unknown; status?: number }
+    try {
+      res = args === undefined ? await sb.rpc(fn) : await sb.rpc(fn, args)
+    } catch (e) {
+      throw toCloudError(e)
+    }
+    if (res.error) throw toCloudError(res.error, res.status)
+    return res.data as T
+  }
+
+  async function currentUser() {
+    let res
+    try { res = await sb.auth.getSession() } catch (e) { throw toCloudError(e) }
+    if (res.error) throw toCloudError(res.error)
+    return res.data.session?.user ?? null
+  }
+
+  async function requireUser() {
+    const user = await currentUser()
+    if (!user) throw new CloudError('unknown', 'unauthenticated')
+    return user
+  }
+
+  return {
+    async ensureSession(): Promise<CloudUser> {
+      const existing = await currentUser()
+      if (existing) return { id: existing.id, isGuest: !!existing.is_anonymous }
+      let res
+      try { res = await sb.auth.signInAnonymously() } catch (e) { throw toCloudError(e) }
+      if (res.error || !res.data.user) throw toCloudError(res.error)
+      return { id: res.data.user.id, isGuest: !!res.data.user.is_anonymous }
+    },
+    async ensureProfile(p) {
+      return toProfile(await call<ProfileRow>('ensure_profile', { p_nickname: p.nickname, p_avatar_id: p.avatarId }), p)
+    },
+    async updateProfile(p) {
+      return toProfile(await call<ProfileRow>('update_profile', { p_nickname: p.nickname, p_avatar_id: p.avatarId }), p)
+    },
+    async pullProgress() {
+      const user = await requireUser()
+      let res
+      try {
+        res = await sb.from('progress').select('snapshot').eq('user_id', user.id).maybeSingle()
+      } catch (e) { throw toCloudError(e) }
+      if (res.error) throw toCloudError(res.error, res.status)
+      return ((res.data as { snapshot: ProgressSnapshot } | null)?.snapshot) ?? null
+    },
+    async pushProgress(snapshot) {
+      const user = await requireUser()
+      let res
+      try {
+        res = await sb.from('progress').upsert(
+          { user_id: user.id, snapshot, updated_at: new Date().toISOString() },
+          { onConflict: 'user_id' },
+        )
+      } catch (e) { throw toCloudError(e) }
+      if (res.error) throw toCloudError(res.error, res.status)
+    },
+    async recordXp(week, gained, streak) {
+      await call('record_xp', { p_week: week, p_gained: gained, p_streak: streak })
+    },
+    async leaderboard(week): Promise<LeaderboardRow[]> {
+      const rows = (await call<BoardRow[] | null>('friend_leaderboard', { p_week: week })) ?? []
+      return rows.map(r => ({
+        ...toFriend(r),
+        totalXp: r.total_xp ?? 0,
+        weekXp: r.week_xp ?? 0,
+        streak: r.streak ?? 0,
+        isMe: !!r.is_me,
+        crown: !!r.crown,
+      }))
+    },
+    async profileByCode(code) {
+      const rows = (await call<CodeRow[] | null>('profile_by_code', { p_code: code })) ?? []
+      const r = rows[0]
+      if (!r) return null
+      // The RPC does not expose the user id; callers use the code to add the friend.
+      return { userId: '', nickname: r.nickname ?? '', avatarId: r.avatar_id ?? '', isMe: !!r.is_me }
+    },
+    async addFriend(code) {
+      const rows = (await call<FriendRow[] | null>('add_friend', { p_code: code })) ?? []
+      if (!rows[0]) throw new CloudError('unknown', 'empty add_friend result')
+      return toFriend(rows[0])
+    },
+    async removeFriend(userId) {
+      await call('remove_friend', { p_user: userId })
+    },
+    async connectKakao(returnTo) {
+      const user = await currentUser()
+      // Only a guest gets a ticket: the RPC raises not_guest for everyone else.
+      if (user?.is_anonymous) {
+        const ticket = await call<string>('create_transfer_ticket')
+        writeTicket({ ticket, guestId: user.id })
+      }
+      const options = {
+        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(returnTo)}`,
+        scopes: KAKAO_SCOPES,
+      }
+      let res
+      try { res = await sb.auth.linkIdentity({ provider: 'kakao', options }) } catch (e) { throw toCloudError(e) }
+      if (!res.error) return
+      const err = res.error as { code?: string }
+      if (err.code !== 'identity_already_exists') throw toCloudError(res.error)
+      // This Kakao account already has its own user: sign in as it; finishAuth absorbs the guest with the ticket.
+      let signIn
+      try { signIn = await sb.auth.signInWithOAuth({ provider: 'kakao', options }) } catch (e) { throw toCloudError(e) }
+      if (signIn.error) throw toCloudError(signIn.error)
+    },
+    async finishAuth() {
+      try {
+        const user = await currentUser()
+        const t = readTicket()
+        if (!user || !t || t.guestId === user.id) return { absorbed: false }
+        await call('absorb_guest', { p_ticket: t.ticket })
+        return { absorbed: true }
+      } finally {
+        clearTicket()
+      }
+    },
+    async signOut() {
+      let res
+      try { res = await sb.auth.signOut() } catch (e) { throw toCloudError(e) }
+      if (res.error) throw toCloudError(res.error)
+    },
+    async deleteAccount() {
+      await call('delete_my_account')
+      // The user no longer exists on the server: only drop the local session.
+      try { await sb.auth.signOut({ scope: 'local' }) } catch { /* session is gone either way */ }
+      try { window.localStorage.removeItem(PROFILE_KEY) } catch { /* storage blocked */ }
+    },
+  }
+}
