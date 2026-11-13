@@ -31,6 +31,8 @@ export interface CloudApi {
   removeFriend(userId: string): Promise<void>
   /** Links Kakao to the guest (redirects). If the Kakao account already exists, issues a ticket and continues with Kakao login. */
   connectKakao(returnTo: string): Promise<void>
+  /** Kakao login (not linking) after /auth/callback reported identity_already_exists; keeps the stored ticket so finishAuth absorbs the guest. */
+  continueKakaoLogin(returnTo: string): Promise<void>
   /** Called from /auth/callback. */
   finishAuth(): Promise<{ absorbed: boolean }>
   signOut(): Promise<void>

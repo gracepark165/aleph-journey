@@ -46,10 +46,15 @@ function clearTicket(): void {
   try { window.sessionStorage.removeItem(TICKET_KEY) } catch { /* storage blocked */ }
 }
 
+const kakaoOptions = (returnTo: string) => ({
+  redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(returnTo)}`,
+  scopes: KAKAO_SCOPES,
+})
+
 /** The real backend: Supabase auth (anonymous + Kakao) and the RPCs in supabase/migrations. Uses only the anon key. */
 export function createSupabaseCloudApi(url: string, anonKey: string): CloudApi {
   const sb = createClient(url, anonKey, {
-    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+    auth: { flowType: 'pkce', persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
   })
 
   async function call<T>(fn: string, args?: Record<string, unknown>): Promise<T> {
@@ -74,6 +79,12 @@ export function createSupabaseCloudApi(url: string, anonKey: string): CloudApi {
     const user = await currentUser()
     if (!user) throw new CloudError('unknown', 'unauthenticated')
     return user
+  }
+
+  async function continueKakaoLogin(returnTo: string): Promise<void> {
+    let res
+    try { res = await sb.auth.signInWithOAuth({ provider: 'kakao', options: kakaoOptions(returnTo) }) } catch (e) { throw toCloudError(e) }
+    if (res.error) throw toCloudError(res.error)
   }
 
   return {
@@ -146,21 +157,19 @@ export function createSupabaseCloudApi(url: string, anonKey: string): CloudApi {
       if (user?.is_anonymous) {
         const ticket = await call<string>('create_transfer_ticket')
         writeTicket({ ticket, guestId: user.id })
+      } else {
+        clearTicket()
       }
-      const options = {
-        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(returnTo)}`,
-        scopes: KAKAO_SCOPES,
-      }
+      const options = kakaoOptions(returnTo)
       let res
       try { res = await sb.auth.linkIdentity({ provider: 'kakao', options }) } catch (e) { throw toCloudError(e) }
       if (!res.error) return
       const err = res.error as { code?: string }
       if (err.code !== 'identity_already_exists') throw toCloudError(res.error)
       // This Kakao account already has its own user: sign in as it; finishAuth absorbs the guest with the ticket.
-      let signIn
-      try { signIn = await sb.auth.signInWithOAuth({ provider: 'kakao', options }) } catch (e) { throw toCloudError(e) }
-      if (signIn.error) throw toCloudError(signIn.error)
+      await continueKakaoLogin(returnTo)
     },
+    continueKakaoLogin,
     async finishAuth() {
       try {
         const user = await currentUser()

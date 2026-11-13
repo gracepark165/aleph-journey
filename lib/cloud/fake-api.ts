@@ -105,6 +105,7 @@ export function createFakeCloudApi(storage: Storage = window.localStorage): Clou
     },
     async removeFriend(userId) { update(st => { st.friends = st.friends.filter(id => id !== userId) }) },
     async connectKakao() { update(st => { st.isGuest = false }) },
+    async continueKakaoLogin() { update(st => { st.isGuest = false }) },
     async finishAuth() { return { absorbed: false } },
     async signOut() { update(st => { st.signedIn = false }) },
     async deleteAccount() { storage.removeItem(KEY) },

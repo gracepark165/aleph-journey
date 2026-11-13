@@ -16,6 +16,14 @@ async function setup() {
 const codeOf = async (p: Promise<unknown>) => p.then(() => null, (e: CloudError) => e.code)
 
 describe('fake cloud api', () => {
+  it('continueKakaoLogin makes the user a non-guest', async () => {
+    window.localStorage.clear()
+    const api = createFakeCloudApi(window.localStorage)
+    expect((await api.ensureSession()).isGuest).toBe(true)
+    await api.continueKakaoLogin('/')
+    expect((await api.ensureSession()).isGuest).toBe(false)
+  })
+
   it('returns the same user id across calls', async () => {
     const api = createFakeCloudApi(window.localStorage)
     expect((await api.ensureSession()).id).toBe((await api.ensureSession()).id)

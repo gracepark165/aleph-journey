@@ -18,6 +18,7 @@ export function fakeCloud(overrides: Partial<CloudApi> = {}): FakeCloud {
     addFriend: async () => { throw new CloudError('not_found') },
     removeFriend: async () => {},
     connectKakao: async () => {},
+    continueKakaoLogin: async () => {},
     finishAuth: async () => ({ absorbed: false }),
     signOut: async () => {},
     deleteAccount: async () => {},

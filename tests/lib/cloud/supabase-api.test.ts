@@ -44,6 +44,9 @@ describe('createSupabaseCloudApi', () => {
     expect(createClient).toHaveBeenCalledTimes(1)
     expect(createClient.mock.calls[0][0]).toBe('https://x.supabase.co')
     expect(createClient.mock.calls[0][1]).toBe('anon-key')
+    expect(createClient.mock.calls[0][2]).toEqual({
+      auth: { flowType: 'pkce', persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+    })
   })
 
   test('ensureSession signs in anonymously once when there is no session', async () => {
@@ -126,11 +129,28 @@ describe('createSupabaseCloudApi', () => {
     expect(sessionStorage.getItem(TICKET_KEY)).not.toBeNull()
   })
 
-  test('connectKakao does not ask for a ticket when already a Kakao user', async () => {
+  test('connectKakao does not ask for a ticket when already a Kakao user, and drops a stale one', async () => {
+    sessionStorage.setItem(TICKET_KEY, JSON.stringify({ ticket: 'old', guestId: 'guest-0' }))
     auth.getSession.mockResolvedValue(session('kakao-1', false))
     await api().connectKakao('/')
     expect(rpc).not.toHaveBeenCalledWith('create_transfer_ticket')
     expect(sessionStorage.getItem(TICKET_KEY)).toBeNull()
+  })
+
+  test('continueKakaoLogin signs in with Kakao and keeps the ticket', async () => {
+    sessionStorage.setItem(TICKET_KEY, JSON.stringify({ ticket: 't-123', guestId: 'guest-1' }))
+    await api().continueKakaoLogin('/friends')
+    expect(auth.signInWithOAuth).toHaveBeenCalledWith({
+      provider: 'kakao',
+      options: { redirectTo: `${location.origin}/auth/callback?next=%2Ffriends`, scopes: 'profile_nickname profile_image' },
+    })
+    expect(auth.linkIdentity).not.toHaveBeenCalled()
+    expect(sessionStorage.getItem(TICKET_KEY)).not.toBeNull()
+  })
+
+  test('continueKakaoLogin maps errors', async () => {
+    auth.signInWithOAuth.mockResolvedValue({ data: null, error: { message: 'fetch failed', status: 0, name: 'AuthRetryableFetchError' } })
+    expect((await api().continueKakaoLogin('/').catch(e => e)).code).toBe('network')
   })
 
   test('finishAuth absorbs the guest when the ticket came from another user', async () => {
