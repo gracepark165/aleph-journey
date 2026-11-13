@@ -7,7 +7,7 @@ import { ZOE_SRC } from './Zoe'
 
 const TABS = [
   { href: '/journey', label: '여정', icon: '🧭', match: (p: string) => p === '/journey' || p.startsWith('/unit/') },
-  { href: '/', label: '조에', icon: null, match: (p: string) => p === '/' },
+  { href: '/', label: '홈', icon: null, match: (p: string) => p === '/' },
   { href: '/vocab', label: '단어장', icon: '📜', match: (p: string) => p === '/vocab' },
 ]
 

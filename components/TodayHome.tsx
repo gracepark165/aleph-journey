@@ -8,11 +8,12 @@ import { nextLesson, zoeMessage } from '@/lib/zoe'
 import { Illustration } from './Illustration'
 import { ZoeSays } from './Zoe'
 import { IntroScene } from './IntroScene'
+import { ProfileCard } from './ProfileCard'
 
 const TYPE_LABEL: Record<LessonType, string> = { reading: '본문 읽기', quiz: '연습 퀴즈', roleplay: '롤플레이 미션' }
 
 export function TodayHome({ course, lessons }: { course: Course; lessons: { id: string; type: LessonType; titleKo: string }[] }) {
-  const { snapshot, today, ready, introSeen, markIntroSeen } = useProgress()
+  const { snapshot, today, ready, introSeen, markIntroSeen, profile } = useProgress()
   const titles = Object.fromEntries(lessons.map(l => [l.id, l.titleKo]))
   const next = nextLesson(course, snapshot.completed)
   const unit = next ? course.units.find(u => u.id === next.unitId) : undefined
@@ -23,16 +24,9 @@ export function TodayHome({ course, lessons }: { course: Course; lessons: { id: 
   return (
     <div className="today">
       {ready && !introSeen && <IntroScene onDone={markIntroSeen} />}
-      <h1 className="hello">샬롬! <span aria-hidden="true">👋</span></h1>
-      {ready ? <ZoeSays size="lg">{zoeMessage(course, snapshot, today, titles)}</ZoeSays> : <div className="zoe-placeholder" />}
-
-      {ready && (
-        <div className="chips" aria-label="오늘의 기록">
-          <span className="chip">🔥 {snapshot.streak.current}일 연속</span>
-          <span className="chip">⭐ {snapshot.xp} XP</span>
-          <span className="chip">🕯️ 쉼표 {snapshot.restTokens}</span>
-        </div>
-      )}
+      <h1 className="hello">샬롬{ready ? `, ${profile.nickname}` : ''}! <span aria-hidden="true">👋</span></h1>
+      <ProfileCard />
+      {ready ? <ZoeSays>{zoeMessage(course, snapshot, today, titles)}</ZoeSays> : <div className="zoe-placeholder" />}
 
       {ready && next && unit && lesson && (
         <section className={`next-card ${unit.imageSrc ? 'has-image' : ''}`}>

@@ -362,3 +362,36 @@ main.wrap { padding-block: 8px 40px; min-height: 60vh; }
   .intro-meteor { display: none; }
   .intro-text p, .intro-text .btn { opacity: 1 !important; transform: none !important; }
 }
+
+/* Profile card */
+.profile-card { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px; }
+.profile-card.placeholder { height: 176px; }
+.profile-top { display: flex; align-items: center; gap: 12px; }
+.profile-avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 3px solid var(--surface-2); flex: none; background: var(--surface-2); }
+.profile-id { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.profile-name { font-size: 1.2rem; font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.profile-rank { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.rank-badge {
+  display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--accent); color: var(--accent-text); font-family: var(--font-hebrew), serif; font-size: 1rem; font-weight: 600;
+}
+.profile-edit { text-decoration: none; font-size: 1.1rem; padding: 6px; border-radius: 50%; }
+.rank-progress { height: 8px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+.rank-progress > span { display: block; height: 100%; background: linear-gradient(90deg, var(--terracotta), var(--accent)); border-radius: 999px; }
+.rank-next { margin: 0; font-size: 0.8rem; color: var(--muted); }
+.profile-stats { display: flex; gap: 6px; flex-wrap: wrap; }
+.profile-stats .chip { font-size: 0.8rem; padding: 4px 10px; }
+
+/* Profile editor */
+.profile-editor { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.field-label { font-weight: 700; font-size: 0.9rem; }
+.field-hint { font-size: 0.8rem; margin: 0; }
+.text-input { font: inherit; padding: 12px 14px; border-radius: 14px; border: 2px solid var(--border); background: var(--surface); color: var(--text); }
+.text-input:focus { outline: none; border-color: var(--terracotta); }
+.avatar-grid { border: 0; padding: 0; margin: 12px 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 10px; }
+.avatar-grid legend { margin-bottom: 8px; }
+.avatar-option { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 0.75rem; text-align: center; cursor: pointer; padding: 8px 4px; border-radius: 16px; border: 2px solid transparent; }
+.avatar-option input { position: absolute; opacity: 0; pointer-events: none; }
+.avatar-option.selected { border-color: var(--accent); background: var(--surface); }
+.avatar-option:has(input:focus-visible) { outline: 2px solid var(--terracotta); }
+.avatar-option-img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; background: var(--surface-2); }

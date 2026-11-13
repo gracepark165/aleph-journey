@@ -2,7 +2,8 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { LessonType } from '@/lib/content/schema'
-import { INTRO_SEEN_KEY, parseUnlockParam, readFlag, REVIEW_MODE_KEY, writeFlag } from '@/lib/prefs'
+import { INTRO_SEEN_KEY, parseUnlockParam, PROFILE_KEY, readFlag, readJson, REVIEW_MODE_KEY, writeFlag, writeJson } from '@/lib/prefs'
+import { AVATARS, cleanNickname, DEFAULT_PROFILE, type Profile } from '@/lib/profile'
 import { seoulDate } from './dates'
 import { addLearned, recordReview } from './review'
 import { emptySnapshot, type ProgressSnapshot } from './snapshot'
@@ -21,6 +22,15 @@ export type ProgressApi = {
   /** Whether this browser has finished the intro; false until `ready`. */
   introSeen: boolean
   markIntroSeen(): void
+  profile: Profile
+  setProfile(p: Profile): void
+}
+
+function loadProfile(): Profile {
+  const raw = readJson(PROFILE_KEY) as Partial<Profile> | null
+  const nickname = typeof raw?.nickname === 'string' ? cleanNickname(raw.nickname) : ''
+  const avatarId = AVATARS.some(a => a.id === raw?.avatarId) ? (raw!.avatarId as string) : DEFAULT_PROFILE.avatarId
+  return { nickname: nickname || DEFAULT_PROFILE.nickname, avatarId }
 }
 
 const ProgressContext = createContext<ProgressApi | null>(null)
@@ -34,6 +44,7 @@ export function ProgressProvider({ children, store, now = () => new Date() }: { 
   const [ready, setReady] = useState(false)
   const [unlockAll, setUnlockAllState] = useState(false)
   const [introSeen, setIntroSeen] = useState(false)
+  const [profile, setProfileState] = useState<Profile>(DEFAULT_PROFILE)
 
   const commit = useCallback((next: ProgressSnapshot) => {
     current.current = next
@@ -52,6 +63,7 @@ export function ProgressProvider({ children, store, now = () => new Date() }: { 
     if (param) writeFlag(REVIEW_MODE_KEY, param === 'on')
     setUnlockAllState(param ? param === 'on' : readFlag(REVIEW_MODE_KEY))
     setIntroSeen(readFlag(INTRO_SEEN_KEY))
+    setProfileState(loadProfile())
     setReady(true)
   }, [commit])
 
@@ -90,9 +102,14 @@ export function ProgressProvider({ children, store, now = () => new Date() }: { 
     setIntroSeen(true)
   }, [])
 
+  const setProfile = useCallback((p: Profile) => {
+    writeJson(PROFILE_KEY, p)
+    setProfileState(p)
+  }, [])
+
   const api = useMemo(
-    () => ({ ready, snapshot, today, completeLesson, reviewAnswered, unlockAll, setUnlockAll, introSeen, markIntroSeen }),
-    [ready, snapshot, today, completeLesson, reviewAnswered, unlockAll, setUnlockAll, introSeen, markIntroSeen],
+    () => ({ ready, snapshot, today, completeLesson, reviewAnswered, unlockAll, setUnlockAll, introSeen, markIntroSeen, profile, setProfile }),
+    [ready, snapshot, today, completeLesson, reviewAnswered, unlockAll, setUnlockAll, introSeen, markIntroSeen, profile, setProfile],
   )
   return <ProgressContext.Provider value={api}>{children}</ProgressContext.Provider>
 }

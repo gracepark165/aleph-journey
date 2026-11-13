@@ -96,4 +96,12 @@ describe('streak', () => {
     expect(s.restTokens).toBe(1)
     expect(s.streak.current).toBe(1)
   })
+  test('weekly XP accumulates within an ISO week and restarts on a new week', () => {
+    let s = done(emptySnapshot('2026-11-03'), '2026-11-03')            // Tue, W45: 15
+    s = done(s, '2026-11-05', quiz, { score: 100, perfect: false })     // Thu, W45: +10
+    expect(s.weekXp).toEqual({ week: '2026-W45', xp: 25 })
+    s = done(s, '2026-11-09', quiz, { score: 100, perfect: false })     // Mon, W46: repeat +5
+    expect(s.weekXp).toEqual({ week: '2026-W46', xp: 5 })
+    expect(s.xp).toBe(30)
+  })
 })

@@ -18,6 +18,8 @@ export type ProgressSnapshot = {
   restTokenWeek: string | null
   today: { date: string; lessonsCompleted: number }
   reviews: Record<string, ReviewItem>
+  /** XP earned in the current ISO week (week label like '2026-W46'); basis for weekly friend rankings. */
+  weekXp: { week: string | null; xp: number }
 }
 
 export function emptySnapshot(today: string): ProgressSnapshot {
@@ -31,5 +33,6 @@ export function emptySnapshot(today: string): ProgressSnapshot {
     restTokenWeek: null,
     today: { date: today, lessonsCompleted: 0 },
     reviews: {},
+    weekXp: { week: null, xp: 0 },
   }
 }

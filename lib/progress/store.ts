@@ -27,6 +27,7 @@ const SnapshotSchema = z.object({
     correctCount: z.number().int().nonnegative(),
     wrongCount: z.number().int().nonnegative(),
   })),
+  weekXp: z.object({ week: z.string().nullable(), xp: z.number().int().nonnegative() }).default({ week: null, xp: 0 }),
 })
 
 export function createLocalStore(storage?: Storage): ProgressStore {

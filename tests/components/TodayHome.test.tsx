@@ -19,7 +19,7 @@ describe('TodayHome', () => {
     renderWithProgress(<TodayHome course={course} lessons={lessons} />)
     expect(await screen.findByRole('heading', { name: /샬롬/ })).toBeInTheDocument()
     expect(screen.getByText(/저는 조에예요/)).toBeInTheDocument()
-    expect(screen.getByRole('img', { name: '조에' })).toBeInTheDocument()
+    expect(screen.getAllByRole('img', { name: '조에' }).length).toBeGreaterThan(0)
     expect(screen.getByRole('link', { name: /시작하기/ })).toHaveAttribute('href', '/lesson/alef-bet-1')
   })
   test('next lesson card shows the unit illustration and continues', async () => {

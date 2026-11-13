@@ -51,9 +51,13 @@ export function recordLessonComplete(
     const current = streak.current + 1
     streak = { current, longest: Math.max(streak.longest, current), lastActiveDate: today }
   }
+  const gained = xpForLesson(lesson.type, result.perfect, prev !== undefined)
+  const week = isoWeek(today)
+  const weekXp = { week, xp: (base.weekXp?.week === week ? base.weekXp.xp : 0) + gained }
   return {
     ...base,
-    xp: base.xp + xpForLesson(lesson.type, result.perfect, prev !== undefined),
+    xp: base.xp + gained,
+    weekXp,
     completed,
     streak,
     today: { date: today, lessonsCompleted },

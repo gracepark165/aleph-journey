@@ -10,9 +10,9 @@ describe('TabBar', () => {
     render(<TabBar />)
     const links = screen.getAllByRole('link')
     expect(links).toHaveLength(3)
-    ;['여정', '조에', '단어장'].forEach((name, i) => expect(links[i]).toHaveAccessibleName(name))
+    ;['여정', '홈', '단어장'].forEach((name, i) => expect(links[i]).toHaveAccessibleName(name))
     expect(screen.getByRole('link', { name: '여정' })).toHaveAttribute('aria-current', 'page')
-    expect(screen.getByRole('link', { name: '조에' })).not.toHaveAttribute('aria-current')
+    expect(screen.getByRole('link', { name: '홈' })).not.toHaveAttribute('aria-current')
   })
   test('unit pages count as the journey tab', () => {
     pathname = '/unit/unit-1-rebekah'

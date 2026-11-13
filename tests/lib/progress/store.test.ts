@@ -48,4 +48,12 @@ describe('local progress store', () => {
     expect(() => store.save(emptySnapshot(T))).not.toThrow()
     warn.mockRestore()
   })
+  test('older saves without weekly XP still load', () => {
+    const s = recordLessonComplete(emptySnapshot(T), { id: 'r', type: 'reading' }, { score: 100, perfect: true }, T, 'x')
+    const old: Partial<typeof s> = { ...s }
+    delete old.weekXp
+    const loaded = createLocalStore(fakeStorage({ [STORAGE_KEY]: JSON.stringify(old) })).load(T)
+    expect(loaded.xp).toBe(s.xp)
+    expect(loaded.weekXp).toEqual({ week: null, xp: 0 })
+  })
 })

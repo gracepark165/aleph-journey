@@ -1,6 +1,24 @@
 /** Small per-browser flags kept outside the progress snapshot. All storage access is guarded. */
 export const INTRO_SEEN_KEY = 'aleph-journey:intro-seen'
 export const REVIEW_MODE_KEY = 'aleph-journey:unlock-all'
+export const PROFILE_KEY = 'aleph-journey:profile'
+
+export function readJson(key: string): unknown {
+  try {
+    const raw = window.localStorage.getItem(key)
+    return raw ? JSON.parse(raw) : null
+  } catch {
+    return null
+  }
+}
+
+export function writeJson(key: string, value: unknown): void {
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value))
+  } catch {
+    /* storage blocked: lasts for this visit only */
+  }
+}
 
 export function readFlag(key: string): boolean {
   try {
