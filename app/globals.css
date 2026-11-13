@@ -415,3 +415,10 @@ main.wrap { padding-block: 8px 40px; min-height: 60vh; }
 .invite { display: contents; }
 .invite-note { flex-basis: 100%; margin: 0; font-size: 0.85rem; color: var(--muted); }
 .invite-link { user-select: all; word-break: break-all; }
+
+/* invite landing */
+.invite-landing { display: grid; gap: 12px; justify-items: center; text-align: center; padding: 24px 16px; }
+.invite-landing > * { max-width: 100%; }
+.invite-landing .btn, .invite-landing .invite { width: 100%; }
+.invite-avatar { width: 96px; height: 96px; }
+.invite-name { margin: 0; overflow-wrap: anywhere; }
