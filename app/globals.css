@@ -409,6 +409,11 @@ main.wrap { padding-block: 8px 40px; min-height: 60vh; }
 .lb-tag { flex-shrink: 0; white-space: nowrap; }
 .lb-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .lb-xp, .lb-streak { white-space: nowrap; font-size: 0.8rem; }
+.friend-code { margin: 4px 0 8px; font-size: 1.75rem; font-weight: 700; letter-spacing: 0.04em; user-select: all; }
+.friend-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.friend-row { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); font-size: 0.9rem; }
+.friend-row .lb-name { display: block; }
+.friend-confirm { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 4px 8px; }
 .lb-empty, .lb-loading { margin: 0; }
 .lb-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; }
 .lb-actions .btn { flex: 1 1 140px; text-align: center; }

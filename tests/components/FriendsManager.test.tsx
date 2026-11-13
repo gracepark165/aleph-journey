@@ -126,7 +126,31 @@ describe('FriendsManager', () => {
     expect(api.removeFriend).toHaveBeenCalledWith('f2')
   })
 
-  test('error status: retry button', async () => {
+  test('connecting status shows loading', async () => {
+    renderWithCloud(<FriendsManager />, fakeCloud({ ensureSession: () => new Promise(() => {}) }))
+    expect(await screen.findByText('불러오는 중…')).toBeInTheDocument()
+  })
+
+  test('startup error status: message and retry restarts startup', async () => {
+    let fail = true
+    const api = fakeCloud({ ensureSession: async () => { if (fail) throw new Error('x'); return { id: 'me', isGuest: true } } })
+    renderWithCloud(<FriendsManager />, api)
+    expect(await screen.findByText(/순위를 불러오지 못했어요/)).toBeInTheDocument()
+    expect(screen.queryByLabelText('친구 코드')).toBeNull()
+    const calls = api.ensureSession.mock.calls.length
+    fail = false
+    await userEvent.click(screen.getByRole('button', { name: '다시 시도' }))
+    expect(api.ensureSession.mock.calls.length).toBeGreaterThan(calls)
+    expect(await screen.findByText('ALEF-ME22')).toBeInTheDocument()
+  })
+
+  test('offline leaderboard shows the offline line', async () => {
+    vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(false)
+    renderWithCloud(<FriendsManager />, fakeCloud({ leaderboard: async () => { throw new TypeError('Failed to fetch') } }))
+    expect(await screen.findByText('인터넷에 연결되면 순위가 보여요')).toBeInTheDocument()
+  })
+
+  test('leaderboard error after startup: inline retry', async () => {
     const api = fakeCloud({ leaderboard: async () => { throw new Error('x') } })
     renderWithCloud(<FriendsManager />, api)
     expect(await screen.findByText(/순위를 불러오지 못했어요/)).toBeInTheDocument()

@@ -101,7 +101,7 @@ export function FriendsManager() {
       {profile && (
         <section>
           <p className="field-label">내 코드</p>
-          <p className="friend-code" style={{ fontSize: '1.75rem', fontWeight: 700, userSelect: 'all' }}>{profile.friendCode}</p>
+          <p className="friend-code">{profile.friendCode}</p>
           <button type="button" className="btn secondary" onClick={() => void copy()}>복사</button>
           {copied === 'ok' && <p className="invite-note" role="status">복사했어요</p>}
           {copied === 'failed' && <p className="invite-note" role="status">복사하지 못했어요. 코드를 길게 눌러 선택해 주세요</p>}
@@ -123,16 +123,17 @@ export function FriendsManager() {
           순위를 불러오지 못했어요 · <button type="button" className="link-btn" onClick={() => void refreshLeaderboard()}>다시 시도</button>
         </p>
       )}
+      {leaderboard.state === 'offline' && <p className="muted">인터넷에 연결되면 순위가 보여요</p>}
       {removeError && <p className="feedback bad" role="alert">{removeError}</p>}
-      <ul className="leaderboard">
+      <ul className="friend-list">
         {friends.map(r => {
           const avatar = avatarById(r.avatarId)
           return (
-            <li key={r.userId} className="lb-row">
+            <li key={r.userId} className="friend-row">
               <Illustration src={avatar.src} alt={avatar.nameKo} className="lb-avatar" />
               <span className="lb-who"><span className="lb-name">{r.nickname}</span></span>
               {confirming === r.userId ? (
-                <span>
+                <span className="friend-confirm">
                   <span>정말 끊을까요?</span>{' '}
                   <button type="button" className="link-btn" disabled={removing === r.userId} onClick={() => void remove(r.userId)}>예</button>{' '}
                   <button type="button" className="link-btn" onClick={() => setConfirming(null)}>아니오</button>
