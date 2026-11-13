@@ -405,7 +405,9 @@ main.wrap { padding-block: 8px 40px; min-height: 60vh; }
 .lb-row.me { background: color-mix(in srgb, var(--accent) 14%, transparent); font-weight: 700; }
 .lb-pos { text-align: center; color: var(--muted); }
 .lb-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
-.lb-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lb-who { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.lb-tag { flex-shrink: 0; white-space: nowrap; }
+.lb-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .lb-xp, .lb-streak { white-space: nowrap; font-size: 0.8rem; }
 .lb-empty, .lb-loading { margin: 0; }
 .lb-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; }

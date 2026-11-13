@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, test, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { useCloud } from '@/lib/cloud/CloudProvider'
 import { LeaderboardCard } from '@/components/LeaderboardCard'
 import { ProfileCard } from '@/components/ProfileCard'
 import type { LeaderboardRow } from '@/lib/cloud/types'
@@ -33,7 +34,8 @@ describe('LeaderboardCard', () => {
     expect(items[0]).toHaveTextContent('🔥 5')
     expect(items[0]).toHaveTextContent('ג')
     expect(items[1]).toHaveTextContent('2')
-    expect(items[1]).toHaveTextContent('순례자 (나)')
+    expect(items[1]).toHaveTextContent('순례자')
+    expect(items[1]).toHaveTextContent('(나)')
     expect(items[1]).toHaveClass('me')
     expect(items[1]).not.toHaveTextContent('👑')
     expect(items[1]).toHaveTextContent('א')
@@ -65,6 +67,36 @@ describe('LeaderboardCard', () => {
     vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(false)
     renderWithCloud(<LeaderboardCard />, fakeCloud({ leaderboard: async () => { throw new TypeError('Failed to fetch') } }))
     expect(await screen.findByText('인터넷에 연결되면 순위가 보여요')).toBeInTheDocument()
+  })
+})
+
+function Refresh() {
+  const { refreshLeaderboard } = useCloud()
+  return <button onClick={() => void refreshLeaderboard().catch(() => {})}>refresh</button>
+}
+
+describe('LeaderboardCard stale rows', () => {
+  test('failed refresh keeps rows and shows error with retry', async () => {
+    let fail = false
+    const api = fakeCloud({ leaderboard: async () => { if (fail) throw new Error('x'); return ROWS } })
+    renderWithCloud(<><LeaderboardCard /><Refresh /></>, api)
+    expect(await screen.findByText('룻')).toBeInTheDocument()
+    fail = true
+    await userEvent.click(screen.getByRole('button', { name: 'refresh' }))
+    expect(await screen.findByText(/순위를 불러오지 못했어요/)).toBeInTheDocument()
+    expect(screen.getByText('룻')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '다시 시도' })).toBeInTheDocument()
+  })
+  test('offline refresh keeps rows and shows offline line', async () => {
+    let fail = false
+    const api = fakeCloud({ leaderboard: async () => { if (fail) throw new Error('x'); return ROWS } })
+    renderWithCloud(<><LeaderboardCard /><Refresh /></>, api)
+    expect(await screen.findByText('룻')).toBeInTheDocument()
+    fail = true
+    vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(false)
+    await userEvent.click(screen.getByRole('button', { name: 'refresh' }))
+    expect(await screen.findByText('인터넷에 연결되면 순위가 보여요')).toBeInTheDocument()
+    expect(screen.getByText('룻')).toBeInTheDocument()
   })
 })
 
