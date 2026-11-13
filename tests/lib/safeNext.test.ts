@@ -25,3 +25,13 @@ describe('safeNextPath', () => {
     expect(safeNextPath('/profile')).toBe('/profile')
   })
 })
+
+describe('safeNextPath dot segments', () => {
+  test('normalised paths never become protocol-relative', () => {
+    for (const v of ['/..//evil.com', '/.//evil.com', '/a/..//evil.com', '/%2e%2e//evil.com', '/%2e//evil.com', '/.%2e//evil.com']) {
+      const out = safeNextPath(v, ORIGIN)
+      expect(out.startsWith('//')).toBe(false)
+      expect(new URL(out, ORIGIN).origin).toBe(ORIGIN)
+    }
+  })
+})
