@@ -292,12 +292,20 @@ main.wrap { padding-block: 8px 40px; min-height: 60vh; }
   position: fixed; inset: 0; z-index: 50; background: #0d1230; color: #f7efe2;
   display: flex; flex-direction: column; align-items: center; justify-content: center; overflow-y: auto;
 }
-.intro-stack { width: min(100vw, 480px, calc(68dvh * 358 / 478)); display: flex; flex-direction: column; animation: intro-dawn 1.6s ease-out both; }
-.intro-skip {
-  position: absolute; z-index: 2;
+.intro-stack { width: min(100vw, 480px, calc(68dvh * 358 / 478)); display: flex; flex-direction: column; filter: brightness(0.45); transition: filter 1.6s ease-out; }
+.intro.is-playing .intro-stack { filter: none; }
+.intro:not(.is-playing) .intro-text > * { opacity: 0; }
+.intro:not(.is-playing) .intro-meteor > span, .intro:not(.is-playing) .intro-text > * { animation: none !important; }
+.intro-controls {
+  position: absolute; z-index: 3; display: flex; gap: 8px;
   top: calc(12px + env(safe-area-inset-top, 0px)); right: calc(12px + env(safe-area-inset-right, 0px));
-  background: rgba(255, 255, 255, 0.14); color: #f7efe2; border: 0; border-radius: 999px; padding: 6px 14px; cursor: pointer; font-size: 0.85rem;
 }
+.intro-pill { background: rgba(255, 255, 255, 0.14); color: #f7efe2; border: 0; border-radius: 999px; padding: 6px 14px; cursor: pointer; font-size: 0.85rem; }
+.intro-gate { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: calc(18vh + env(safe-area-inset-bottom, 0px)); gap: 14px; }
+.intro-tap { position: absolute; inset: 0; background: transparent; border: 0; cursor: pointer; color: inherit; display: flex; align-items: flex-end; justify-content: center; padding-bottom: calc(24vh + env(safe-area-inset-bottom, 0px)); }
+.intro-tap-label { font-size: 1.1rem; font-weight: 700; color: #ffe9b0; text-shadow: 0 0 12px rgba(255, 220, 140, 0.5); animation: intro-breathe 2s ease-in-out infinite; }
+.intro-silent { position: relative; background: none; border: 0; color: rgba(247, 239, 226, 0.75); font-size: 0.85rem; text-decoration: underline; cursor: pointer; }
+@keyframes intro-breathe { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
 .intro-scene {
   position: relative; width: 100%; aspect-ratio: 358 / 478;
   -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent); mask-image: linear-gradient(to bottom, #000 82%, transparent);
@@ -317,6 +325,7 @@ main.wrap { padding-block: 8px 40px; min-height: 60vh; }
   position: absolute; left: 0; top: -1px; width: 120px; height: 2px; border-radius: 2px; opacity: 0;
   background: linear-gradient(to right, rgba(255, 255, 255, 0), #fffbe8);
   animation: intro-fall 1.2s cubic-bezier(0.3, 0.1, 0.6, 1) 2.6s both;
+  animation-play-state: running;
 }
 .intro-meteor > span::after {
   content: ""; position: absolute; right: -2px; top: -2px; width: 6px; height: 6px; border-radius: 50%;
