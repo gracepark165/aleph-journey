@@ -57,3 +57,21 @@ describe('local progress store', () => {
     expect(loaded.weekXp).toEqual({ week: null, xp: 0 })
   })
 })
+
+describe('parseSnapshot', () => {
+  test('accepts a valid snapshot and fills in weekXp for old ones', async () => {
+    const { parseSnapshot } = await import('@/lib/progress/store')
+    const s = { ...emptySnapshot(T), xp: 40 }
+    expect(parseSnapshot(s)).toEqual(s)
+    const { weekXp: _omit, ...old } = s
+    void _omit
+    expect(parseSnapshot(old)?.weekXp).toEqual({ week: null, xp: 0 })
+  })
+  test('returns null for malformed input', async () => {
+    const { parseSnapshot } = await import('@/lib/progress/store')
+    expect(parseSnapshot(null)).toBeNull()
+    expect(parseSnapshot('x')).toBeNull()
+    expect(parseSnapshot({ ...emptySnapshot(T), xp: -1 })).toBeNull()
+    expect(parseSnapshot({ version: 2 })).toBeNull()
+  })
+})
