@@ -1,4 +1,4 @@
-/** Intro soundtrack: a 45-second piano clip, plus a synthesized sparkle for the shooting star. */
+/** Intro soundtrack: our own piano + celesta arrangement of Silent Night (public domain; see public/audio/README.md), plus a synthesized sparkle for the shooting star. */
 export const INTRO_MUSIC_SRC = '/audio/intro-silent-night.mp3'
 export const MUSIC_VOLUME = 0.7
 
