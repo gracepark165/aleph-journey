@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { fadeVolume, INTRO_MUSIC_SRC, MUSIC_VOLUME, playSparkle } from '@/lib/intro-audio'
+import { fadeVolume, INTRO_MUSIC_SRC, MUSIC_VOLUME } from '@/lib/intro-audio'
 import { APP_NAME } from '@/lib/version'
 import { Illustration } from './Illustration'
 
@@ -10,8 +10,6 @@ const STARS: [number, number, number][] = [
   [12, 6, 0], [28, 4, 0.8], [44, 10, 1.6], [58, 5, 0.4], [70, 14, 1.2], [92, 18, 2],
   [8, 20, 1.4], [36, 22, 0.2], [52, 26, 1.8], [82, 28, 0.6], [20, 32, 1], [64, 34, 2.2],
 ]
-/** Matches the shooting star's CSS animation-delay. */
-const METEOR_AT_MS = 2600
 
 export const INTRO_IMAGE = '/illustrations/zoe-night.webp'
 export const GENESIS_15_5 = 'הַבֶּט־נָא הַשָּׁמַיְמָה וּסְפֹר הַכּוֹכָבִים'
@@ -26,7 +24,6 @@ export function IntroScene({ onDone }: { onDone(): void }) {
   const [playing, setPlaying] = useState(false)
   const [withSound, setWithSound] = useState(false)
   const [muted, setMuted] = useState(false)
-  const mutedRef = useRef(false)
 
   useEffect(() => {
     const audio = audioRef.current
@@ -35,12 +32,6 @@ export function IntroScene({ onDone }: { onDone(): void }) {
       fadeVolume(audio, 0, 600).then(() => audio.pause())
     }
   }, [])
-
-  useEffect(() => {
-    if (!playing || !withSound) return
-    const t = setTimeout(() => { if (!mutedRef.current) playSparkle() }, METEOR_AT_MS)
-    return () => clearTimeout(t)
-  }, [playing, withSound])
 
   const start = (sound: boolean) => {
     setWithSound(sound)
@@ -53,7 +44,6 @@ export function IntroScene({ onDone }: { onDone(): void }) {
 
   const toggleMute = () => {
     const next = !muted
-    mutedRef.current = next
     setMuted(next)
     if (audioRef.current) audioRef.current.muted = next
   }

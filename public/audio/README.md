@@ -15,6 +15,3 @@ python3 scripts/music/silent_night.py /tmp/sn.mid
 fluidsynth -ni -q -g 0.7 -R 1 -r 44100 -F /tmp/sn.wav /usr/share/sounds/sf2/FluidR3_GM.sf2 /tmp/sn.mid
 ffmpeg -y -i /tmp/sn.wav -af "silenceremove=start_periods=1:start_threshold=-60dB,loudnorm=I=-20:TP=-2:LRA=11,afade=t=in:st=0:d=0.8,areverse,silenceremove=start_periods=1:start_threshold=-55dB,afade=t=in:st=0:d=3,areverse" -b:a 96k -map_metadata -1 public/audio/intro-silent-night.mp3
 ```
-
-## 별똥별 효과음
-파일 없이 Web Audio로 합성합니다 (`lib/intro-audio.ts`).

@@ -60,4 +60,13 @@ describe('IntroScene', () => {
     unmount()
     await vi.waitFor(() => expect(pause).toHaveBeenCalled())
   })
+  test('no synthesized sound effect plays with the shooting star', async () => {
+    const ctor = vi.fn()
+    ;(window as unknown as { AudioContext: unknown }).AudioContext = ctor
+    render(<IntroScene onDone={() => {}} />)
+    await tapToStart()
+    await new Promise(r => setTimeout(r, 2800))
+    expect(ctor).not.toHaveBeenCalled()
+    delete (window as unknown as { AudioContext?: unknown }).AudioContext
+  }, 10000)
 })
