@@ -4,7 +4,8 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import type { LessonType } from '@/lib/content/schema'
 import { INTRO_SEEN_KEY, parseUnlockParam, PROFILE_KEY, readFlag, readJson, REVIEW_MODE_KEY, writeFlag, writeJson } from '@/lib/prefs'
 import { AVATARS, cleanNickname, DEFAULT_PROFILE, type Profile } from '@/lib/profile'
-import { seoulDate } from './dates'
+import type { XpEvent } from '@/lib/cloud/outbox'
+import { isoWeek, seoulDate } from './dates'
 import { addLearned, recordReview } from './review'
 import { emptySnapshot, type ProgressSnapshot } from './snapshot'
 import { createLocalStore, STORAGE_KEY, type ProgressStore } from './store'
@@ -24,7 +25,13 @@ export type ProgressApi = {
   markIntroSeen(): void
   profile: Profile
   setProfile(p: Profile): void
+  /** Called on every progress commit from lessons/reviews (`ev` is null for reviews), never on replaceSnapshot. */
+  subscribe(listener: (s: ProgressSnapshot, ev: XpEvent | null) => void): () => void
+  /** Apply a merged snapshot (saved, listeners not called). */
+  replaceSnapshot(s: ProgressSnapshot): void
 }
+
+type Listener = (s: ProgressSnapshot, ev: XpEvent | null) => void
 
 function loadProfile(): Profile {
   const raw = readJson(PROFILE_KEY) as Partial<Profile> | null
@@ -45,6 +52,8 @@ export function ProgressProvider({ children, store, now = () => new Date() }: { 
   const [unlockAll, setUnlockAllState] = useState(false)
   const [introSeen, setIntroSeen] = useState(false)
   const [profile, setProfileState] = useState<Profile>(DEFAULT_PROFILE)
+
+  const listeners = useRef(new Set<Listener>())
 
   const commit = useCallback((next: ProgressSnapshot) => {
     current.current = next
@@ -84,13 +93,26 @@ export function ProgressProvider({ children, store, now = () => new Date() }: { 
     const t = nowRef.current()
     const day = seoulDate(t)
     setToday(day)
-    commit(addLearned(recordLessonComplete(latest(), lesson, result, day, t.toISOString()), learned, day))
+    const base = latest()
+    const next = addLearned(recordLessonComplete(base, lesson, result, day, t.toISOString()), learned, day)
+    commit(next)
+    const ev: XpEvent = { week: isoWeek(day), gained: next.xp - base.xp, streak: next.streak.current }
+    listeners.current.forEach(l => l(next, ev))
   }, [commit, latest])
 
   const reviewAnswered = useCallback<ProgressApi['reviewAnswered']>((lemmaId, correct) => {
     const day = seoulDate(nowRef.current())
-    commit(recordReview(latest(), lemmaId, correct, day))
+    const next = recordReview(latest(), lemmaId, correct, day)
+    commit(next)
+    listeners.current.forEach(l => l(next, null))
   }, [commit, latest])
+
+  const subscribe = useCallback<ProgressApi['subscribe']>(listener => {
+    listeners.current.add(listener)
+    return () => { listeners.current.delete(listener) }
+  }, [])
+
+  const replaceSnapshot = useCallback<ProgressApi['replaceSnapshot']>(s => commit(s), [commit])
 
   const setUnlockAll = useCallback((on: boolean) => {
     writeFlag(REVIEW_MODE_KEY, on)
@@ -108,8 +130,8 @@ export function ProgressProvider({ children, store, now = () => new Date() }: { 
   }, [])
 
   const api = useMemo(
-    () => ({ ready, snapshot, today, completeLesson, reviewAnswered, unlockAll, setUnlockAll, introSeen, markIntroSeen, profile, setProfile }),
-    [ready, snapshot, today, completeLesson, reviewAnswered, unlockAll, setUnlockAll, introSeen, markIntroSeen, profile, setProfile],
+    () => ({ ready, snapshot, today, completeLesson, reviewAnswered, unlockAll, setUnlockAll, introSeen, markIntroSeen, profile, setProfile, subscribe, replaceSnapshot }),
+    [ready, snapshot, today, completeLesson, reviewAnswered, unlockAll, setUnlockAll, introSeen, markIntroSeen, profile, setProfile, subscribe, replaceSnapshot],
   )
   return <ProgressContext.Provider value={api}>{children}</ProgressContext.Provider>
 }
