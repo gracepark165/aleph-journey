@@ -207,6 +207,75 @@ describe('CloudProvider', () => {
     }
   })
 
+  test('refreshLeaderboard after a startup failure (online) retries startup', async () => {
+    let fail = true
+    const api = fakeCloud({
+      ensureSession: async () => { if (fail) throw new Error('500'); return { id: 'me', isGuest: true } },
+      leaderboard: async () => [ROW],
+    })
+    let refresh!: () => Promise<void>
+    function Grab() { refresh = useCloud().refreshLeaderboard; return null }
+    renderWithCloud(<><Probe /><Grab /></>, api)
+    expect(await screen.findByText('board:error')).toBeInTheDocument()
+    fail = false
+    await act(async () => { await refresh() })
+    expect(await screen.findByText('status:ready')).toBeInTheDocument()
+    expect(screen.getByText('rows:룻')).toBeInTheDocument()
+  })
+
+  test('a failed profile update stays pending: retried on the next startup, not reverted', async () => {
+    const api = fakeCloud()
+    api.updateProfile.mockRejectedValueOnce(new Error('offline'))
+    const first = renderWithCloud(<Probe />, api)
+    await screen.findByText('status:ready')
+    act(() => screen.getByText('rename').click())
+    await waitFor(() => expect(api.updateProfile).toHaveBeenCalledTimes(1))
+    await new Promise(r => setTimeout(r, 10))
+    first.unmount()
+    // Next visit: the server still has the old profile ('순례자'/zoe).
+    renderWithCloud(<Probe />, api)
+    await screen.findByText('status:ready')
+    await waitFor(() => expect(api.updateProfile).toHaveBeenCalledTimes(2))
+    expect(api.updateProfile).toHaveBeenLastCalledWith({ nickname: '요나', avatarId: 'sailor' })
+    expect(screen.getByText('nick:요나')).toBeInTheDocument()
+  })
+
+  test('a failed profile update is retried on the next profile change', async () => {
+    const api = fakeCloud()
+    api.updateProfile.mockRejectedValueOnce(new Error('offline'))
+    let setProfile!: ReturnType<typeof useProgress>['setProfile']
+    function Grab() { setProfile = useProgress().setProfile; return null }
+    renderWithCloud(<><Probe /><Grab /></>, api)
+    await screen.findByText('status:ready')
+    act(() => setProfile({ nickname: '요나', avatarId: 'sailor' }))
+    await waitFor(() => expect(api.updateProfile).toHaveBeenCalledTimes(1))
+    await new Promise(r => setTimeout(r, 10))
+    act(() => setProfile({ nickname: '요나', avatarId: 'eli' }))
+    await waitFor(() => expect(api.updateProfile).toHaveBeenCalledTimes(2))
+    expect(api.updateProfile).toHaveBeenLastCalledWith({ nickname: '요나', avatarId: 'eli' })
+  })
+
+  test('a lesson completed while pullProgress is in flight survives the merge', async () => {
+    let complete!: () => void
+    function Grab() {
+      const p = useProgress()
+      complete = () => p.completeLesson({ id: 'r1', type: 'reading' }, { score: 100, perfect: true })
+      return null
+    }
+    const store = memoryStore()
+    const api = fakeCloud({
+      pullProgress: async () => {
+        complete() // commits before React re-renders, right as the pull resolves
+        return { ...emptySnapshot(TODAY), xp: 5 }
+      },
+    })
+    renderWithCloud(<><Probe /><Grab /></>, api, { store })
+    await screen.findByText('status:ready')
+    expect(screen.getByText('xp:15')).toBeInTheDocument()
+    expect(store.current().completed.r1).toBeDefined()
+    expect(api.pushProgress).toHaveBeenCalledWith(expect.objectContaining({ xp: 15 }))
+  })
+
   test('lookupCode wraps profileByCode', async () => {
     const hit = { userId: 'f1', nickname: '룻', avatarId: 'naomi', isMe: false }
     const api = fakeCloud({ profileByCode: async () => hit })

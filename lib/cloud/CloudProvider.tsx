@@ -4,6 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import type { Profile } from '@/lib/profile'
 import { isoWeek } from '@/lib/progress/dates'
 import { mergeSnapshots } from '@/lib/progress/merge'
+import { readFlag, writeFlag } from '@/lib/prefs'
 import { useProgress } from '@/lib/progress/ProgressProvider'
 import type { ProgressSnapshot } from '@/lib/progress/snapshot'
 import { parseSnapshot } from '@/lib/progress/store'
@@ -47,6 +48,9 @@ const OFF: CloudContextValue = {
 
 const CloudContext = createContext<CloudContextValue>(OFF)
 
+/** Set while a local profile edit has not reached the server; the next startup pushes it instead of taking the server's. */
+export const PROFILE_DIRTY_KEY = 'aleph-journey:profile-dirty'
+
 const isOffline = () => typeof navigator !== 'undefined' && navigator.onLine === false
 const sameProfile = (a: Profile | null, b: Profile | null) =>
   !!a && !!b && a.nickname === b.nickname && a.avatarId === b.avatarId
@@ -83,6 +87,8 @@ export function CloudProvider({
   const started = useRef(false)
   /** Profile as the server last returned it; a local profile equal to it is not pushed back. */
   const serverProfile = useRef<Profile | null>(null)
+  /** Profile currently being sent with updateProfile, so re-renders don't resend it. */
+  const profileInFlight = useRef<Profile | null>(null)
   const lastSnap = useRef<ProgressSnapshot | null>(null)
   const pushPending = useRef(false)
   const pushTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -102,11 +108,6 @@ export function CloudProvider({
       throw e
     }
   }, [])
-
-  const refreshLeaderboard = useCallback(async () => {
-    if (!api || !started.current) return
-    try { await loadLeaderboard(api) } catch (e) { console.warn('leaderboard failed', e) }
-  }, [api, loadLeaderboard])
 
   const pushNow = useCallback(async (a: CloudApi) => {
     const s = lastSnap.current ?? progressRef.current.snapshot
@@ -139,14 +140,17 @@ export function CloudProvider({
       const server = { nickname: cp.nickname, avatarId: cp.avatarId }
       serverProfile.current = server
       setCloudProfile(cp)
-      if (!sameProfile(progressRef.current.profile, server)) progressRef.current.setProfile(server)
+      // Server wins, unless a local edit never reached it: then the profile effect pushes the local one.
+      const keepLocal = readFlag(PROFILE_DIRTY_KEY)
+      if (!keepLocal && !sameProfile(progressRef.current.profile, server)) progressRef.current.setProfile(server)
 
       const remote = parseSnapshot(await a.pullProgress())
-      let merged = progressRef.current.snapshot
-      if (remote) {
-        merged = mergeSnapshots(merged, remote)
-        progressRef.current.replaceSnapshot(merged)
-      }
+      // A lesson committed while the pull was in flight is in lastSnap (set synchronously by the
+      // listener) before progressRef catches up; merging both keeps whichever is newer.
+      const rendered = progressRef.current.snapshot
+      let merged = lastSnap.current ? mergeSnapshots(rendered, lastSnap.current) : rendered
+      if (remote) merged = mergeSnapshots(merged, remote)
+      if (merged !== rendered) progressRef.current.replaceSnapshot(merged)
       lastSnap.current = merged
       await a.pushProgress(merged)
       await flush(sender(a))
@@ -165,6 +169,13 @@ export function CloudProvider({
       running.current = false
     }
   }, [loadLeaderboard, schedulePush])
+
+  /** Before startup has succeeded (e.g. the user taps "다시 시도" after an error), this retries the whole startup. */
+  const refreshLeaderboard = useCallback(async () => {
+    if (!api) return
+    if (!started.current) { await start(api); return }
+    try { await loadLeaderboard(api) } catch (e) { console.warn('leaderboard failed', e) }
+  }, [api, loadLeaderboard, start])
 
   // Startup once progress is loaded; retry when the browser comes back online.
   useEffect(() => {
@@ -193,15 +204,24 @@ export function CloudProvider({
   // Local profile edits go to the server; the server→local overwrite is equal to serverProfile and is skipped.
   useEffect(() => {
     if (!api || status !== 'ready' || !serverProfile.current) return
-    if (sameProfile(localProfile, serverProfile.current)) return
+    if (sameProfile(localProfile, serverProfile.current)) { writeFlag(PROFILE_DIRTY_KEY, false); return }
+    if (sameProfile(localProfile, profileInFlight.current)) return
     const sent = { nickname: localProfile.nickname, avatarId: localProfile.avatarId }
-    serverProfile.current = sent
+    profileInFlight.current = sent
+    writeFlag(PROFILE_DIRTY_KEY, true)
     api.updateProfile(sent).then(cp => {
+      if (sameProfile(profileInFlight.current, sent)) profileInFlight.current = null
       const server = { nickname: cp.nickname, avatarId: cp.avatarId }
       serverProfile.current = server
       setCloudProfile(cp)
-      if (!sameProfile(progressRef.current.profile, server)) setProfile(server)
+      // Apply the server's version (e.g. a cleaned nickname) only if the user hasn't edited again meanwhile.
+      if (sameProfile(progressRef.current.profile, sent)) {
+        writeFlag(PROFILE_DIRTY_KEY, false)
+        if (!sameProfile(sent, server)) setProfile(server)
+      }
     }, e => {
+      // Not synced: serverProfile is untouched and the dirty flag stays, so the next change or startup retries.
+      if (sameProfile(profileInFlight.current, sent)) profileInFlight.current = null
       console.warn('profile update failed', e)
     })
   }, [api, status, localProfile, setProfile])
@@ -209,6 +229,7 @@ export function CloudProvider({
   const reset = useCallback(() => {
     started.current = false
     serverProfile.current = null
+    profileInFlight.current = null
     setUser(null)
     setCloudProfile(null)
     setRows([])
