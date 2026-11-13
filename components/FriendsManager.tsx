@@ -8,8 +8,8 @@ import { avatarById } from '@/lib/profile'
 import { Illustration } from './Illustration'
 import { InviteButton } from './InviteButton'
 
-// ALEF-DEMO is the fake backend's demo friend (its "O" is outside the real charset).
-const CODE_RE = /^(ALEF-[A-HJ-NP-Z2-9]{4}|ALEF-DEMO)$/
+// Lenient shape check only; the server is the authority on the code charset.
+const CODE_RE = /^ALEF-[A-Z0-9]{4}$/
 
 function normalise(raw: string): string {
   const s = raw.trim().toUpperCase()

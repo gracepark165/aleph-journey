@@ -12,7 +12,8 @@ export default defineConfig({
       NEXT_PUBLIC_SUPABASE_URL: 'http://fake.local',
       NEXT_PUBLIC_SUPABASE_ANON_KEY: 'fake',
     },
-    reuseExistingServer: !process.env.CI,
+    // Never reuse: a server started without the fake-cloud env would silently hide the friends UI.
+    reuseExistingServer: false,
     timeout: 240_000,
   },
   projects: [

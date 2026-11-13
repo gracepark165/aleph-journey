@@ -79,15 +79,36 @@ describe('FriendsManager', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent(msg)
   })
 
-  test('invalid input is rejected locally without calling the server', async () => {
+  test.each(['ALEFK7Q2', 'k7q', '가나다라'])('malformed input %s is rejected locally without calling the server', async (text) => {
     const user = userEvent.setup()
     const api = fakeCloud({ leaderboard: async () => ROWS })
+    renderWithCloud(<FriendsManager />, api)
+    await screen.findByText('룻')
+    await user.type(input(), text)
+    await user.click(screen.getByRole('button', { name: '추가' }))
+    expect(await screen.findByRole('alert')).toHaveTextContent('초대 코드를 찾을 수 없어요')
+    expect(api.addFriend).not.toHaveBeenCalled()
+  })
+
+  test('well-formed code with charset-invalid characters goes to the server, which says not_found', async () => {
+    const user = userEvent.setup()
+    const api = fakeCloud({ leaderboard: async () => ROWS, addFriend: async () => { throw new CloudError('not_found') } })
     renderWithCloud(<FriendsManager />, api)
     await screen.findByText('룻')
     await user.type(input(), 'K0O1')
     await user.click(screen.getByRole('button', { name: '추가' }))
     expect(await screen.findByRole('alert')).toHaveTextContent('초대 코드를 찾을 수 없어요')
-    expect(api.addFriend).not.toHaveBeenCalled()
+    expect(api.addFriend).toHaveBeenCalledWith('ALEF-K0O1')
+  })
+
+  test('demo is normalised to ALEF-DEMO', async () => {
+    const user = userEvent.setup()
+    const api = fakeCloud({ leaderboard: async () => ROWS })
+    renderWithCloud(<FriendsManager />, api)
+    await screen.findByText('룻')
+    await user.type(input(), 'demo')
+    await user.click(screen.getByRole('button', { name: '추가' }))
+    expect(api.addFriend).toHaveBeenCalledWith('ALEF-DEMO')
   })
 
   test('add button is disabled while a request is in flight', async () => {
