@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { LessonType } from '@/lib/content/schema'
+import { INTRO_SEEN_KEY, parseUnlockParam, readFlag, REVIEW_MODE_KEY, writeFlag } from '@/lib/prefs'
 import { seoulDate } from './dates'
 import { addLearned, recordReview } from './review'
 import { emptySnapshot, type ProgressSnapshot } from './snapshot'
@@ -14,6 +15,12 @@ export type ProgressApi = {
   today: string
   completeLesson(lesson: { id: string; type: LessonType }, result: { score: number; perfect: boolean }, learnedLemmaIds?: string[]): void
   reviewAnswered(lemmaId: string, correct: boolean): void
+  /** Review mode: every lesson open (?unlock=all). */
+  unlockAll: boolean
+  setUnlockAll(on: boolean): void
+  /** Whether this browser has finished the intro; false until `ready`. */
+  introSeen: boolean
+  markIntroSeen(): void
 }
 
 const ProgressContext = createContext<ProgressApi | null>(null)
@@ -25,6 +32,8 @@ export function ProgressProvider({ children, store, now = () => new Date() }: { 
   const [snapshot, setSnapshot] = useState<ProgressSnapshot>(() => emptySnapshot(today))
   const current = useRef(snapshot)
   const [ready, setReady] = useState(false)
+  const [unlockAll, setUnlockAllState] = useState(false)
+  const [introSeen, setIntroSeen] = useState(false)
 
   const commit = useCallback((next: ProgressSnapshot) => {
     current.current = next
@@ -39,6 +48,10 @@ export function ProgressProvider({ children, store, now = () => new Date() }: { 
     const day = seoulDate(nowRef.current())
     setToday(day)
     commit(startOfDay(storeRef.current.load(day), day))
+    const param = parseUnlockParam(window.location.search)
+    if (param) writeFlag(REVIEW_MODE_KEY, param === 'on')
+    setUnlockAllState(param ? param === 'on' : readFlag(REVIEW_MODE_KEY))
+    setIntroSeen(readFlag(INTRO_SEEN_KEY))
     setReady(true)
   }, [commit])
 
@@ -67,7 +80,20 @@ export function ProgressProvider({ children, store, now = () => new Date() }: { 
     commit(recordReview(latest(), lemmaId, correct, day))
   }, [commit, latest])
 
-  const api = useMemo(() => ({ ready, snapshot, today, completeLesson, reviewAnswered }), [ready, snapshot, today, completeLesson, reviewAnswered])
+  const setUnlockAll = useCallback((on: boolean) => {
+    writeFlag(REVIEW_MODE_KEY, on)
+    setUnlockAllState(on)
+  }, [])
+
+  const markIntroSeen = useCallback(() => {
+    writeFlag(INTRO_SEEN_KEY, true)
+    setIntroSeen(true)
+  }, [])
+
+  const api = useMemo(
+    () => ({ ready, snapshot, today, completeLesson, reviewAnswered, unlockAll, setUnlockAll, introSeen, markIntroSeen }),
+    [ready, snapshot, today, completeLesson, reviewAnswered, unlockAll, setUnlockAll, introSeen, markIntroSeen],
+  )
   return <ProgressContext.Provider value={api}>{children}</ProgressContext.Provider>
 }
 

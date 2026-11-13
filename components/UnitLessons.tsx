@@ -8,12 +8,12 @@ import { isLessonUnlocked } from '@/lib/progress/unlock'
 const TYPE_LABEL: Record<LessonType, string> = { reading: '본문 읽기', quiz: '연습 퀴즈', roleplay: '롤플레이 미션' }
 
 export function UnitLessons({ course, lessons }: { course: Course; lessons: { id: string; type: LessonType; titleKo: string }[] }) {
-  const { snapshot } = useProgress()
+  const { snapshot, unlockAll } = useProgress()
   return (
     <ol className="lesson-list">
       {lessons.map(l => {
         const done = snapshot.completed[l.id]
-        const open = isLessonUnlocked(course, l.id, snapshot.completed)
+        const open = isLessonUnlocked(course, l.id, snapshot.completed, { all: unlockAll })
         const body = (
           <>
             <span className="lesson-type">{TYPE_LABEL[l.type]}</span>

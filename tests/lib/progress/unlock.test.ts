@@ -22,4 +22,9 @@ describe('unlock', () => {
     expect(isLessonUnlocked(course, 'nope', {})).toBe(false)
     expect(isUnitUnlocked(course, 'nope', {})).toBe(false)
   })
+  test('review mode opens every known lesson but not unknown ids', () => {
+    expect(isLessonUnlocked(course, 'jonah-roleplay', {}, { all: true })).toBe(true)
+    expect(isUnitUnlocked(course, 'unit-10-jonah', {}, { all: true })).toBe(true)
+    expect(isLessonUnlocked(course, 'nope', {}, { all: true })).toBe(false)
+  })
 })

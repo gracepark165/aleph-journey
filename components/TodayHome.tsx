@@ -7,11 +7,12 @@ import { dueReviews } from '@/lib/progress/review'
 import { nextLesson, zoeMessage } from '@/lib/zoe'
 import { Illustration } from './Illustration'
 import { ZoeSays } from './Zoe'
+import { IntroScene } from './IntroScene'
 
 const TYPE_LABEL: Record<LessonType, string> = { reading: '본문 읽기', quiz: '연습 퀴즈', roleplay: '롤플레이 미션' }
 
 export function TodayHome({ course, lessons }: { course: Course; lessons: { id: string; type: LessonType; titleKo: string }[] }) {
-  const { snapshot, today, ready } = useProgress()
+  const { snapshot, today, ready, introSeen, markIntroSeen } = useProgress()
   const titles = Object.fromEntries(lessons.map(l => [l.id, l.titleKo]))
   const next = nextLesson(course, snapshot.completed)
   const unit = next ? course.units.find(u => u.id === next.unitId) : undefined
@@ -21,6 +22,7 @@ export function TodayHome({ course, lessons }: { course: Course; lessons: { id: 
 
   return (
     <div className="today">
+      {ready && !introSeen && <IntroScene onDone={markIntroSeen} />}
       <h1 className="hello">샬롬! <span aria-hidden="true">👋</span></h1>
       {ready ? <ZoeSays size="lg">{zoeMessage(course, snapshot, today, titles)}</ZoeSays> : <div className="zoe-placeholder" />}
 
@@ -50,6 +52,8 @@ export function TodayHome({ course, lessons }: { course: Course; lessons: { id: 
           <span className="muted">지금 복습하기 →</span>
         </Link>
       )}
+
+      {ready && <Link href="/intro" className="replay-intro">✨ 인트로 다시 보기</Link>}
     </div>
   )
 }

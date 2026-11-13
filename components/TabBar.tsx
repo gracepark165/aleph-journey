@@ -13,7 +13,7 @@ const TABS = [
 
 export function TabBar() {
   const pathname = usePathname() ?? '/'
-  if (pathname.startsWith('/lesson/')) return null
+  if (pathname.startsWith('/lesson/') || pathname === '/intro') return null
   return (
     <nav className="tabbar" aria-label="주요 메뉴">
       {TABS.map(t => (

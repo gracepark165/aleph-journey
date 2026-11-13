@@ -7,13 +7,13 @@ import { isUnitUnlocked } from '@/lib/progress/unlock'
 import { Illustration } from './Illustration'
 
 export function JourneyMap({ course }: { course: Course }) {
-  const { snapshot } = useProgress()
+  const { snapshot, unlockAll } = useProgress()
   return (
     <ol className="journey">
       {course.units.map((unit, i) => {
         const done = unit.lessonIds.filter(id => snapshot.completed[id]).length
         const total = unit.lessonIds.length
-        const open = isUnitUnlocked(course, unit.id, snapshot.completed)
+        const open = isUnitUnlocked(course, unit.id, snapshot.completed, { all: unlockAll })
         const body = (
           <>
             <span className="journey-step" aria-hidden="true">{done === total ? '✓' : i}</span>

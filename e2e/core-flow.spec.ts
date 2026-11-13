@@ -1,5 +1,35 @@
 import { expect, test } from '@playwright/test'
-import { playThrough } from './helpers'
+import { introSeen, playThrough } from './helpers'
+
+test.describe('first visit', () => {
+  test('intro plays once: shooting star, Genesis 15:5, then home', async ({ page }) => {
+    await page.goto('/')
+    const intro = page.getByRole('dialog', { name: '인트로' })
+    await expect(intro).toBeVisible()
+    await expect(intro.getByText('הַבֶּט־נָא הַשָּׁמַיְמָה וּסְפֹר הַכּוֹכָבִים')).toBeVisible()
+    await intro.getByRole('button', { name: '여정 시작하기' }).click()
+    await expect(intro).toHaveCount(0)
+    await expect(page.getByText(/저는 조에예요/)).toBeVisible()
+    await page.reload()
+    await expect(page.getByText(/저는 조에예요/)).toBeVisible()
+    await expect(page.getByRole('dialog', { name: '인트로' })).toHaveCount(0)
+  })
+})
+
+test.describe('returning visitor', () => {
+test.beforeEach(async ({ page }) => { await introSeen(page) })
+
+test('review mode (?unlock=all) opens every lesson until turned off', async ({ page }) => {
+  await page.goto('/journey?unlock=all')
+  await expect(page.getByText('검토 모드 · 모든 레슨 열림')).toBeVisible()
+  await page.getByRole('link', { name: /폭풍 속의 요나/ }).click()
+  await page.getByRole('link', { name: /미션: 선원들에게/ }).click()
+  await expect(page.getByLabel('남은 등불 3개')).toBeVisible()
+  await page.goto('/journey')
+  await page.getByRole('button', { name: '끄기' }).click()
+  await expect(page.getByRole('link', { name: /폭풍 속의 요나/ })).toHaveCount(0)
+})
+
 
 test('home: Zoe greets a new learner and starts the first lesson', async ({ page }) => {
   await page.goto('/')
@@ -48,4 +78,5 @@ test('attribution footer on every page', async ({ page }) => {
     await page.goto(path)
     await expect(page.locator('footer')).toContainText('Open Scriptures Hebrew Bible (CC BY 4.0)')
   }
+})
 })

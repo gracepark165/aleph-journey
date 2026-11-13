@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import Link from 'next/link'
 import { HeaderStats } from '@/components/HeaderStats'
 import { TabBar } from '@/components/TabBar'
+import { ReviewModeBanner } from '@/components/ReviewModeBanner'
 import { ProgressProvider } from '@/lib/progress/ProgressProvider'
 import { APP_NAME } from '@/lib/version'
 import './globals.css'
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <HeaderStats />
             </div>
           </header>
+          <ReviewModeBanner />
           <main className="wrap">{children}</main>
           <footer className="wrap site-footer">
             본문: Westminster Leningrad Codex (퍼블릭 도메인) · 형태소 정보: Open Scriptures Hebrew Bible (CC BY 4.0) · 사전 원형: Strong&apos;s Hebrew Dictionary, Open Scriptures (CC BY-SA)

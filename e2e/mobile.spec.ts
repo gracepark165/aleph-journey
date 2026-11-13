@@ -7,6 +7,7 @@ async function noHorizontalScroll(page: Page) {
 }
 
 test('pages fit a 390px screen and Hebrew is RTL', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('aleph-journey:intro-seen', '1'))
   // Unlock everything by seeding completed lessons.
   await page.addInitScript(() => {
     const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul' }).format(new Date())
@@ -18,7 +19,7 @@ test('pages fit a 390px screen and Hebrew is RTL', async ({ page }) => {
       today: { date: today, lessonsCompleted: 0 }, reviews: {},
     }))
   })
-  for (const path of ['/', '/journey', '/unit/unit-1-rebekah', '/lesson/alef-bet-1', '/lesson/rebekah-reading', '/lesson/rebekah-quiz', '/lesson/rebekah-roleplay', '/vocab']) {
+  for (const path of ['/', '/journey', '/intro', '/unit/unit-1-rebekah', '/lesson/alef-bet-1', '/lesson/rebekah-reading', '/lesson/rebekah-quiz', '/lesson/rebekah-roleplay', '/vocab']) {
     await page.goto(path)
     await page.waitForLoadState('networkidle')
     await noHorizontalScroll(page)

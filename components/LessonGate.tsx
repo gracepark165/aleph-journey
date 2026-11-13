@@ -7,9 +7,9 @@ import { useProgress } from '@/lib/progress/ProgressProvider'
 import { isLessonUnlocked } from '@/lib/progress/unlock'
 
 export function LessonGate({ course, lessonId, unitId, children }: { course: Course; lessonId: string; unitId: string; children: ReactNode }) {
-  const { ready, snapshot } = useProgress()
+  const { ready, snapshot, unlockAll } = useProgress()
   const router = useRouter()
-  const open = ready && isLessonUnlocked(course, lessonId, snapshot.completed)
+  const open = ready && isLessonUnlocked(course, lessonId, snapshot.completed, { all: unlockAll })
 
   useEffect(() => {
     if (ready && !open) router.replace(`/unit/${unitId}`)

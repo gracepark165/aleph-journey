@@ -1,5 +1,10 @@
 import { expect, type Page } from '@playwright/test'
 
+/** Returning visitor: skip the first-visit intro. */
+export async function introSeen(page: Page) {
+  await page.addInitScript(() => localStorage.setItem('aleph-journey:intro-seen', '1'))
+}
+
 export const btn = (page: Page, name: string) => page.getByRole('button', { name, exact: true })
 
 export async function answerChoices(page: Page, answers: string[]) {

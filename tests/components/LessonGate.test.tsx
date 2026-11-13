@@ -5,6 +5,7 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ replace, push: vi.fn() }
 import { LessonGate } from '@/components/LessonGate'
 import { readCourse } from '@/lib/content/read-files'
 import { renderWithProgress } from '../utils/progress'
+import { REVIEW_MODE_KEY } from '@/lib/prefs'
 
 const course = readCourse()
 
@@ -17,6 +18,12 @@ describe('LessonGate', () => {
   })
   test('open lesson renders children', async () => {
     renderWithProgress(<LessonGate course={course} lessonId="alef-bet-1" unitId="unit-0-alefbet"><p>secret</p></LessonGate>)
+    expect(await screen.findByText('secret')).toBeInTheDocument()
+    expect(replace).not.toHaveBeenCalled()
+  })
+  test('review mode opens a locked lesson', async () => {
+    localStorage.setItem(REVIEW_MODE_KEY, '1')
+    renderWithProgress(<LessonGate course={course} lessonId="jonah-roleplay" unitId="unit-10-jonah"><p>secret</p></LessonGate>)
     expect(await screen.findByText('secret')).toBeInTheDocument()
     expect(replace).not.toHaveBeenCalled()
   })
