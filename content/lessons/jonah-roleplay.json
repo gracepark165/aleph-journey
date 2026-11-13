@@ -5,7 +5,8 @@
   "setupKo": "당신은 요나입니다. 다시스로 가는 배에 탔는데, 큰 폭풍이 몰아칩니다. 선원들이 당신을 흔들어 깨워요.",
   "character": {
     "nameKo": "선원들",
-    "nameHe": "מַלָּחִים"
+    "nameHe": "מַלָּחִים",
+    "avatarSrc": "/illustrations/sailor-face.webp"
   },
   "startNodeId": "intro",
   "nodes": {

@@ -5,7 +5,8 @@
   "setupKo": "당신은 요셉입니다. 아버지의 심부름으로 형들을 찾아 세겜 들판을 헤매고 있어요.",
   "character": {
     "nameKo": "들판의 사람",
-    "nameHe": "אִישׁ"
+    "nameHe": "אִישׁ",
+    "avatarSrc": "/illustrations/fieldman-face.webp"
   },
   "startNodeId": "intro",
   "nodes": {

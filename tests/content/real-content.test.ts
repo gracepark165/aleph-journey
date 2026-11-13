@@ -23,7 +23,11 @@ describe('shipped content', () => {
   })
   test('every roleplay character with an avatar and every illustrated unit has its picture', () => {
     const withImage = course.units.filter(u => u.imageSrc).map(u => u.id)
-    expect(withImage).toEqual(['unit-1-rebekah', 'unit-2-jacob', 'unit-4-ruth', 'unit-5-boaz', 'unit-6-samuel', 'unit-7-david'])
+    expect(withImage).toEqual(course.units.slice(1).map(u => u.id))
+    for (const id of course.units.slice(1).flatMap(u => u.lessonIds).filter(id => id.endsWith('-roleplay'))) {
+      const rp = lessons.find(l => l.id === id)
+      expect(rp?.type === 'roleplay' && rp.character.avatarSrc, id).toBeTruthy()
+    }
   })
   test('roleplay has a choice node that branches on two correct options', () => {
     const rp = lessons.find(l => l.id === 'rebekah-roleplay')

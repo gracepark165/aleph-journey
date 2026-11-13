@@ -5,7 +5,8 @@
   "setupKo": "호세아 시대, 하나님을 떠난 이스라엘은 상처투성이가 되었어요. 당신의 이웃이 다가와 말을 겁니다.",
   "character": {
     "nameKo": "이웃",
-    "nameHe": "שָׁכֵן"
+    "nameHe": "שָׁכֵן",
+    "avatarSrc": "/illustrations/neighbor-face.webp"
   },
   "startNodeId": "intro",
   "nodes": {

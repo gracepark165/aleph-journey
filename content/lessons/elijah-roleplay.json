@@ -5,7 +5,8 @@
   "setupKo": "당신은 선지자 엘리야입니다. 가뭄 속에 사르밧 성문에 이르니, 한 과부가 나뭇가지를 줍고 있어요.",
   "character": {
     "nameKo": "과부",
-    "nameHe": "אַלְמָנָה"
+    "nameHe": "אַלְמָנָה",
+    "avatarSrc": "/illustrations/widow-face.webp"
   },
   "startNodeId": "intro",
   "nodes": {

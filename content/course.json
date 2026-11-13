@@ -45,7 +45,9 @@
         "joseph-reading",
         "joseph-quiz",
         "joseph-roleplay"
-      ]
+      ],
+      "imageSrc": "/illustrations/joseph-field.webp",
+      "imageAltKo": "들판에서 요셉에게 길을 가리키는 사람"
     },
     {
       "id": "unit-4-ruth",
@@ -108,7 +110,9 @@
         "elijah-reading",
         "elijah-quiz",
         "elijah-roleplay"
-      ]
+      ],
+      "imageSrc": "/illustrations/elijah-widow.webp",
+      "imageAltKo": "그릇을 든 과부에게 손을 내미는 엘리야"
     },
     {
       "id": "unit-9-hosea",
@@ -119,7 +123,9 @@
         "hosea-reading",
         "hosea-quiz",
         "hosea-roleplay"
-      ]
+      ],
+      "imageSrc": "/illustrations/hosea-return.webp",
+      "imageAltKo": "금송아지를 뒤로하고 기도하는 이스라엘 백성"
     },
     {
       "id": "unit-10-jonah",
@@ -130,7 +136,9 @@
         "jonah-reading",
         "jonah-quiz",
         "jonah-roleplay"
-      ]
+      ],
+      "imageSrc": "/illustrations/jonah-storm.webp",
+      "imageAltKo": "폭풍 속 배 위에서 선원들에게 둘러싸인 요나"
     }
   ]
 }
