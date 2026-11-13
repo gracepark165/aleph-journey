@@ -1,12 +1,23 @@
 import type { Profile } from '@/lib/profile'
 import type { ProgressSnapshot } from '@/lib/progress/snapshot'
-import { isoWeek, seoulDate } from '@/lib/progress/dates'
+import { addDays, isoWeek, seoulDate } from '@/lib/progress/dates'
 import { CloudError, type CloudApi, type CloudProfile, type FriendSummary, type LeaderboardRow } from './types'
 
 const KEY = 'aleph.fakeCloud.v1'
 const MY_CODE = 'ALEF-ME22'
 const DEMO = { userId: 'demo-friend', code: 'ALEF-DEMO', nickname: '다윗', avatarId: 'saul', totalXp: 1500, weekXp: 120, streak: 6 }
 const MAX_GAIN = 30
+const MAX_WEEK_XP = 2100
+
+/** ISO week label before the given one, e.g. '2026-W01' -> '2025-W52'. */
+function previousWeek(week: string): string {
+  const [y, w] = week.split('-W').map(Number)
+  const jan4 = `${y}-01-04`
+  const weekday = new Date(`${jan4}T00:00:00Z`).getUTCDay() || 7
+  return isoWeek(addDays(jan4, 1 - weekday + (w - 1) * 7 - 7))
+}
+const byRank = (a: { weekXp: number; streak: number; nickname: string }, b: typeof a) =>
+  b.weekXp - a.weekXp || b.streak - a.streak || a.nickname.localeCompare(b.nickname)
 
 type State = {
   signedIn: boolean
@@ -49,25 +60,31 @@ export function createFakeCloudApi(storage: Storage = window.localStorage): Clou
     async pullProgress() { return read().progress },
     async pushProgress(snapshot) { update(st => { st.progress = snapshot }) },
     async recordXp(week, gained, streak) {
-      if (gained < 0 || gained > MAX_GAIN) throw new CloudError('unknown', 'invalid_gained')
-      update(st => { st.xp[week] = (st.xp[week] ?? 0) + gained; st.streak = streak })
+      if (!Number.isInteger(gained) || gained < 1 || gained > MAX_GAIN) throw new CloudError('unknown', 'invalid_gained')
+      update(st => { st.xp[week] = Math.min((st.xp[week] ?? 0) + gained, MAX_WEEK_XP); st.streak = streak })
     },
     async leaderboard(week) {
       const s = read()
       const mine = requireProfile(s)
-      const myWeek = s.xp[week] ?? 0
-      const rows: Omit<LeaderboardRow, 'crown'>[] = [{
-        userId: 'fake-me', nickname: mine.nickname, avatarId: mine.avatarId,
-        totalXp: Object.values(s.xp).reduce((a, b) => a + b, 0), weekXp: myWeek, streak: s.streak, isMe: true,
-      }]
-      if (s.friends.includes(DEMO.userId)) {
-        rows.push({
-          userId: DEMO.userId, nickname: DEMO.nickname, avatarId: DEMO.avatarId, totalXp: DEMO.totalXp,
-          weekXp: week === currentWeek() ? DEMO.weekXp : 0, streak: DEMO.streak, isMe: false,
-        })
+      const hasDemo = s.friends.includes(DEMO.userId)
+      const demoXp = (w: string) => (w === currentWeek() ? DEMO.weekXp : 0)
+      const build = (w: string) => {
+        const rows: Omit<LeaderboardRow, 'crown'>[] = [{
+          userId: 'fake-me', nickname: mine.nickname, avatarId: mine.avatarId,
+          totalXp: Object.values(s.xp).reduce((x, y) => x + y, 0), weekXp: s.xp[w] ?? 0, streak: s.streak, isMe: true,
+        }]
+        if (hasDemo) {
+          rows.push({
+            userId: DEMO.userId, nickname: DEMO.nickname, avatarId: DEMO.avatarId, totalXp: DEMO.totalXp,
+            weekXp: demoXp(w), streak: DEMO.streak, isMe: false,
+          })
+        }
+        return rows.sort(byRank)
       }
-      rows.sort((a, b) => b.weekXp - a.weekXp || b.totalXp - a.totalXp)
-      return rows.map((r, i) => ({ ...r, crown: i === 0 && r.weekXp > 0 }))
+      // Crown: #1 of the previous ISO week, only if they earned XP then.
+      const last = build(previousWeek(week))[0]
+      const crownId = last.weekXp > 0 ? last.userId : null
+      return build(week).map(r => ({ ...r, crown: r.userId === crownId }))
     },
     async profileByCode(code) {
       const c = code.trim().toUpperCase()

@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import { createFakeCloudApi } from '@/lib/cloud/fake-api'
 import { CloudError } from '@/lib/cloud/types'
-import { isoWeek, seoulDate } from '@/lib/progress/dates'
+import { addDays, isoWeek, seoulDate } from '@/lib/progress/dates'
 
 const WEEK = isoWeek(seoulDate(new Date()))
+const LAST_WEEK = isoWeek(addDays(seoulDate(new Date()), -7))
 const me = { nickname: '나', avatarId: 'zoe' }
 
 async function setup() {
@@ -51,5 +52,44 @@ describe('fake cloud api', () => {
     expect(await api.leaderboard(WEEK)).toHaveLength(1)
     await api.deleteAccount()
     expect(window.localStorage.length).toBe(0)
+  })
+
+  it('rejects gained 0 and non-integers, and caps the week at 2100', async () => {
+    const { api } = await setup()
+    expect(await codeOf(api.recordXp(WEEK, 0, 1))).toBe('unknown')
+    expect(await codeOf(api.recordXp(WEEK, 1.5, 1))).toBe('unknown')
+    for (let i = 0; i < 71; i++) await api.recordXp(WEEK, 30, 1)
+    expect((await api.leaderboard(WEEK))[0].weekXp).toBe(2100)
+  })
+
+  it('breaks weekXp ties by streak, then nickname', async () => {
+    const api = createFakeCloudApi(window.localStorage)
+    await api.ensureSession()
+    await api.ensureProfile({ nickname: '가', avatarId: 'zoe' })
+    await api.addFriend('ALEF-DEMO')
+    await api.recordXp(WEEK, 30, 1)
+    await api.recordXp(WEEK, 30, 1)
+    await api.recordXp(WEEK, 30, 1)
+    await api.recordXp(WEEK, 30, 1) // 120 xp, streak 1 vs demo streak 6
+    expect((await api.leaderboard(WEEK)).map(r => r.nickname)).toEqual(['다윗', '가'])
+  })
+
+  it('orders by nickname when xp and streak tie', async () => {
+    const api = createFakeCloudApi(window.localStorage)
+    await api.ensureSession()
+    await api.ensureProfile({ nickname: '가', avatarId: 'zoe' })
+    await api.addFriend('ALEF-DEMO')
+    for (let i = 0; i < 4; i++) await api.recordXp(WEEK, 30, 6) // 120, streak 6
+    expect((await api.leaderboard(WEEK)).map(r => r.nickname)).toEqual(['가', '다윗'])
+  })
+
+  it('crowns only last week\'s winner with xp', async () => {
+    const { api } = await setup()
+    await api.addFriend('ALEF-DEMO')
+    expect((await api.leaderboard(WEEK)).some(r => r.crown)).toBe(false)
+    await api.recordXp(LAST_WEEK, 30, 1)
+    const rows = await api.leaderboard(WEEK)
+    expect(rows.find(r => r.isMe)!.crown).toBe(true)
+    expect(rows.find(r => !r.isMe)!.crown).toBe(false)
   })
 })
