@@ -9,6 +9,7 @@ import { Illustration } from './Illustration'
 import { ZoeSays } from './Zoe'
 import { IntroScene } from './IntroScene'
 import { ProfileCard } from './ProfileCard'
+import { LeaderboardCard } from './LeaderboardCard'
 
 const TYPE_LABEL: Record<LessonType, string> = { reading: '본문 읽기', quiz: '연습 퀴즈', roleplay: '롤플레이 미션' }
 
@@ -26,6 +27,7 @@ export function TodayHome({ course, lessons }: { course: Course; lessons: { id: 
       {ready && !introSeen && <IntroScene onDone={markIntroSeen} />}
       <h1 className="hello">샬롬{ready ? `, ${profile.nickname}` : ''}! <span aria-hidden="true">👋</span></h1>
       <ProfileCard />
+      <LeaderboardCard />
       {ready ? <ZoeSays>{zoeMessage(course, snapshot, today, titles)}</ZoeSays> : <div className="zoe-placeholder" />}
 
       {ready && next && unit && lesson && (

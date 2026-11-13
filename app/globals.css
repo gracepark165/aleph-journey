@@ -395,3 +395,21 @@ main.wrap { padding-block: 8px 40px; min-height: 60vh; }
 .avatar-option.selected { border-color: var(--accent); background: var(--surface); }
 .avatar-option:has(input:focus-visible) { outline: 2px solid var(--terracotta); }
 .avatar-option-img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; background: var(--surface-2); }
+
+/* Weekly friends leaderboard */
+.lb-card { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px; }
+.lb-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 8px; }
+.lb-head h2 { margin: 0; font-size: 1.05rem; }
+.lb-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.lb-row { display: grid; grid-template-columns: 20px 32px minmax(0, 1fr) auto auto auto; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 14px; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+.lb-row.me { background: color-mix(in srgb, var(--accent) 14%, transparent); font-weight: 700; }
+.lb-pos { text-align: center; color: var(--muted); }
+.lb-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+.lb-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lb-xp, .lb-streak { white-space: nowrap; font-size: 0.8rem; }
+.lb-empty, .lb-loading { margin: 0; }
+.lb-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; }
+.lb-actions .btn { flex: 1 1 140px; text-align: center; }
+.invite { display: contents; }
+.invite-note { flex-basis: 100%; margin: 0; font-size: 0.85rem; color: var(--muted); }
+.invite-link { user-select: all; word-break: break-all; }

@@ -4,14 +4,17 @@ import Link from 'next/link'
 import { isoWeek } from '@/lib/progress/dates'
 import { useProgress } from '@/lib/progress/ProgressProvider'
 import { avatarById } from '@/lib/profile'
+import { useCloud } from '@/lib/cloud/CloudProvider'
 import { rankFor } from '@/lib/rank'
 import { Illustration } from './Illustration'
 
 export function ProfileCard() {
   const { snapshot, profile, today, ready } = useProgress()
+  const { leaderboard } = useCloud()
   if (!ready) return <div className="profile-card placeholder" aria-hidden="true" />
   const avatar = avatarById(profile.avatarId)
   const { rank, next, xpToNext, progress } = rankFor(snapshot.xp)
+  const crowned = leaderboard.rows.some(r => r.isMe && r.crown)
   const weekXp = snapshot.weekXp?.week === isoWeek(today) ? snapshot.weekXp.xp : 0
 
   return (
@@ -19,7 +22,7 @@ export function ProfileCard() {
       <div className="profile-top">
         <Illustration src={avatar.src} alt={avatar.nameKo} className="profile-avatar" />
         <div className="profile-id">
-          <strong className="profile-name">{profile.nickname}</strong>
+          <strong className="profile-name">{profile.nickname}{crowned && <span aria-label="지난주 1위"> 👑</span>}</strong>
           <span className="profile-rank">
             <span className="rank-badge" aria-label={`랭크 ${rank.nameKo}`}>{rank.letter}</span>
             {rank.nameKo} 랭크 · {snapshot.xp} XP
