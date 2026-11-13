@@ -55,6 +55,13 @@ export function ProgressProvider({ children, store, now = () => new Date() }: { 
 
   const listeners = useRef(new Set<Listener>())
 
+  /** A failing listener (e.g. cloud sync) must never reach the lesson UI or skip other listeners. */
+  const notify = useCallback((s: ProgressSnapshot, ev: XpEvent | null) => {
+    listeners.current.forEach(l => {
+      try { l(s, ev) } catch (e) { console.warn('progress listener failed', e) }
+    })
+  }, [])
+
   const commit = useCallback((next: ProgressSnapshot) => {
     current.current = next
     setSnapshot(next)
@@ -97,15 +104,15 @@ export function ProgressProvider({ children, store, now = () => new Date() }: { 
     const next = addLearned(recordLessonComplete(base, lesson, result, day, t.toISOString()), learned, day)
     commit(next)
     const ev: XpEvent = { week: isoWeek(day), gained: next.xp - base.xp, streak: next.streak.current }
-    listeners.current.forEach(l => l(next, ev))
-  }, [commit, latest])
+    notify(next, ev)
+  }, [commit, latest, notify])
 
   const reviewAnswered = useCallback<ProgressApi['reviewAnswered']>((lemmaId, correct) => {
     const day = seoulDate(nowRef.current())
     const next = recordReview(latest(), lemmaId, correct, day)
     commit(next)
-    listeners.current.forEach(l => l(next, null))
-  }, [commit, latest])
+    notify(next, null)
+  }, [commit, latest, notify])
 
   const subscribe = useCallback<ProgressApi['subscribe']>(listener => {
     listeners.current.add(listener)

@@ -77,5 +77,25 @@ describe('ProgressProvider', () => {
       expect(store.current().xp).toBe(500)
       expect(listener).not.toHaveBeenCalled()
     })
+    test('a throwing listener never blocks completion or other listeners', async () => {
+      listener.mockClear()
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      function Two() {
+        const p = useProgress()
+        return (
+          <button onClick={() => { p.subscribe(() => { throw new Error('boom') }); p.subscribe(listener) }}>sub2</button>
+        )
+      }
+      function Both() { return <><Probe /><Two /></> }
+      const { store } = renderWithProgress(<Both />)
+      await screen.findByText('ready:true')
+      act(() => screen.getByText('sub2').click())
+      expect(() => act(() => screen.getByText('done').click())).not.toThrow()
+      expect(screen.getByText('xp:10')).toBeInTheDocument()
+      expect(store.current().xp).toBe(10)
+      expect(listener).toHaveBeenCalledTimes(1)
+      expect(listener.mock.calls[0][1]).toEqual({ week: '2026-W45', gained: 10, streak: 1 })
+      warn.mockRestore()
+    })
   })
 })
