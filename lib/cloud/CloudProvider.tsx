@@ -2,9 +2,9 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { Profile } from '@/lib/profile'
-import { isoWeek } from '@/lib/progress/dates'
+import { isoWeek, previousIsoWeek } from '@/lib/progress/dates'
 import { mergeSnapshots } from '@/lib/progress/merge'
-import { readFlag, writeFlag } from '@/lib/prefs'
+import { PROFILE_DIRTY_KEY, readFlag, writeFlag } from '@/lib/prefs'
 import { useProgress } from '@/lib/progress/ProgressProvider'
 import type { ProgressSnapshot } from '@/lib/progress/snapshot'
 import { parseSnapshot } from '@/lib/progress/store'
@@ -48,16 +48,20 @@ const OFF: CloudContextValue = {
 
 const CloudContext = createContext<CloudContextValue>(OFF)
 
-/** Set while a local profile edit has not reached the server; the next startup pushes it instead of taking the server's. */
-export const PROFILE_DIRTY_KEY = 'aleph-journey:profile-dirty'
+export { PROFILE_DIRTY_KEY }
 
 const isOffline = () => typeof navigator !== 'undefined' && navigator.onLine === false
 const sameProfile = (a: Profile | null, b: Profile | null) =>
   !!a && !!b && a.nickname === b.nickname && a.avatarId === b.avatarId
 
-/** The server rejects XP events below 1; drop them from the outbox instead of retrying forever. */
-const sender = (api: CloudApi) => (ev: XpEvent) =>
-  ev.gained < 1 ? Promise.resolve() : api.recordXp(ev.week, ev.gained, ev.streak)
+/**
+ * The server rejects XP events below 1 and weeks before the previous one: drop those from the outbox
+ * without sending. Other rejections (invalid_week/invalid_gained) are dropped by the outbox itself.
+ */
+const sender = (api: CloudApi, today: () => string) => (ev: XpEvent) =>
+  ev.gained < 1 || ev.week < previousIsoWeek(isoWeek(today()))
+    ? Promise.resolve()
+    : api.recordXp(ev.week, ev.gained, ev.streak)
 
 export function CloudProvider({
   children,
@@ -112,7 +116,7 @@ export function CloudProvider({
   const pushNow = useCallback(async (a: CloudApi) => {
     const s = lastSnap.current ?? progressRef.current.snapshot
     try {
-      await flush(sender(a))
+      await flush(sender(a, () => progressRef.current.today))
       await a.pushProgress(s)
       await loadLeaderboard(a)
     } catch (e) {
@@ -153,7 +157,7 @@ export function CloudProvider({
       if (merged !== rendered) progressRef.current.replaceSnapshot(merged)
       lastSnap.current = merged
       await a.pushProgress(merged)
-      await flush(sender(a))
+      await flush(sender(a, () => progressRef.current.today))
       await loadLeaderboard(a)
       started.current = true
       setStatus('ready')
@@ -192,7 +196,7 @@ export function CloudProvider({
     const unsubscribe = subscribe((s, ev) => {
       lastSnap.current = s
       if (ev && ev.gained >= 1) enqueue(ev)
-      if (started.current && ev) void flush(sender(api))
+      if (started.current && ev) void flush(sender(api, () => progressRef.current.today))
       schedulePush(api)
     })
     return () => {

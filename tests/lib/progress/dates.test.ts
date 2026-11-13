@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { addDays, daysBetween, isoWeek, seoulDate } from '@/lib/progress/dates'
+import { addDays, daysBetween, isoWeek, previousIsoWeek, seoulDate } from '@/lib/progress/dates'
 
 describe('dates', () => {
   test('seoulDate uses Asia/Seoul regardless of host timezone', () => {
@@ -20,5 +20,13 @@ describe('dates', () => {
     expect(isoWeek('2027-01-01')).toBe('2026-W53')
     expect(isoWeek('2026-11-08')).toBe('2026-W45')
     expect(isoWeek('2026-11-09')).toBe('2026-W46')
+  })
+})
+
+describe('previousIsoWeek', () => {
+  test('steps back one ISO week, across year boundaries', () => {
+    expect(previousIsoWeek('2026-W45')).toBe('2026-W44')
+    expect(previousIsoWeek('2026-W01')).toBe('2025-W52')
+    expect(previousIsoWeek('2021-W01')).toBe('2020-W53')
   })
 })

@@ -6,7 +6,13 @@ export type CloudProfile = { nickname: string; avatarId: string; friendCode: str
 export type FriendSummary = { userId: string; nickname: string; avatarId: string }
 export type LeaderboardRow = FriendSummary & { totalXp: number; weekXp: number; streak: number; isMe: boolean; crown: boolean }
 
-export type CloudErrorCode = 'not_found' | 'self' | 'already' | 'invalid_ticket' | 'not_guest' | 'network' | 'unknown'
+export type CloudErrorCode =
+  | 'not_found' | 'self' | 'already' | 'invalid_ticket' | 'not_guest'
+  /** record_xp rejections: permanent, the outbox drops the event. */
+  | 'invalid_week' | 'invalid_gained'
+  /** Too many unknown friend codes looked up in the last hour. */
+  | 'rate_limited'
+  | 'network' | 'unknown'
 
 export class CloudError extends Error {
   code: CloudErrorCode

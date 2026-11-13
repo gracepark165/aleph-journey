@@ -39,6 +39,7 @@ run "'$PGBIN/pg_ctl' -D '$WORK/data' -o \"-p $PORT -k '$SOCK' -c listen_addresse
 
 PSQL="psql -X -q -h '$SOCK' -p $PORT -U postgres -v ON_ERROR_STOP=1"
 run "$PSQL -d postgres -c 'create database app_test'" 
-for f in stub_auth.sql 20261113000000_friends.sql friends.test.sql; do
+# Migrations in order (file names sort by timestamp), then the tests.
+for f in stub_auth.sql $(cd "$ROOT/supabase/migrations" && ls *.sql | sort) friends.test.sql; do
   run "$PSQL -d app_test -f '$TESTDIR/$f'"
 done

@@ -17,6 +17,7 @@ const visit = (url: string) => window.history.replaceState(null, '', url)
 beforeEach(() => {
   vi.clearAllMocks()
   sessionStorage.clear()
+  localStorage.clear()
   api = fakeCloud()
 })
 afterEach(() => {
@@ -49,11 +50,11 @@ describe('/auth/callback', () => {
 
   test('cancelled: shows the message, drops the ticket and goes to /profile after 3 s', async () => {
     vi.useFakeTimers()
-    sessionStorage.setItem(TICKET_KEY, '{"ticket":"t","guestId":"g"}')
+    localStorage.setItem(TICKET_KEY, JSON.stringify({ ticket: 't', guestId: 'g', expiresAt: Date.now() + 60_000 }))
     visit('/auth/callback?next=%2F&error=access_denied&error_description=cancelled')
     render(<AuthCallbackPage />)
     expect(screen.getByText('카카오 연결이 취소되었어요')).toBeInTheDocument()
-    expect(sessionStorage.getItem(TICKET_KEY)).toBeNull()
+    expect(localStorage.getItem(TICKET_KEY)).toBeNull()
     expect(api!.finishAuth).not.toHaveBeenCalled()
     act(() => { vi.advanceTimersByTime(3000) })
     expect(replace).toHaveBeenCalledWith('/profile')
@@ -66,12 +67,12 @@ describe('/auth/callback', () => {
   })
 
   test('identity already linked elsewhere: continues with Kakao login and keeps the ticket', async () => {
-    sessionStorage.setItem(TICKET_KEY, '{"ticket":"t","guestId":"g"}')
+    localStorage.setItem(TICKET_KEY, JSON.stringify({ ticket: 't', guestId: 'g', expiresAt: Date.now() + 60_000 }))
     visit('/auth/callback?next=%2Ffriends&error=server_error&error_code=identity_already_exists&error_description=Identity+is+already+linked')
     render(<AuthCallbackPage />)
     await waitFor(() => expect(api!.continueKakaoLogin).toHaveBeenCalledWith('/friends'))
     expect(screen.queryByText('카카오 연결이 취소되었어요')).toBeNull()
-    expect(sessionStorage.getItem(TICKET_KEY)).not.toBeNull()
+    expect(localStorage.getItem(TICKET_KEY)).not.toBeNull()
     expect(api!.finishAuth).not.toHaveBeenCalled()
   })
 

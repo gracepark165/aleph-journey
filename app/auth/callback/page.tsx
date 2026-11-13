@@ -26,7 +26,7 @@ export default function AuthCallbackPage() {
     const cancel = () => {
       if (!alive) return
       setCancelled(true)
-      try { window.sessionStorage.removeItem(TICKET_KEY) } catch { /* storage blocked */ }
+      try { window.localStorage.removeItem(TICKET_KEY) } catch { /* storage blocked */ }
       timer = setTimeout(() => router.replace('/profile'), 3000)
     }
 

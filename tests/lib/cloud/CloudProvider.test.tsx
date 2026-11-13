@@ -2,6 +2,8 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import { act, render, screen, waitFor } from '@testing-library/react'
 import { StrictMode } from 'react'
 import { useCloud } from '@/lib/cloud/CloudProvider'
+import { markProfileEdited } from '@/lib/prefs'
+import { CloudError } from '@/lib/cloud/types'
 import { enqueue, flush, pending } from '@/lib/cloud/outbox'
 import type { LeaderboardRow } from '@/lib/cloud/types'
 import { useProgress } from '@/lib/progress/ProgressProvider'
@@ -27,6 +29,7 @@ function Probe() {
       <button onClick={() => p.completeLesson({ id: 'r1', type: 'reading' }, { score: 100, perfect: true })}>done</button>
       <button onClick={() => p.reviewAnswered('H1', true)}>review</button>
       <button onClick={() => p.setProfile({ nickname: '요나', avatarId: 'sailor' })}>rename</button>
+      <button onClick={() => { markProfileEdited(); p.setProfile({ nickname: '에스더', avatarId: 'naomi' }) }}>edit</button>
     </div>
   )
 }
@@ -165,7 +168,7 @@ describe('CloudProvider', () => {
     await screen.findByText('status:ready')
     act(() => screen.getByText('done').click())
     await waitFor(() => expect(api.recordXp).toHaveBeenCalled())
-    expect(pending()).toEqual([{ week: '2026-W45', gained: 15, streak: 1 }])
+    expect(pending()).toEqual([expect.objectContaining({ week: '2026-W45', gained: 15, streak: 1 })])
   })
 
   test('a review sends no recordXp but still pushes progress', async () => {
@@ -187,6 +190,54 @@ describe('CloudProvider', () => {
     expect(api.recordXp).toHaveBeenCalledTimes(1)
     expect(api.recordXp).toHaveBeenCalledWith('2026-W45', 5, 1)
     expect(pending()).toEqual([])
+  })
+
+  test('a permanently rejected queued event is dropped and later events are still sent', async () => {
+    enqueue({ week: '2026-W44', gained: 7, streak: 1 })
+    enqueue({ week: '2026-W45', gained: 5, streak: 1 })
+    const api = fakeCloud({
+      recordXp: async (_w, gained) => { if (gained === 7) throw new CloudError('invalid_week') },
+    })
+    renderWithCloud(<Probe />, api)
+    await screen.findByText('status:ready')
+    expect(api.recordXp).toHaveBeenCalledWith('2026-W45', 5, 1)
+    expect(pending()).toEqual([])
+  })
+
+  test('queued events older than the previous week are dropped without sending', async () => {
+    enqueue({ week: '2026-W43', gained: 9, streak: 1 })
+    enqueue({ week: '2025-W52', gained: 9, streak: 1 })
+    enqueue({ week: '2026-W44', gained: 4, streak: 1 })
+    const api = fakeCloud()
+    renderWithCloud(<Probe />, api)
+    await screen.findByText('status:ready')
+    expect(api.recordXp).toHaveBeenCalledTimes(1)
+    expect(api.recordXp).toHaveBeenCalledWith('2026-W44', 4, 1)
+    expect(pending()).toEqual([])
+  })
+
+  test('a network error while flushing keeps the queued events', async () => {
+    enqueue({ week: '2026-W45', gained: 5, streak: 1 })
+    const api = fakeCloud({ recordXp: async () => { throw new CloudError('network') } })
+    renderWithCloud(<Probe />, api)
+    await screen.findByText('status:ready')
+    expect(api.recordXp).toHaveBeenCalledTimes(1)
+    expect(pending()).toEqual([expect.objectContaining({ gained: 5 })])
+  })
+
+  test('a profile edit made while the cloud is in error is pushed by the next startup, not reverted', async () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {})
+    let fail = true
+    const api = fakeCloud({ ensureSession: async () => { if (fail) throw new Error('offline'); return { id: 'me', isGuest: true } } })
+    renderWithCloud(<Probe />, api)
+    await screen.findByText('status:error')
+    act(() => screen.getByText('edit').click())
+    expect(screen.getByText('nick:에스더')).toBeInTheDocument()
+    fail = false
+    act(() => { window.dispatchEvent(new Event('online')) })
+    await screen.findByText('status:ready')
+    await waitFor(() => expect(api.updateProfile).toHaveBeenCalledWith({ nickname: '에스더', avatarId: 'naomi' }))
+    expect(screen.getByText('nick:에스더')).toBeInTheDocument()
   })
 
   test('progress pushes are debounced', async () => {

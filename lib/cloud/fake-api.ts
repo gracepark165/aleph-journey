@@ -1,6 +1,6 @@
 import type { Profile } from '@/lib/profile'
 import type { ProgressSnapshot } from '@/lib/progress/snapshot'
-import { addDays, isoWeek, seoulDate } from '@/lib/progress/dates'
+import { isoWeek, previousIsoWeek, seoulDate } from '@/lib/progress/dates'
 import { CloudError, type CloudApi, type CloudProfile, type FriendSummary, type LeaderboardRow } from './types'
 
 const KEY = 'aleph.fakeCloud.v1'
@@ -9,13 +9,6 @@ const DEMO = { userId: 'demo-friend', code: 'ALEF-DEMO', nickname: '다윗', ava
 const MAX_GAIN = 30
 const MAX_WEEK_XP = 2100
 
-/** ISO week label before the given one, e.g. '2026-W01' -> '2025-W52'. */
-function previousWeek(week: string): string {
-  const [y, w] = week.split('-W').map(Number)
-  const jan4 = `${y}-01-04`
-  const weekday = new Date(`${jan4}T00:00:00Z`).getUTCDay() || 7
-  return isoWeek(addDays(jan4, 1 - weekday + (w - 1) * 7 - 7))
-}
 const byRank = (a: { weekXp: number; streak: number; nickname: string }, b: typeof a) =>
   b.weekXp - a.weekXp || b.streak - a.streak || a.nickname.localeCompare(b.nickname)
 
@@ -60,7 +53,9 @@ export function createFakeCloudApi(storage: Storage = window.localStorage): Clou
     async pullProgress() { return read().progress },
     async pushProgress(snapshot) { update(st => { st.progress = snapshot }) },
     async recordXp(week, gained, streak) {
-      if (!Number.isInteger(gained) || gained < 1 || gained > MAX_GAIN) throw new CloudError('unknown', 'invalid_gained')
+      if (!Number.isInteger(gained) || gained < 1 || gained > MAX_GAIN) throw new CloudError('invalid_gained')
+      const now = currentWeek()
+      if (week !== now && week !== previousIsoWeek(now)) throw new CloudError('invalid_week')
       update(st => { st.xp[week] = Math.min((st.xp[week] ?? 0) + gained, MAX_WEEK_XP); st.streak = streak })
     },
     async leaderboard(week) {
@@ -82,7 +77,7 @@ export function createFakeCloudApi(storage: Storage = window.localStorage): Clou
         return rows.sort(byRank)
       }
       // Crown: #1 of the previous ISO week, only if they earned XP then.
-      const last = build(previousWeek(week))[0]
+      const last = build(previousIsoWeek(week))[0]
       const crownId = last.weekXp > 0 ? last.userId : null
       return build(week).map(r => ({ ...r, crown: r.userId === crownId }))
     },

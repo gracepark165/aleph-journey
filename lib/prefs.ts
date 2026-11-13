@@ -2,8 +2,10 @@
 export const INTRO_SEEN_KEY = 'aleph-journey:intro-seen'
 export const REVIEW_MODE_KEY = 'aleph-journey:unlock-all'
 export const PROFILE_KEY = 'aleph-journey:profile'
-/** Guest transfer ticket kept in sessionStorage across the Kakao redirect. */
+/** Guest transfer ticket `{ticket, guestId, expiresAt}` kept in localStorage across the Kakao redirect (10-minute expiry). */
 export const TICKET_KEY = 'aleph-journey:ticket'
+/** Set while a user's profile edit has not reached the server; the next cloud startup pushes it instead of taking the server's. */
+export const PROFILE_DIRTY_KEY = 'aleph-journey:profile-dirty'
 
 export function readJson(key: string): unknown {
   try {
@@ -43,4 +45,9 @@ export function writeFlag(key: string, on: boolean): void {
 export function parseUnlockParam(search: string): 'on' | 'off' | null {
   const v = new URLSearchParams(search).get('unlock')
   return v === 'all' ? 'on' : v === 'off' ? 'off' : null
+}
+
+/** Call when the USER saves a profile edit (whatever the cloud status), so a later startup keeps it. */
+export function markProfileEdited(): void {
+  writeFlag(PROFILE_DIRTY_KEY, true)
 }

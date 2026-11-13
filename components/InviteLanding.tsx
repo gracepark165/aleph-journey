@@ -7,11 +7,13 @@ import { useCloud } from '@/lib/cloud/CloudProvider'
 import { CloudError, type FriendSummary } from '@/lib/cloud/types'
 import { avatarById } from '@/lib/profile'
 import { Illustration } from './Illustration'
+import { RATE_LIMITED } from './FriendsManager'
 import { InviteButton } from './InviteButton'
 
-type Lookup = 'loading' | 'missing' | 'failed' | { friend: FriendSummary; isMe: boolean }
-type Added = 'idle' | 'busy' | 'done' | 'already' | 'failed'
+type Lookup = 'loading' | 'missing' | 'failed' | 'limited' | { friend: FriendSummary; isMe: boolean }
+type Added = 'idle' | 'busy' | 'done' | 'already' | 'limited' | 'failed'
 
+const isLimited = (e: unknown) => e instanceof CloudError && e.code === 'rate_limited'
 const Home = () => <Link href="/" className="btn secondary block">홈으로</Link>
 
 export function InviteLanding({ code, redirectMs = 2000 }: { code: string; redirectMs?: number }) {
@@ -28,7 +30,7 @@ export function InviteLanding({ code, redirectMs = 2000 }: { code: string; redir
     setLookup('loading')
     lookupCode(normalised).then(
       r => { if (live) setLookup(r ? { friend: r, isMe: r.isMe } : 'missing') },
-      () => { if (live) setLookup('failed') },
+      e => { if (live) setLookup(isLimited(e) ? 'limited' : 'failed') },
     )
     return () => { live = false }
   }, [status, normalised, attempt]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -45,7 +47,7 @@ export function InviteLanding({ code, redirectMs = 2000 }: { code: string; redir
       await addFriend(normalised)
       setAdded('done')
     } catch (e) {
-      setAdded(e instanceof CloudError && e.code === 'already' ? 'already' : 'failed')
+      setAdded(e instanceof CloudError && e.code === 'already' ? 'already' : isLimited(e) ? 'limited' : 'failed')
     }
   }
 
@@ -61,6 +63,8 @@ export function InviteLanding({ code, redirectMs = 2000 }: { code: string; redir
     )
   } else if (status === 'connecting' || lookup === 'loading') {
     body = <p className="muted" aria-busy="true">불러오는 중…</p>
+  } else if (lookup === 'limited') {
+    body = <><p>{RATE_LIMITED}</p><Home /></>
   } else if (lookup === 'missing') {
     body = <><p>초대 코드를 찾을 수 없어요</p><Home /></>
   } else if (lookup.isMe) {
@@ -87,6 +91,7 @@ export function InviteLanding({ code, redirectMs = 2000 }: { code: string; redir
           <>
             <button type="button" className="btn block" disabled={added === 'busy'} onClick={() => void join()}>친구 되기</button>
             {added === 'failed' && <p className="muted" role="alert">친구 추가에 실패했어요. 다시 시도해 주세요</p>}
+            {added === 'limited' && <p className="muted" role="alert">{RATE_LIMITED}</p>}
           </>
         )}
       </>

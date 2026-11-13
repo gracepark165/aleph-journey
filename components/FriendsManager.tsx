@@ -16,11 +16,15 @@ function normalise(raw: string): string {
   return s.length === 4 ? `ALEF-${s}` : s
 }
 
+/** Too many unknown codes in the last hour (server-side limit). */
+export const RATE_LIMITED = '잠시 후 다시 시도해 주세요'
+
 function errorMessage(e: unknown): string {
   if (e instanceof CloudError) {
     if (e.code === 'not_found') return '초대 코드를 찾을 수 없어요'
     if (e.code === 'self') return '내 코드예요'
     if (e.code === 'already') return '이미 친구예요'
+    if (e.code === 'rate_limited') return RATE_LIMITED
   }
   return '친구를 추가하지 못했어요. 잠시 후 다시 시도해 주세요.'
 }
@@ -48,7 +52,7 @@ export function FriendsManager() {
   if (status === 'error' && !profile) {
     return (
       <p className="muted">
-        순위를 불러오지 못했어요 · <button type="button" className="link-btn" onClick={() => void refreshLeaderboard()}>다시 시도</button>
+        친구 정보를 불러오지 못했어요 · <button type="button" className="link-btn" onClick={() => void refreshLeaderboard()}>다시 시도</button>
       </p>
     )
   }

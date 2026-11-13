@@ -48,9 +48,15 @@ describe('fake cloud api', () => {
 
   it('caps recordXp like the server', async () => {
     const { api } = await setup()
-    expect(await codeOf(api.recordXp(WEEK, 31, 1))).toBe('unknown')
+    expect(await codeOf(api.recordXp(WEEK, 31, 1))).toBe('invalid_gained')
     await expect(api.recordXp(WEEK, 30, 1)).resolves.toBeUndefined()
     expect((await api.leaderboard(WEEK))[0].weekXp).toBe(30)
+  })
+
+  it('rejects weeks other than this one and the previous one, like the server', async () => {
+    const { api } = await setup()
+    expect(await codeOf(api.recordXp('2020-W01', 5, 1))).toBe('invalid_week')
+    await expect(api.recordXp(LAST_WEEK, 5, 1)).resolves.toBeUndefined()
   })
 
   it('removes friends and deletes the account', async () => {
@@ -64,8 +70,8 @@ describe('fake cloud api', () => {
 
   it('rejects gained 0 and non-integers, and caps the week at 2100', async () => {
     const { api } = await setup()
-    expect(await codeOf(api.recordXp(WEEK, 0, 1))).toBe('unknown')
-    expect(await codeOf(api.recordXp(WEEK, 1.5, 1))).toBe('unknown')
+    expect(await codeOf(api.recordXp(WEEK, 0, 1))).toBe('invalid_gained')
+    expect(await codeOf(api.recordXp(WEEK, 1.5, 1))).toBe('invalid_gained')
     for (let i = 0; i < 71; i++) await api.recordXp(WEEK, 30, 1)
     expect((await api.leaderboard(WEEK))[0].weekXp).toBe(2100)
   })

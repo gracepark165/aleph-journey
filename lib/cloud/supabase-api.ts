@@ -5,9 +5,13 @@ import type { ProgressSnapshot } from '@/lib/progress/snapshot'
 import { CloudError, type CloudApi, type CloudErrorCode, type CloudProfile, type CloudUser, type FriendSummary, type LeaderboardRow } from './types'
 
 const KAKAO_SCOPES = 'profile_nickname profile_image'
-const KNOWN: CloudErrorCode[] = ['not_found', 'self', 'already', 'invalid_ticket', 'not_guest']
+const KNOWN: CloudErrorCode[] = ['not_found', 'self', 'already', 'invalid_ticket', 'not_guest', 'invalid_week', 'invalid_gained', 'rate_limited']
+/** A request that hangs longer than this fails (as a network error) instead of loading forever. */
+const REQUEST_TIMEOUT_MS = 10_000
+/** Matches the server ticket lifetime (create_transfer_ticket). */
+const TICKET_TTL_MS = 10 * 60_000
 
-type Ticket = { ticket: string; guestId: string }
+type Ticket = { ticket: string; guestId: string; expiresAt: number }
 type ProfileRow = { nickname: string | null; avatar_id: string | null; friend_code: string }
 type FriendRow = { user_id: string; nickname: string | null; avatar_id: string | null }
 type CodeRow = { nickname: string | null; avatar_id: string | null; is_me: boolean }
@@ -20,7 +24,9 @@ function toCloudError(e: unknown, status?: number): CloudError {
   const err = (e ?? {}) as { message?: unknown; status?: unknown; name?: unknown }
   const message = typeof err.message === 'string' ? err.message : ''
   if (KNOWN.includes(message as CloudErrorCode)) return new CloudError(message as CloudErrorCode)
-  if (status === 0 || err.status === 0 || err.name === 'AuthRetryableFetchError') return new CloudError('network', message)
+  if (status === 0 || err.status === 0 || err.name === 'AuthRetryableFetchError' || err.name === 'TimeoutError' || err.name === 'AbortError') {
+    return new CloudError('network', message)
+  }
   return new CloudError('unknown', message || 'unknown')
 }
 
@@ -31,19 +37,36 @@ const toProfile = (row: ProfileRow, fallback: Profile): CloudProfile => ({
 })
 const toFriend = (r: FriendRow): FriendSummary => ({ userId: r.user_id, nickname: r.nickname ?? '', avatarId: r.avatar_id ?? '' })
 
-function readTicket(): Ticket | null {
+/**
+ * The guest transfer ticket lives in localStorage (the Kakao app handoff may come back in a new tab,
+ * which would not see sessionStorage) and expires with the server ticket. Expired or malformed: cleared.
+ */
+function readTicket(): Omit<Ticket, 'expiresAt'> | null {
   try {
-    const t = JSON.parse(window.sessionStorage.getItem(TICKET_KEY) ?? 'null') as Ticket | null
-    return t && typeof t.ticket === 'string' && typeof t.guestId === 'string' ? t : null
+    const t = JSON.parse(window.localStorage.getItem(TICKET_KEY) ?? 'null') as Ticket | null
+    if (t && typeof t.ticket === 'string' && typeof t.guestId === 'string' && typeof t.expiresAt === 'number' && t.expiresAt > Date.now()) {
+      return { ticket: t.ticket, guestId: t.guestId }
+    }
+    if (t) clearTicket()
+    return null
   } catch {
     return null
   }
 }
-function writeTicket(t: Ticket): void {
-  try { window.sessionStorage.setItem(TICKET_KEY, JSON.stringify(t)) } catch { /* storage blocked: no merge after login */ }
+function writeTicket(t: Omit<Ticket, 'expiresAt'>): void {
+  try {
+    window.localStorage.setItem(TICKET_KEY, JSON.stringify({ ...t, expiresAt: Date.now() + TICKET_TTL_MS }))
+  } catch { /* storage blocked: no merge after login */ }
 }
 function clearTicket(): void {
-  try { window.sessionStorage.removeItem(TICKET_KEY) } catch { /* storage blocked */ }
+  try { window.localStorage.removeItem(TICKET_KEY) } catch { /* storage blocked */ }
+}
+
+/** fetch with a default timeout, so a hanging request ends in an error instead of a spinner forever. */
+const timedFetch: typeof fetch = (input, init) => {
+  const canTimeout = typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function'
+  const signal = init?.signal ?? (canTimeout ? AbortSignal.timeout(REQUEST_TIMEOUT_MS) : undefined)
+  return fetch(input, signal ? { ...init, signal } : init)
 }
 
 const kakaoOptions = (returnTo: string) => ({
@@ -55,6 +78,7 @@ const kakaoOptions = (returnTo: string) => ({
 export function createSupabaseCloudApi(url: string, anonKey: string): CloudApi {
   const sb = createClient(url, anonKey, {
     auth: { flowType: 'pkce', persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+    global: { fetch: timedFetch },
   })
 
   async function call<T>(fn: string, args?: Record<string, unknown>): Promise<T> {
@@ -145,7 +169,8 @@ export function createSupabaseCloudApi(url: string, anonKey: string): CloudApi {
     },
     async addFriend(code) {
       const rows = (await call<FriendRow[] | null>('add_friend', { p_code: code })) ?? []
-      if (!rows[0]) throw new CloudError('unknown', 'empty add_friend result')
+      // No row: unknown code (the server returns nothing instead of raising, so the miss is counted for the rate limit).
+      if (!rows[0]) throw new CloudError('not_found')
       return toFriend(rows[0])
     },
     async removeFriend(userId) {
@@ -183,7 +208,8 @@ export function createSupabaseCloudApi(url: string, anonKey: string): CloudApi {
     },
     async signOut() {
       let res
-      try { res = await sb.auth.signOut() } catch (e) { throw toCloudError(e) }
+      // Only this device: other devices of the same (Kakao) account stay signed in.
+      try { res = await sb.auth.signOut({ scope: 'local' }) } catch (e) { throw toCloudError(e) }
       if (res.error) throw toCloudError(res.error)
     },
     async deleteAccount() {

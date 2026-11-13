@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { markProfileEdited } from '@/lib/prefs'
 import { useProgress } from '@/lib/progress/ProgressProvider'
 import { AVATARS, cleanNickname, NICKNAME_MAX } from '@/lib/profile'
 import { AccountSection } from './AccountSection'
@@ -24,6 +25,8 @@ export function ProfileEditor() {
     e.preventDefault()
     const name = cleanNickname(nickname)
     if (!name) return setError('닉네임을 입력해 주세요.')
+    // Mark before saving: if the cloud is offline or failing now, its next startup must push this edit, not revert it.
+    markProfileEdited()
     setProfile({ nickname: name, avatarId })
     router.push('/')
   }

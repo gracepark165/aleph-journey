@@ -54,6 +54,18 @@ describe('InviteLanding', () => {
     expect(screen.getByRole('link', { name: /홈으로/ })).toHaveAttribute('href', '/')
     expect(push).not.toHaveBeenCalled()
   })
+  test('rate limited lookup: try again later, no add button', async () => {
+    renderWithCloud(<InviteLanding code="ALEF-DEMO" />, fakeCloud({ profileByCode: async () => { throw new CloudError('rate_limited') } }))
+    expect(await screen.findByText('잠시 후 다시 시도해 주세요')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '친구 되기' })).toBeNull()
+    expect(screen.getByRole('link', { name: /홈으로/ })).toHaveAttribute('href', '/')
+  })
+  test('rate limited add: try again later', async () => {
+    const api = fakeCloud({ profileByCode: async () => FRIEND, addFriend: async () => { throw new CloudError('rate_limited') } })
+    renderWithCloud(<InviteLanding code="ALEF-DEMO" />, api)
+    await userEvent.click(await screen.findByRole('button', { name: '친구 되기' }))
+    expect(await screen.findByRole('alert')).toHaveTextContent('잠시 후 다시 시도해 주세요')
+  })
   test('connection error offers retry', async () => {
     const api = fakeCloud({ ensureSession: async () => { throw new Error('x') } })
     renderWithCloud(<InviteLanding code="ALEF-DEMO" />, api)

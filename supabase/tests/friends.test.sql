@@ -45,7 +45,9 @@ begin
 
   -- add_friend errors and success
   perform as_user(a);
-  assert err_of('select * from add_friend(''ALEF-ZZZZ'')') = 'not_found', 'not_found';
+  -- unknown code: no row (not an error, so the miss is recorded for the rate limit); the client maps it to not_found
+  select count(*) into n from add_friend('ALEF-ZZZZ');
+  assert n = 0, 'unknown code adds nothing';
   assert err_of(format('select * from add_friend(%L)', pa.friend_code)) = 'self', 'self';
   select * into r from add_friend(lower(pb.friend_code));
   assert r.user_id = b and r.nickname = '다윗', 'lowercase code add succeeds';
@@ -220,6 +222,71 @@ begin
   assert n = 0, 'profile gone';
   select count(*) into n from auth.users where id = k;
   assert n = 0, 'user gone';
+end $$;
+
+-- friend-code rate limit (20260114 migration): 20 unknown codes per user per hour, then every lookup is refused
+do $$
+declare
+  r uuid := gen_random_uuid(); b uuid := uid_of('b'); a uuid := uid_of('a');
+  code text := (select friend_code from profiles where user_id = uid_of('b'));
+  n int;
+begin
+  reset role;
+  insert into auth.users(id) values (r);
+  perform as_user(r); perform ensure_profile('리밋', 'x');
+  -- found codes (and my own) never count
+  for i in 1..25 loop
+    select count(*) into n from profile_by_code(code);
+    assert n = 1, 'hit ' || i;
+  end loop;
+  -- 20 misses (profile_by_code and add_friend both count) are fine
+  for i in 1..10 loop
+    select count(*) into n from profile_by_code('ALEF-ZZZZ');
+    assert n = 0, 'miss lookup ' || i;
+  end loop;
+  for i in 1..10 loop
+    select count(*) into n from add_friend('ALEF-ZZ' || lpad(i::text, 2, '0'));
+    assert n = 0, 'miss add ' || i;
+  end loop;
+  -- the 21st lookup is refused, and so is every lookup (even a valid code) until the hour has passed
+  assert err_of('select * from profile_by_code(''ALEF-ZZZZ'')') = 'rate_limited', '21st miss rate_limited';
+  assert err_of(format('select * from profile_by_code(%L)', code)) = 'rate_limited', 'valid lookup blocked too';
+  assert err_of(format('select * from add_friend(%L)', code)) = 'rate_limited', 'add_friend blocked too';
+  -- other users are not affected
+  perform as_user(a);
+  select count(*) into n from profile_by_code(code);
+  assert n = 1, 'other user unaffected';
+  -- the table is not reachable directly
+  perform as_user(r);
+  assert err_of('select * from friend_code_misses') like 'permission denied%', 'misses not readable';
+  assert err_of(format('delete from friend_code_misses where user_id = %L', r)) like 'permission denied%', 'misses not deletable';
+  -- an hour later the limit is lifted
+  reset role;
+  update friend_code_misses set at = now() - interval '61 minutes' where user_id = r;
+  perform as_user(r);
+  select count(*) into n from add_friend(code);
+  assert n = 1, 'valid add works after the hour';
+  reset role;
+end $$;
+
+-- absorb_guest re-checks that the ticket's guest is still anonymous
+do $$
+declare g2 uuid := gen_random_uuid(); k2 uuid := gen_random_uuid(); tk text; n int;
+begin
+  reset role;
+  insert into auth.users(id) values (g2), (k2);
+  perform as_user(g2); perform ensure_profile('손님2', 'x');
+  tk := create_transfer_ticket();
+  -- the guest linked Kakao itself after minting the ticket
+  reset role;
+  update auth.users set is_anonymous = false where id = g2;
+  perform as_user(k2); perform ensure_profile('카카오2', 'x');
+  assert err_of(format('select absorb_guest(%L)', tk)) = 'invalid_ticket', 'non-anonymous source refused';
+  reset role;
+  select count(*) into n from auth.users where id = g2;
+  assert n = 1, 'the linked account survives';
+  select count(*) into n from profiles where user_id = g2;
+  assert n = 1, 'its profile survives';
 end $$;
 
 \echo friends.test.sql: all assertions passed

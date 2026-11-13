@@ -101,6 +101,16 @@ describe('FriendsManager', () => {
     expect(api.addFriend).toHaveBeenCalledWith('ALEF-K0O1')
   })
 
+  test('rate limited: asks to try again later', async () => {
+    const user = userEvent.setup()
+    const api = fakeCloud({ addFriend: async () => { throw new CloudError('rate_limited') } })
+    renderWithCloud(<FriendsManager />, api)
+    await screen.findByText('ALEF-ME22')
+    await user.type(input(), 'AB23')
+    await user.click(screen.getByRole('button', { name: '추가' }))
+    expect((await screen.findByRole('alert')).textContent).toBe('잠시 후 다시 시도해 주세요')
+  })
+
   test('demo is normalised to ALEF-DEMO', async () => {
     const user = userEvent.setup()
     const api = fakeCloud({ leaderboard: async () => ROWS })
@@ -156,7 +166,8 @@ describe('FriendsManager', () => {
     let fail = true
     const api = fakeCloud({ ensureSession: async () => { if (fail) throw new Error('x'); return { id: 'me', isGuest: true } } })
     renderWithCloud(<FriendsManager />, api)
-    expect(await screen.findByText(/순위를 불러오지 못했어요/)).toBeInTheDocument()
+    expect(await screen.findByText(/친구 정보를 불러오지 못했어요/)).toBeInTheDocument()
+    expect(screen.queryByText(/순위를 불러오지 못했어요/)).toBeNull()
     expect(screen.queryByLabelText('친구 코드')).toBeNull()
     const calls = api.ensureSession.mock.calls.length
     fail = false

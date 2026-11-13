@@ -23,6 +23,7 @@ import { PROFILE_KEY } from '@/lib/prefs'
 const TICKET_KEY = 'aleph-journey:ticket'
 const session = (id: string, isAnonymous: boolean) => ({ data: { session: { user: { id, is_anonymous: isAnonymous } } }, error: null })
 const noSession = { data: { session: null }, error: null }
+const TICKET = { ticket: 't-123', guestId: 'guest-1', expiresAt: Date.now() + 5 * 60_000 }
 
 const api = () => createSupabaseCloudApi('https://x.supabase.co', 'anon-key')
 
@@ -46,7 +47,29 @@ describe('createSupabaseCloudApi', () => {
     expect(createClient.mock.calls[0][1]).toBe('anon-key')
     expect(createClient.mock.calls[0][2]).toEqual({
       auth: { flowType: 'pkce', persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+      global: { fetch: expect.any(Function) },
     })
+  })
+
+  test('requests time out after 10 s unless the caller passes its own signal', async () => {
+    const fetchSpy = vi.fn(async () => new Response('{}'))
+    vi.stubGlobal('fetch', fetchSpy)
+    const timeout = vi.spyOn(AbortSignal, 'timeout')
+    try {
+      api()
+      const wrapped = (createClient.mock.calls[0][2] as { global: { fetch: typeof fetch } }).global.fetch
+      await wrapped('https://x.supabase.co/rest/v1/rpc/a', { method: 'POST' })
+      expect(timeout).toHaveBeenCalledWith(10_000)
+      const init = (fetchSpy.mock.calls[0] as unknown[])[1] as RequestInit
+      expect(init.method).toBe('POST')
+      expect(init.signal).toBeInstanceOf(AbortSignal)
+      const own = new AbortController().signal
+      await wrapped('https://x.supabase.co/rest/v1/rpc/b', { signal: own })
+      expect(((fetchSpy.mock.calls[1] as unknown[])[1] as RequestInit).signal).toBe(own)
+    } finally {
+      vi.unstubAllGlobals()
+      timeout.mockRestore()
+    }
   })
 
   test('ensureSession signs in anonymously once when there is no session', async () => {
@@ -88,9 +111,31 @@ describe('createSupabaseCloudApi', () => {
     expect((await api().removeFriend('f1').catch(e => e)).code).toBe('network')
   })
 
+  test('record_xp rejections and rate limits keep their own codes', async () => {
+    for (const code of ['invalid_week', 'invalid_gained', 'rate_limited']) {
+      rpc.mockResolvedValue({ data: null, error: { message: code }, status: 400 })
+      expect((await api().recordXp('2020-W01', 5, 1).catch(e => e)).code).toBe(code)
+    }
+  })
+
+  test('a timed-out request maps to network', async () => {
+    rpc.mockRejectedValue(new DOMException('signal timed out', 'TimeoutError'))
+    expect((await api().leaderboard('2026-W46').catch(e => e)).code).toBe('network')
+  })
+
   test('unknown errors map to unknown', async () => {
-    rpc.mockResolvedValue({ data: null, error: { message: 'invalid_week' }, status: 400 })
-    expect((await api().recordXp('2020-W01', 5, 1).catch(e => e)).code).toBe('unknown')
+    rpc.mockResolvedValue({ data: null, error: { message: 'boom' }, status: 400 })
+    expect((await api().recordXp('2026-W45', 5, 1).catch(e => e)).code).toBe('unknown')
+  })
+
+  test('addFriend with no row back means the code was not found', async () => {
+    rpc.mockResolvedValue(ok([]))
+    expect((await api().addFriend('ALEF-ZZZZ').catch(e => e)).code).toBe('not_found')
+  })
+
+  test('signOut only ends the session on this device', async () => {
+    await api().signOut()
+    expect(auth.signOut).toHaveBeenCalledWith({ scope: 'local' })
   })
 
   test('leaderboard maps rows', async () => {
@@ -108,7 +153,12 @@ describe('createSupabaseCloudApi', () => {
     rpc.mockResolvedValue(ok('t-123'))
     await api().connectKakao('/profile')
     expect(rpc).toHaveBeenCalledWith('create_transfer_ticket')
-    expect(JSON.parse(sessionStorage.getItem(TICKET_KEY)!)).toEqual({ ticket: 't-123', guestId: 'guest-1' })
+    const stored = JSON.parse(localStorage.getItem(TICKET_KEY)!)
+    expect(stored).toMatchObject({ ticket: 't-123', guestId: 'guest-1' })
+    // Kept in localStorage (survives the Kakao app opening a new tab) for 10 minutes.
+    expect(stored.expiresAt - Date.now()).toBeGreaterThan(9 * 60_000)
+    expect(stored.expiresAt - Date.now()).toBeLessThanOrEqual(10 * 60_000)
+    expect(sessionStorage.getItem(TICKET_KEY)).toBeNull()
     expect(auth.linkIdentity).toHaveBeenCalledWith({
       provider: 'kakao',
       options: { redirectTo: `${location.origin}/auth/callback?next=%2Fprofile`, scopes: 'profile_nickname profile_image' },
@@ -126,26 +176,26 @@ describe('createSupabaseCloudApi', () => {
       provider: 'kakao',
       options: { redirectTo: `${location.origin}/auth/callback?next=%2Fprofile`, scopes: 'profile_nickname profile_image' },
     })
-    expect(sessionStorage.getItem(TICKET_KEY)).not.toBeNull()
+    expect(localStorage.getItem(TICKET_KEY)).not.toBeNull()
   })
 
   test('connectKakao does not ask for a ticket when already a Kakao user, and drops a stale one', async () => {
-    sessionStorage.setItem(TICKET_KEY, JSON.stringify({ ticket: 'old', guestId: 'guest-0' }))
+    localStorage.setItem(TICKET_KEY, JSON.stringify({ ticket: 'old', guestId: 'guest-0', expiresAt: Date.now() + 60_000 }))
     auth.getSession.mockResolvedValue(session('kakao-1', false))
     await api().connectKakao('/')
     expect(rpc).not.toHaveBeenCalledWith('create_transfer_ticket')
-    expect(sessionStorage.getItem(TICKET_KEY)).toBeNull()
+    expect(localStorage.getItem(TICKET_KEY)).toBeNull()
   })
 
   test('continueKakaoLogin signs in with Kakao and keeps the ticket', async () => {
-    sessionStorage.setItem(TICKET_KEY, JSON.stringify({ ticket: 't-123', guestId: 'guest-1' }))
+    localStorage.setItem(TICKET_KEY, JSON.stringify(TICKET))
     await api().continueKakaoLogin('/friends')
     expect(auth.signInWithOAuth).toHaveBeenCalledWith({
       provider: 'kakao',
       options: { redirectTo: `${location.origin}/auth/callback?next=%2Ffriends`, scopes: 'profile_nickname profile_image' },
     })
     expect(auth.linkIdentity).not.toHaveBeenCalled()
-    expect(sessionStorage.getItem(TICKET_KEY)).not.toBeNull()
+    expect(localStorage.getItem(TICKET_KEY)).not.toBeNull()
   })
 
   test('continueKakaoLogin maps errors', async () => {
@@ -154,27 +204,42 @@ describe('createSupabaseCloudApi', () => {
   })
 
   test('finishAuth absorbs the guest when the ticket came from another user', async () => {
-    sessionStorage.setItem(TICKET_KEY, JSON.stringify({ ticket: 't-123', guestId: 'guest-1' }))
+    localStorage.setItem(TICKET_KEY, JSON.stringify(TICKET))
     auth.getSession.mockResolvedValue(session('kakao-1', false))
     expect(await api().finishAuth()).toEqual({ absorbed: true })
     expect(rpc).toHaveBeenCalledWith('absorb_guest', { p_ticket: 't-123' })
-    expect(sessionStorage.getItem(TICKET_KEY)).toBeNull()
+    expect(localStorage.getItem(TICKET_KEY)).toBeNull()
   })
 
   test('finishAuth does not absorb when the same user linked Kakao', async () => {
-    sessionStorage.setItem(TICKET_KEY, JSON.stringify({ ticket: 't-123', guestId: 'guest-1' }))
+    localStorage.setItem(TICKET_KEY, JSON.stringify(TICKET))
     auth.getSession.mockResolvedValue(session('guest-1', false))
     expect(await api().finishAuth()).toEqual({ absorbed: false })
     expect(rpc).not.toHaveBeenCalled()
-    expect(sessionStorage.getItem(TICKET_KEY)).toBeNull()
+    expect(localStorage.getItem(TICKET_KEY)).toBeNull()
   })
 
   test('finishAuth clears the ticket even when absorbing fails', async () => {
-    sessionStorage.setItem(TICKET_KEY, JSON.stringify({ ticket: 't-123', guestId: 'guest-1' }))
+    localStorage.setItem(TICKET_KEY, JSON.stringify(TICKET))
     auth.getSession.mockResolvedValue(session('kakao-1', false))
     rpc.mockResolvedValue({ data: null, error: { message: 'invalid_ticket' }, status: 400 })
     expect((await api().finishAuth().catch(e => e)).code).toBe('invalid_ticket')
-    expect(sessionStorage.getItem(TICKET_KEY)).toBeNull()
+    expect(localStorage.getItem(TICKET_KEY)).toBeNull()
+  })
+
+  test('finishAuth ignores and clears an expired ticket', async () => {
+    localStorage.setItem(TICKET_KEY, JSON.stringify({ ...TICKET, expiresAt: Date.now() - 1 }))
+    auth.getSession.mockResolvedValue(session('kakao-1', false))
+    expect(await api().finishAuth()).toEqual({ absorbed: false })
+    expect(rpc).not.toHaveBeenCalled()
+    expect(localStorage.getItem(TICKET_KEY)).toBeNull()
+  })
+
+  test('finishAuth ignores a ticket without an expiry (old format)', async () => {
+    localStorage.setItem(TICKET_KEY, JSON.stringify({ ticket: 't-123', guestId: 'guest-1' }))
+    auth.getSession.mockResolvedValue(session('kakao-1', false))
+    expect(await api().finishAuth()).toEqual({ absorbed: false })
+    expect(rpc).not.toHaveBeenCalled()
   })
 
   test('deleteAccount deletes, signs out and forgets the local profile only', async () => {
