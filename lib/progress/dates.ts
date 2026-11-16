@@ -29,3 +29,11 @@ export function isoWeek(date: string): string {
   const week = Math.ceil(((d.getTime() - Date.UTC(year, 0, 1)) / DAY_MS + 1) / 7)
   return `${year}-W${String(week).padStart(2, '0')}`
 }
+
+/** ISO week label before the given one, e.g. '2026-W01' -> '2025-W52'. */
+export function previousIsoWeek(week: string): string {
+  const [y, w] = week.split('-W').map(Number)
+  const jan4 = `${y}-01-04`
+  const weekday = new Date(`${jan4}T00:00:00Z`).getUTCDay() || 7
+  return isoWeek(addDays(jan4, 1 - weekday + (w - 1) * 7 - 7))
+}

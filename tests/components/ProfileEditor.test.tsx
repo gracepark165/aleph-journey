@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 const push = vi.fn()
 vi.mock('next/navigation', () => ({ useRouter: () => ({ push, replace: vi.fn() }) }))
 import { ProfileEditor } from '@/components/ProfileEditor'
-import { PROFILE_KEY } from '@/lib/prefs'
+import { PROFILE_DIRTY_KEY, PROFILE_KEY } from '@/lib/prefs'
 import { renderWithProgress } from '../utils/progress'
 
 describe('ProfileEditor', () => {
@@ -16,6 +16,8 @@ describe('ProfileEditor', () => {
     await userEvent.click(screen.getByRole('radio', { name: '나오미' }))
     await userEvent.click(screen.getByRole('button', { name: '저장' }))
     expect(JSON.parse(localStorage.getItem(PROFILE_KEY)!)).toEqual({ nickname: '룻', avatarId: 'naomi' })
+    // A user edit is marked unsynced right away, whatever the cloud status, so a later startup pushes it.
+    expect(localStorage.getItem(PROFILE_DIRTY_KEY)).toBe('1')
     expect(push).toHaveBeenCalledWith('/')
   })
   test('empty nickname is not saved', async () => {
@@ -25,5 +27,6 @@ describe('ProfileEditor', () => {
     await userEvent.click(screen.getByRole('button', { name: '저장' }))
     expect(screen.getByText('닉네임을 입력해 주세요.')).toBeInTheDocument()
     expect(localStorage.getItem(PROFILE_KEY)).toBeNull()
+    expect(localStorage.getItem(PROFILE_DIRTY_KEY)).toBeNull()
   })
 })

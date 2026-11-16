@@ -30,14 +30,19 @@ const SnapshotSchema = z.object({
   weekXp: z.object({ week: z.string().nullable(), xp: z.number().int().nonnegative() }).default({ week: null, xp: 0 }),
 })
 
+/** Validate a snapshot from outside (e.g. the server); old ones get defaults, invalid ones are null. */
+export function parseSnapshot(raw: unknown): ProgressSnapshot | null {
+  const parsed = SnapshotSchema.safeParse(raw)
+  return parsed.success ? (parsed.data as ProgressSnapshot) : null
+}
+
 export function createLocalStore(storage?: Storage): ProgressStore {
   const get = () => storage ?? (typeof window !== 'undefined' ? window.localStorage : undefined)
   const peek = (): ProgressSnapshot | null => {
     try {
       const raw = get()?.getItem(STORAGE_KEY)
       if (!raw) return null
-      const parsed = SnapshotSchema.safeParse(JSON.parse(raw))
-      return parsed.success ? (parsed.data as ProgressSnapshot) : null
+      return parseSnapshot(JSON.parse(raw))
     } catch {
       return null
     }

@@ -1,6 +1,8 @@
 import { render } from '@testing-library/react'
 import type { ReactElement } from 'react'
 import { ProgressProvider } from '@/lib/progress/ProgressProvider'
+import { CloudProvider } from '@/lib/cloud/CloudProvider'
+import type { CloudApi } from '@/lib/cloud/types'
 import type { ProgressStore } from '@/lib/progress/store'
 import { emptySnapshot, type ProgressSnapshot } from '@/lib/progress/snapshot'
 
@@ -21,4 +23,20 @@ export function memoryStore(initial?: ProgressSnapshot) {
 
 export function renderWithProgress(ui: ReactElement, store = memoryStore()) {
   return { store, ...render(<ProgressProvider store={store} now={() => FIXED_NOW}>{ui}</ProgressProvider>) }
+}
+
+/** Same as renderWithProgress, with a CloudProvider (inside ProgressProvider) around `ui`. */
+export function renderWithCloud(
+  ui: ReactElement,
+  api: CloudApi | null,
+  { store = memoryStore(), pushDelayMs = 0 }: { store?: ReturnType<typeof memoryStore>; pushDelayMs?: number } = {},
+) {
+  return {
+    store,
+    ...render(
+      <ProgressProvider store={store} now={() => FIXED_NOW}>
+        <CloudProvider api={api} pushDelayMs={pushDelayMs}>{ui}</CloudProvider>
+      </ProgressProvider>,
+    ),
+  }
 }
