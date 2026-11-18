@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test, vi } from 'vitest'
-import { screen } from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useCloud } from '@/lib/cloud/CloudProvider'
 import { LeaderboardCard } from '@/components/LeaderboardCard'
@@ -23,21 +23,21 @@ describe('LeaderboardCard', () => {
   })
   test('rows in order with me highlighted, crown, rank letter, XP and streak', async () => {
     renderWithCloud(<LeaderboardCard />, fakeCloud({ leaderboard: async () => ROWS }))
-    expect(await screen.findByText('🏆 이번 주 친구 순위')).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: '이번 주 친구 순위' })).toBeInTheDocument()
     expect(screen.getByText('11월 2일 ~ 8일')).toBeInTheDocument()
     const items = await screen.findAllByRole('listitem')
     expect(items).toHaveLength(2)
     expect(items[0]).toHaveTextContent('1')
     expect(items[0]).toHaveTextContent('룻')
-    expect(items[0]).toHaveTextContent('👑')
+    expect(within(items[0]).getByLabelText('지난주 1위')).toBeInTheDocument()
     expect(items[0]).toHaveTextContent('90 XP')
-    expect(items[0]).toHaveTextContent('🔥 5')
+    expect(within(items[0]).getByLabelText('연속 5일')).toHaveTextContent('5')
     expect(items[0]).toHaveTextContent('ג')
     expect(items[1]).toHaveTextContent('2')
     expect(items[1]).toHaveTextContent('순례자')
     expect(items[1]).toHaveTextContent('(나)')
     expect(items[1]).toHaveClass('me')
-    expect(items[1]).not.toHaveTextContent('👑')
+    expect(within(items[1]).queryByLabelText('지난주 1위')).toBeNull()
     expect(items[1]).toHaveTextContent('א')
     expect(screen.getByRole('button', { name: /친구 초대하기/ })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: '코드로 추가' })).toHaveAttribute('href', '/friends')
@@ -101,10 +101,10 @@ describe('LeaderboardCard stale rows', () => {
 })
 
 describe('ProfileCard crown', () => {
-  test('shows 👑 when my row has crown', async () => {
+  test('shows the crown when my row has crown', async () => {
     const api = fakeCloud({ leaderboard: async () => [row({ userId: 'me', nickname: '순례자', isMe: true, crown: true })] })
     renderWithCloud(<ProfileCard />, api)
-    expect(await screen.findByLabelText('지난주 1위')).toHaveTextContent('👑')
+    expect(await screen.findByLabelText('지난주 1위')).toBeInTheDocument()
   })
   test('no crown by default', async () => {
     renderWithProgress(<ProfileCard />)

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Icon } from './Icon'
 
 type Props = { code: string; nickname: string; prominent?: boolean }
 
@@ -29,7 +30,7 @@ export function InviteButton({ code, nickname, prominent = false }: Props) {
 
   return (
     <div className="invite">
-      <button type="button" className={`btn ${prominent ? 'block' : 'secondary'}`} onClick={invite}>🤝 친구 초대하기</button>
+      <button type="button" className={`btn ${prominent ? 'block' : 'secondary'}`} onClick={invite}><Icon name="friend" size={20} />친구 초대하기</button>
       {note === 'copied' && <p className="invite-note" role="status">초대 링크를 복사했어요</p>}
       {note === 'manual' && <p className="invite-note invite-link" role="status">{url()}</p>}
     </div>
