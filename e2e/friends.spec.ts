@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }) => {
 
 test('home shows the leaderboard card with my row', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: '🏆 이번 주 친구 순위' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '이번 주 친구 순위' })).toBeVisible()
   await expect(card(page).getByText('(나)')).toBeVisible()
 })
 

@@ -7,6 +7,7 @@ import { avatarById } from '@/lib/profile'
 import { useCloud } from '@/lib/cloud/CloudProvider'
 import { rankFor } from '@/lib/rank'
 import { Illustration } from './Illustration'
+import { Icon } from './Icon'
 
 export function ProfileCard() {
   const { snapshot, profile, today, ready } = useProgress()
@@ -22,22 +23,22 @@ export function ProfileCard() {
       <div className="profile-top">
         <Illustration src={avatar.src} alt={avatar.nameKo} className="profile-avatar" />
         <div className="profile-id">
-          <strong className="profile-name">{profile.nickname}{crowned && <span aria-label="지난주 1위"> 👑</span>}</strong>
+          <strong className="profile-name">{profile.nickname}{crowned && <span className="crown" role="img" aria-label="지난주 1위"><Icon name="crown" size={18} /></span>}</strong>
           <span className="profile-rank">
             <span className="rank-badge" aria-label={`랭크 ${rank.nameKo}`}>{rank.letter}</span>
-            {rank.nameKo} 랭크 · {snapshot.xp} XP
+            {rank.nameKo} 랭크 <span className="profile-xp">{snapshot.xp} XP</span>
           </span>
         </div>
-        <Link href="/profile" className="profile-edit" aria-label="프로필 편집">✏️</Link>
+        <Link href="/profile" className="profile-edit" aria-label="프로필 편집"><Icon name="pencil" size={20} /></Link>
       </div>
       <div className="rank-progress" aria-hidden="true"><span style={{ width: `${Math.round(progress * 100)}%` }} /></div>
       <p className="rank-next">
         {next ? `다음 랭크 ${next.letter} ${next.nameKo}까지 ${xpToNext} XP` : '마지막 글자 타브에 이르렀어요!'}
       </p>
       <div className="profile-stats">
-        <span className="chip" aria-label={`이번 주 XP ${weekXp}`}>📅 이번 주 {weekXp} XP</span>
-        <span className="chip" aria-label={`연속 학습 ${snapshot.streak.current}일`}>🔥 {snapshot.streak.current}일 연속</span>
-        <span className="chip" aria-label={`안식일 쉼표 ${snapshot.restTokens}개`}>🕯️ 쉼표 {snapshot.restTokens}</span>
+        <span className="chip chip-week" aria-label={`이번 주 XP ${weekXp}`}><Icon name="calendar" size={16} />이번 주 {weekXp} XP</span>
+        <span className="chip chip-streak" aria-label={`연속 학습 ${snapshot.streak.current}일`}><Icon name="flame" size={16} />{snapshot.streak.current}일 연속</span>
+        <span className="chip chip-rest" aria-label={`안식일 쉼표 ${snapshot.restTokens}개`}><Icon name="candle" size={16} />쉼표 {snapshot.restTokens}</span>
       </div>
     </section>
   )

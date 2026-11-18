@@ -8,6 +8,7 @@ import { rankFor } from '@/lib/rank'
 import { weekRangeLabel } from '@/lib/week'
 import { Illustration } from './Illustration'
 import { InviteButton } from './InviteButton'
+import { Icon } from './Icon'
 
 export function LeaderboardCard() {
   const { status, profile, leaderboard, refreshLeaderboard } = useCloud()
@@ -21,7 +22,7 @@ export function LeaderboardCard() {
     state === 'offline' ? <p className="muted">인터넷에 연결되면 순위가 보여요</p>
     : state === 'error' ? (
       <p className="muted">
-        순위를 불러오지 못했어요 · <button type="button" className="link-btn" onClick={() => void refreshLeaderboard()}>다시 시도</button>
+        순위를 불러오지 못했어요. <button type="button" className="link-btn" onClick={() => void refreshLeaderboard()}>다시 시도</button>
       </p>
     ) : null
 
@@ -39,11 +40,11 @@ export function LeaderboardCard() {
                 <span className="lb-who">
                   <span className="lb-name">{r.nickname}</span>
                   {r.isMe && <span className="lb-tag">(나)</span>}
-                  {r.crown && <span className="lb-tag" aria-label="지난주 1위">👑</span>}
+                  {r.crown && <span className="lb-tag crown" role="img" aria-label="지난주 1위"><Icon name="crown" size={16} /></span>}
                 </span>
                 <span className="rank-badge" aria-label={`랭크 ${rankFor(r.totalXp).rank.nameKo}`}>{rankFor(r.totalXp).rank.letter}</span>
                 <span className="lb-xp">{r.weekXp} XP</span>
-                <span className="lb-streak">🔥 {r.streak}</span>
+                <span className="lb-streak" aria-label={`연속 ${r.streak}일`}><Icon name="flame" size={14} />{r.streak}</span>
               </li>
             )
           })}
@@ -57,7 +58,7 @@ export function LeaderboardCard() {
   return (
     <section className="lb-card" aria-label="친구 순위">
       <div className="lb-head">
-        <h2>🏆 이번 주 친구 순위</h2>
+        <h2><Icon name="trophy" size={22} />이번 주 친구 순위</h2>
         <span className="muted">{weekRangeLabel(today)}</span>
       </div>
       {body}
