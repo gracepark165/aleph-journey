@@ -34,9 +34,15 @@ export function VictoryScene({ nameKo, imageSrc, lines }: { nameKo: string; imag
       const a = new Audio(line.audioSrc)
       audio.current = a
       a.onended = next
-      a.onerror = () => { timer.current = setTimeout(() => say(i + 1), silentMs(line)) }
-      // Autoplay can be refused; the words still show and the scene moves on.
-      a.play().catch(() => { timer.current = setTimeout(() => say(i + 1), silentMs(line)) })
+      const silent = () => { a.onended = null; timer.current = setTimeout(() => say(i + 1), silentMs(line)) }
+      a.onerror = silent
+      // Autoplay can be refused (or play() may not exist / return a promise); the words still
+      // show and the scene moves on.
+      try {
+        const p = a.play() as Promise<void> | undefined
+        if (p && typeof p.catch === 'function') p.catch(silent)
+        else silent()
+      } catch { silent() }
     } else {
       timer.current = setTimeout(() => say(i + 1), silentMs(line))
     }
