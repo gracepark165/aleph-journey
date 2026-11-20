@@ -36,7 +36,8 @@
                 "H4994",
                 "H4592",
                 "H4325"
-              ]
+              ],
+              "audioSrc": "/audio/lines/rebekah-roleplay-605e3a0bdf.mp3"
             },
             "correct": true,
             "next": "rebekah-answers"
@@ -53,7 +54,8 @@
                 "H4592",
                 "H4325",
                 "H3537"
-              ]
+              ],
+              "audioSrc": "/audio/lines/rebekah-roleplay-7e7727bbb0.mp3"
             },
             "correct": true,
             "next": "rebekah-lowers-jar"
@@ -117,7 +119,8 @@
           "H4592",
           "H4325"
         ],
-        "ko": "물 조금"
+        "ko": "물 조금",
+        "audioSrc": "/audio/lines/rebekah-roleplay-63f5732c23.mp3"
       }
     },
     "rebekah-lowers-jar": {
@@ -148,7 +151,8 @@
           "H4592",
           "H4325"
         ],
-        "ko": "물 조금"
+        "ko": "물 조금",
+        "audioSrc": "/audio/lines/rebekah-roleplay-63f5732c23.mp3"
       }
     },
     "end": {
