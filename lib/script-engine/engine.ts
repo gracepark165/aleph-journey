@@ -31,3 +31,23 @@ export function applyGrade(lesson: RoleplayLesson, state: MissionState, result: 
   if (!next) throw new Error(`[${lesson.id}] correct answer without valid next: ${result.next}`)
   return { ...state, nodeId: next.id, history: [...state.history, state.nodeId], status: next.end ? 'won' : 'playing' }
 }
+
+/** Hits the monster can take: correct replies on the shortest path from the start to an end node. */
+export function monsterMaxHp(lesson: RoleplayLesson): number {
+  const seen = new Set<string>([lesson.startNodeId])
+  let frontier = [lesson.startNodeId]
+  for (let depth = 0; frontier.length > 0; depth++) {
+    const next: string[] = []
+    for (const id of frontier) {
+      const node = lesson.nodes[id]
+      if (!node) continue
+      if (node.end) return depth
+      const targets = node.reply?.mode === 'choice'
+        ? node.reply.options.filter(o => o.correct).map(o => o.next)
+        : node.reply ? [node.reply.next] : []
+      for (const t of targets) if (t && !seen.has(t)) { seen.add(t); next.push(t) }
+    }
+    frontier = next
+  }
+  return 1
+}

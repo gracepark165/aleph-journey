@@ -6,7 +6,17 @@
   "character": {
     "nameKo": "리브가",
     "nameHe": "רִבְקָה",
-    "avatarSrc": "/illustrations/rebekah-face.webp"
+    "avatarSrc": "/illustrations/rebekah-face.webp",
+    "victorySrc": "/illustrations/rebekah-victory-poster.webp",
+    "victoryVideoSrc": "/video/rebekah-victory.mp4",
+    "voiceId": "590c1cf179714823bf3f3990db4fcad7"
+  },
+  "monster": {
+    "nameKo": "목마름 먼지구름",
+    "src": "/illustrations/monster-1.webp",
+    "defeatKo": "물방울을 맞은 먼지구름이 촉촉해져 흩어졌어요!",
+    "defeat": "droplets",
+    "stageSrc": "/illustrations/stage-1.webp"
   },
   "startNodeId": "intro",
   "nodes": {
@@ -27,7 +37,8 @@
                 "H4994",
                 "H4592",
                 "H4325"
-              ]
+              ],
+              "audioSrc": "/audio/lines/rebekah-roleplay-605e3a0bdf.mp3"
             },
             "correct": true,
             "next": "rebekah-answers"
@@ -44,7 +55,8 @@
                 "H4592",
                 "H4325",
                 "H3537"
-              ]
+              ],
+              "audioSrc": "/audio/lines/rebekah-roleplay-7e7727bbb0.mp3"
             },
             "correct": true,
             "next": "rebekah-lowers-jar"
@@ -107,7 +119,9 @@
         "lemmaIds": [
           "H4592",
           "H4325"
-        ]
+        ],
+        "ko": "물 조금",
+        "audioSrc": "/audio/lines/rebekah-roleplay-63f5732c23.mp3"
       }
     },
     "rebekah-lowers-jar": {
@@ -137,7 +151,9 @@
         "lemmaIds": [
           "H4592",
           "H4325"
-        ]
+        ],
+        "ko": "물 조금",
+        "audioSrc": "/audio/lines/rebekah-roleplay-63f5732c23.mp3"
       }
     },
     "end": {
