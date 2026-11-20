@@ -32,7 +32,15 @@ export default async function LessonPage({ params }: { params: Promise<{ lessonI
   } else if (lesson.type === 'quiz') {
     view = <QuizView lesson={lesson} {...common} />
   } else {
-    view = <RoleplayView lesson={lesson} sceneImageSrc={unit.imageSrc} {...common} />
+    const index = course.units.findIndex(u => u.id === unit.id)
+    const after = course.units[index + 1]
+    view = (
+      <RoleplayView
+        lesson={lesson} sceneImageSrc={unit.imageSrc} {...common}
+        stage={{ index, titleKo: unit.titleKo, unitId: unit.id }}
+        nextStage={after ? { index: index + 1, titleKo: after.titleKo, unitId: after.id } : undefined}
+      />
+    )
   }
 
   return (

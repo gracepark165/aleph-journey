@@ -11,6 +11,7 @@ import { HebrewText } from './HebrewText'
 import { LampMeter } from './LampMeter'
 import { LessonComplete } from './LessonComplete'
 import { VictoryScene } from './VictoryScene'
+import { StageMapReveal, type StageRef } from './StageMapReveal'
 import { TokenPicker } from './TokenPicker'
 import { ZoeFeedback } from './Zoe'
 
@@ -36,13 +37,18 @@ function blocksLine(reply: BlocksReply, picked: number[]): HebrewLine {
   return { he, translit: '', ko: known ? reply.ko ?? '' : '', lemmaIds: reply.lemmaIds, ...(known && reply.audioSrc ? { audioSrc: reply.audioSrc } : {}) }
 }
 
-export function RoleplayView({ lesson, unitId, nextLessonId, sceneImageSrc }: { lesson: RoleplayLesson; unitId: string; nextLessonId?: string; sceneImageSrc?: string }) {
+export function RoleplayView({ lesson, unitId, nextLessonId, sceneImageSrc, stage, nextStage }: {
+  lesson: RoleplayLesson; unitId: string; nextLessonId?: string; sceneImageSrc?: string
+  /** This unit and the one after it on the journey map; the map shows once the battle is won. */
+  stage?: StageRef; nextStage?: StageRef
+}) {
   const [mission, setMission] = useState<MissionState>(() => startMission(lesson))
   const [myLines, setMyLines] = useState<HebrewLine[]>([])
   const [phase, setPhase] = useState<Phase>({ kind: 'answer' })
   const [picked, setPicked] = useState<number[]>([])
   const busy = useRef(false) // guards against double taps before re-render
   const [battle, setBattle] = useState<BattleEvent>({ kind: 'idle', n: 0 })
+  const [spoken, setSpoken] = useState(false) // the victory lines have been said
   const maxHp = lesson.monster ? monsterMaxHp(lesson) : 0
   const { finish, xpGained } = useLessonFinish(lesson)
   const npcName = lesson.character.nameKo
@@ -90,6 +96,7 @@ export function RoleplayView({ lesson, unitId, nextLessonId, sceneImageSrc }: { 
     setMission(startMission(lesson))
     setMyLines([])
     setBattle(b => ({ kind: 'idle', n: b.n + 1 }))
+    setSpoken(false)
     retry()
   }
 
@@ -124,7 +131,10 @@ export function RoleplayView({ lesson, unitId, nextLessonId, sceneImageSrc }: { 
       </div>
 
       {mission.status === 'won' && lesson.character.victorySrc && (
-        <VictoryScene nameKo={npcName} imageSrc={lesson.character.victorySrc} videoSrc={lesson.character.victoryVideoSrc} lines={myLines} />
+        <VictoryScene nameKo={npcName} imageSrc={lesson.character.victorySrc} videoSrc={lesson.character.victoryVideoSrc} lines={myLines} onDone={() => setSpoken(true)} />
+      )}
+      {mission.status === 'won' && stage && lesson.monster && (spoken || !lesson.character.victorySrc) && (
+        <StageMapReveal from={stage} to={nextStage} />
       )}
       {mission.status === 'won' && xpGained !== null && <LessonComplete titleKo="미션 성공!" xpGained={xpGained} unitId={unitId} nextLessonId={nextLessonId} />}
 

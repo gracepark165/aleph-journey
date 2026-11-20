@@ -137,4 +137,21 @@ describe('RoleplayView', () => {
     expect(await within(scene).findByText('물 조금', {}, { timeout: 5000 })).toBeInTheDocument()
     expect(await within(scene).findByRole('button', { name: '다시 듣기' }, { timeout: 5000 })).toBeInTheDocument()
   }, 15000)
+
+  test('once Rebekah has spoken, the map arrows to the next stage', async () => {
+    renderWithProgress(
+      <RoleplayView lesson={lesson} unitId="unit-1-rebekah"
+        stage={{ index: 1, titleKo: '우물가의 리브가', unitId: 'unit-1-rebekah' }}
+        nextStage={{ index: 2, titleKo: '하란의 우물가', unitId: 'unit-2-jacob' }} />,
+    )
+    await userEvent.click(option(/메아트 마임$/))
+    await userEvent.click(screen.getByRole('button', { name: '계속' }))
+    await buildBlocks()
+    await userEvent.click(screen.getByRole('button', { name: '계속' }))
+    expect(screen.queryByRole('region', { name: '여정 지도' })).toBeNull()
+    const map = await screen.findByRole('region', { name: '여정 지도' }, { timeout: 8000 })
+    expect(within(map).getByText('2단계: 하란의 우물가')).toBeInTheDocument()
+    expect(within(map).getByText('홍해에서 기다리고 있어요')).toBeInTheDocument()
+    expect(within(map).getByRole('link', { name: '다음 스테이지' })).toHaveAttribute('href', '/unit/unit-2-jacob')
+  }, 15000)
 })
