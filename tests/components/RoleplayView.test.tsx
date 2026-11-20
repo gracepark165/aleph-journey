@@ -96,4 +96,32 @@ describe('RoleplayView', () => {
     expect(screen.getByRole('status')).toHaveTextContent(/그녀의 손 위에/)
     expect(screen.getByTestId('zoe-feedback')).toBeInTheDocument()
   })
+
+  describe('monster battle', () => {
+    const hp = () => screen.getByRole('meter', { name: '목마름 먼지구름 체력' })
+    test('shows the monster with full health', () => {
+      view()
+      expect(screen.getByRole('img', { name: '목마름 먼지구름' })).toBeInTheDocument()
+      expect(hp()).toHaveAttribute('aria-valuenow', '2')
+      expect(hp()).toHaveAttribute('aria-valuemax', '2')
+    })
+    test('a right line hits the monster, a wrong one does not', async () => {
+      view()
+      await userEvent.click(option(/셰테 아도니/))
+      expect(hp()).toHaveAttribute('aria-valuenow', '2')
+      expect(screen.getByRole('img', { name: '조에' })).toHaveAttribute('src', '/illustrations/zoe-worried.webp')
+      await userEvent.click(screen.getByRole('button', { name: '다시' }))
+      await userEvent.click(option(/메아트 마임$/))
+      expect(hp()).toHaveAttribute('aria-valuenow', '1')
+      expect(screen.getByText('명중! 좋아요!')).toBeInTheDocument()
+    })
+    test('the last right line defeats the monster', async () => {
+      view()
+      await userEvent.click(option(/메아트 마임$/))
+      await userEvent.click(screen.getByRole('button', { name: '계속' }))
+      await buildBlocks()
+      expect(hp()).toHaveAttribute('aria-valuenow', '0')
+      expect(screen.getAllByText(lesson.monster!.defeatKo).length).toBeGreaterThan(0)
+    })
+  })
 })

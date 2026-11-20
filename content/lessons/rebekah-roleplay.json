@@ -8,6 +8,12 @@
     "nameHe": "רִבְקָה",
     "avatarSrc": "/illustrations/rebekah-face.webp"
   },
+  "monster": {
+    "nameKo": "목마름 먼지구름",
+    "src": "/illustrations/monster-1.webp",
+    "defeatKo": "물방울을 맞은 먼지구름이 촉촉해져 흩어졌어요!",
+    "defeat": "droplets"
+  },
   "startNodeId": "intro",
   "nodes": {
     "intro": {

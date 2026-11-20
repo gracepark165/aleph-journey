@@ -57,3 +57,12 @@ describe('script engine', () => {
     expect(() => applyGrade(lesson, s, { correct: true, next: 'ghost' })).toThrow()
   })
 })
+
+describe('monsterMaxHp', () => {
+  test('counts the right replies on the shortest path to the end', async () => {
+    const { readLesson } = await import('@/lib/content/read-files')
+    const { monsterMaxHp } = await import('@/lib/script-engine/engine')
+    expect(monsterMaxHp(readLesson('rebekah-roleplay') as never)).toBe(2)
+  })
+})
+

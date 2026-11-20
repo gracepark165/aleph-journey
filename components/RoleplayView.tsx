@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 import type { BlocksReply, ChoiceReply, HebrewLine, RoleplayLesson, ScriptNode } from '@/lib/content/schema'
 import { gradeBlocks, gradeChoice, type GradeResult } from '@/lib/grader/rules'
 import { useLessonFinish } from '@/lib/progress/useLessonFinish'
-import { applyGrade, currentNode, startMission, STARTING_LAMPS, type MissionState } from '@/lib/script-engine/engine'
+import { applyGrade, currentNode, monsterMaxHp, startMission, STARTING_LAMPS, type MissionState } from '@/lib/script-engine/engine'
+import { BattleStage, type BattleEvent } from './BattleStage'
 import { ChatBubble } from './ChatBubble'
 import { HebrewText } from './HebrewText'
 import { LampMeter } from './LampMeter'
@@ -38,6 +39,8 @@ export function RoleplayView({ lesson, unitId, nextLessonId, sceneImageSrc }: { 
   const [phase, setPhase] = useState<Phase>({ kind: 'answer' })
   const [picked, setPicked] = useState<number[]>([])
   const busy = useRef(false) // guards against double taps before re-render
+  const [battle, setBattle] = useState<BattleEvent>({ kind: 'idle', n: 0 })
+  const maxHp = lesson.monster ? monsterMaxHp(lesson) : 0
   const { finish, xpGained } = useLessonFinish(lesson)
   const npcName = lesson.character.nameKo
   const avatarSrc = lesson.character.avatarSrc
@@ -55,9 +58,13 @@ export function RoleplayView({ lesson, unitId, nextLessonId, sceneImageSrc }: { 
     busy.current = true
     if (result.correct) {
       setPhase({ kind: 'right', result, line })
+      const landed = lesson.nodes[result.next ?? '']?.end === true
+      setBattle(b => ({ kind: landed ? 'defeat' : 'hit', n: b.n + 1 }))
     } else {
+      const lostNow = mission.lamps - 1 <= 0
       setMission(m => applyGrade(lesson, m, result))
       setPhase({ kind: 'wrong', feedbackKo: result.feedbackKo ?? '다시 해 보세요.' })
+      setBattle(b => ({ kind: lostNow ? 'lost' : 'miss', n: b.n + 1 }))
     }
   }
 
@@ -79,19 +86,28 @@ export function RoleplayView({ lesson, unitId, nextLessonId, sceneImageSrc }: { 
   const restart = () => {
     setMission(startMission(lesson))
     setMyLines([])
+    setBattle(b => ({ kind: 'idle', n: b.n + 1 }))
     retry()
   }
 
   const reply = node.reply
+  const hits = mission.history.length + (phase.kind === 'right' ? 1 : 0)
   return (
     <article>
       <div className="mission-head">
         <h1 className="page-title">{lesson.titleKo}</h1>
         <LampMeter lamps={mission.lamps} />
       </div>
-      <div className={`scene-card ${sceneImageSrc ? 'has-image' : ''}`} style={sceneImageSrc ? { backgroundImage: `url(${sceneImageSrc})` } : undefined}>
-        <p>{lesson.setupKo}</p>
-      </div>
+      {lesson.monster ? (
+        <>
+          <BattleStage monster={lesson.monster} maxHp={maxHp} hp={maxHp - hits} event={battle} sceneImageSrc={sceneImageSrc} />
+          <p className="battle-setup">{lesson.setupKo}</p>
+        </>
+      ) : (
+        <div className={`scene-card ${sceneImageSrc ? 'has-image' : ''}`} style={sceneImageSrc ? { backgroundImage: `url(${sceneImageSrc})` } : undefined}>
+          <p>{lesson.setupKo}</p>
+        </div>
+      )}
 
       <div className="chat" aria-live="polite">
         {mission.history.map((id, i) => (
@@ -130,7 +146,7 @@ export function RoleplayView({ lesson, unitId, nextLessonId, sceneImageSrc }: { 
             )}
           {phase.kind === 'right' && (
             <>
-              <ZoeFeedback good>좋아요!</ZoeFeedback>
+              <ZoeFeedback good>{lesson.monster ? '명중! 좋아요!' : '좋아요!'}</ZoeFeedback>
               <button type="button" className="btn block" onClick={proceed}>계속</button>
             </>
           )}

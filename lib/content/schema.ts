@@ -106,6 +106,13 @@ export const RoleplayLessonSchema = z.object({
   titleKo: z.string(),
   setupKo: z.string(),
   character: z.object({ nameKo: z.string(), nameHe: z.string(), avatarSrc: IllustrationSrc.optional() }),
+  /** The scene's difficulty as a cute monster: each right line hits it, each wrong one costs a lamp. */
+  monster: z.object({
+    nameKo: z.string(),
+    src: IllustrationSrc,
+    defeatKo: z.string(),
+    defeat: z.enum(['droplets', 'sparkle']).default('sparkle'),
+  }).optional(),
   startNodeId: Id,
   nodes: z.record(Id, ScriptNodeSchema),
 })
@@ -123,6 +130,7 @@ export type OrderQuestion = z.infer<typeof OrderQuestionSchema>
 export type QuizLesson = z.infer<typeof QuizLessonSchema>
 export type ChoiceReply = z.infer<typeof ChoiceReplySchema>
 export type BlocksReply = z.infer<typeof BlocksReplySchema>
+export type Monster = NonNullable<z.infer<typeof RoleplayLessonSchema>['monster']>
 export type ScriptNode = z.infer<typeof ScriptNodeSchema>
 export type RoleplayLesson = z.infer<typeof RoleplayLessonSchema>
 export type Lesson = z.infer<typeof LessonSchema>

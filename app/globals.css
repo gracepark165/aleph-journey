@@ -572,3 +572,82 @@ a.lesson-card .lesson-state { color: var(--ink); }
 .account-confirm { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border-radius: 16px; background: var(--berry-soft); color: var(--berry); }
 .account-confirm-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .account-confirm-actions .btn { flex: 1 1 120px; }
+
+/* Roleplay battle: Zoe (left) against the scene's monster (right). Hits, misses and the finish replay via a remount key. */
+.battle {
+  position: sticky; top: calc(56px + env(safe-area-inset-top, 0px)); z-index: 5; overflow: hidden; border-radius: var(--radius); margin: 4px 0 8px; padding: 14px 16px 10px;
+  background:
+    linear-gradient(to bottom, color-mix(in oklab, var(--paper) 55%, transparent), color-mix(in oklab, var(--paper) 88%, transparent) 70%),
+    var(--scene, none) center 30% / cover, var(--paper-2);
+  box-shadow: var(--shadow), inset 0 0 0 1px var(--rule);
+}
+.battle-hud { display: flex; align-items: center; gap: 10px; }
+.battle-name { flex: none; font-family: var(--font-display), sans-serif; font-size: 1.05rem; padding: 2px 12px; border-radius: 999px; background: var(--grain), var(--card); box-shadow: inset 0 0 0 1px var(--rule); }
+.battle-hp { flex: 1; height: 14px; border-radius: 999px; background: var(--paper-3); overflow: hidden; box-shadow: inset 0 2px 0 oklch(30% 0.05 42 / 0.1), 0 0 0 2px var(--card); }
+.battle-hp > span { display: block; height: 100%; border-radius: 999px; background: var(--grain), var(--coral); box-shadow: inset 0 -3px 0 color-mix(in oklab, var(--coral) 70%, black), inset 0 3px 0 oklch(100% 0 0 / 0.3); transition: width 0.5s var(--ease-snap) 0.25s; }
+.battle-field { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); align-items: end; height: 140px; margin-top: 4px; }
+.battle-zoe, .battle-monster { position: relative; display: grid; place-items: end center; height: 100%; }
+.battle-zoe::after, .battle-monster::after {
+  content: ''; position: absolute; bottom: 2px; left: 50%; width: 70%; height: 14px; translate: -50% 0; border-radius: 50%;
+  background: radial-gradient(closest-side, oklch(30% 0.05 42 / 0.22), transparent); z-index: -1;
+}
+.battle-zoe-img { width: 88px; height: 88px; object-fit: contain; animation: bob 2.4s ease-in-out infinite; }
+.battle-monster-img { width: 128px; height: 128px; object-fit: contain; animation: breathe 2.8s ease-in-out infinite; transform-origin: 50% 90%; }
+@keyframes bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -4px; } }
+@keyframes breathe { 0%, 100% { scale: 1 1; } 50% { scale: 1.04 0.97; } }
+
+/* Hit: Zoe dashes in, the monster flinches, a burst and a damage number. */
+.on-hit .battle-zoe, .on-defeat .battle-zoe { animation: zoe-dash 0.55s var(--ease-snap); }
+.on-hit .battle-monster-img { animation: hurt 0.5s ease-out 0.18s; }
+@keyframes zoe-dash { 0% { translate: 0 0; } 35% { translate: 70% -14px; rotate: 12deg; } 55% { translate: 64% 0; rotate: 0deg; } 100% { translate: 0 0; } }
+@keyframes hurt {
+  0% { translate: 0 0; filter: none; }
+  20% { translate: 14px 0; filter: brightness(1.6) saturate(0.4); }
+  45% { translate: -8px 0; filter: none; }
+  70% { translate: 5px 0; }
+  100% { translate: 0 0; }
+}
+.battle-burst { position: absolute; left: 36%; top: 46%; width: 0; height: 0; pointer-events: none; }
+.battle-burst > i {
+  position: absolute; left: -5px; top: -5px; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--honey); box-shadow: 0 0 0 2px var(--card);
+  rotate: var(--a); animation: burst 0.6s var(--ease-snap) 0.18s both;
+}
+@keyframes burst { from { transform: translateX(0) scale(1.2); opacity: 1; } to { transform: translateX(58px) scale(0.2); opacity: 0; } }
+.battle-dmg {
+  position: absolute; right: 18%; top: 10%; font-family: var(--font-display), sans-serif; font-size: 1.8rem; color: var(--coral);
+  text-shadow: 0 2px 0 var(--card), 0 -2px 0 var(--card), 2px 0 0 var(--card), -2px 0 0 var(--card);
+  animation: dmg 0.9s var(--ease-snap) 0.2s both;
+}
+@keyframes dmg { 0% { opacity: 0; translate: 0 10px; scale: 0.6; } 25% { opacity: 1; scale: 1.2; } 100% { opacity: 0; translate: 0 -30px; scale: 1; } }
+
+/* Miss: the monster lunges, Zoe winces, the arena shakes. */
+.on-miss .battle-monster-img, .on-lost .battle-monster-img { animation: lunge 0.5s var(--ease-snap); }
+.on-miss .battle-zoe-img, .on-lost .battle-zoe-img { animation: wince 0.5s ease-out 0.15s; }
+.battle.on-miss, .battle.on-lost { animation: shake 0.4s ease-out 0.15s; }
+@keyframes lunge { 0% { translate: 0 0; } 40% { translate: -46% -6px; rotate: -8deg; } 100% { translate: 0 0; } }
+@keyframes wince { 0%, 100% { translate: 0 0; filter: none; } 25% { translate: -10px 0; filter: sepia(0.4) saturate(1.6) hue-rotate(-20deg); } 60% { translate: 6px 0; } }
+@keyframes shake { 0%, 100% { translate: 0 0; } 25% { translate: -6px 2px; } 50% { translate: 5px -2px; } 75% { translate: -3px 1px; } }
+.on-lost .battle-monster-img { animation: lunge 0.5s var(--ease-snap), gloat 0.6s ease-in-out 0.6s 3; }
+@keyframes gloat { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+
+/* Defeat: the monster puffs away; the scene's own finish (water droplets) flies out. */
+.is-defeated .battle-monster-img { opacity: 0; }
+.on-defeat .battle-monster-img { animation: hurt 0.4s ease-out 0.18s, poof 0.7s var(--ease-snap) 0.55s both; }
+@keyframes poof { 0% { opacity: 1; scale: 1; filter: none; } 40% { opacity: 1; scale: 1.12 0.9; filter: brightness(1.25); } 100% { opacity: 0; scale: 0.3; filter: blur(6px); } }
+.battle-drops { position: absolute; left: 50%; top: 55%; width: 0; height: 0; pointer-events: none; }
+.battle-drops > i {
+  position: absolute; left: -6px; top: -8px; width: 12px; height: 16px; border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
+  rotate: var(--a); animation: drop-fly 0.9s var(--ease-snap) 0.6s both;
+}
+.defeat-droplets .battle-drops > i { background: oklch(78% 0.1 230); box-shadow: inset -2px -3px 0 oklch(62% 0.12 235), 0 0 0 2px oklch(98% 0.01 230 / 0.8); }
+.defeat-sparkle .battle-drops > i { background: var(--honey); border-radius: 50%; }
+@keyframes drop-fly { 0% { transform: translateY(0) scale(0.4); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(calc(var(--d) * -1)) scale(1); opacity: 0; } }
+.battle-defeat-line {
+  margin: 2px 0 0; text-align: center; font-weight: 700; font-size: 0.9rem; color: var(--mint-deep);
+  animation: pop-in 0.5s var(--ease-snap) 1.1s both;
+}
+.battle-setup { margin: 0 0 4px; font-size: 0.92rem; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) {
+  .battle-burst, .battle-drops, .battle-dmg { display: none; }
+}
