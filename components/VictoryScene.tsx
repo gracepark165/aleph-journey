@@ -11,12 +11,13 @@ const silentMs = (line: HebrewLine) => 1400 + 260 * line.he.split(/\s+/).length
  * After the battle: the character steps in smiling and says, one by one, the lines the
  * player got right. Words pop in as she speaks; a recording plays when the line has one.
  */
-export function VictoryScene({ nameKo, imageSrc, lines }: { nameKo: string; imageSrc: string; lines: HebrewLine[] }) {
+export function VictoryScene({ nameKo, imageSrc, videoSrc, lines }: { nameKo: string; imageSrc: string; videoSrc?: string; lines: HebrewLine[] }) {
   const [shown, setShown] = useState(0) // lines revealed so far
   const [done, setDone] = useState(false)
   const [round, setRound] = useState(0) // bumps on replay so the words pop again
   const audio = useRef<HTMLAudioElement | null>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [reducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true)
 
   const stop = () => {
     if (timer.current) clearTimeout(timer.current)
@@ -59,7 +60,15 @@ export function VictoryScene({ nameKo, imageSrc, lines }: { nameKo: string; imag
     <section className="victory" aria-label={`${nameKo}의 대답`}>
       <div className="victory-figure">
         <span className="victory-glow" aria-hidden="true" />
-        <Illustration src={imageSrc} alt={`웃고 있는 ${nameKo}`} className="victory-img" />
+        {videoSrc ? (
+          <video
+            className="victory-img victory-video" src={videoSrc} poster={imageSrc}
+            autoPlay={!reducedMotion} muted loop playsInline preload="auto"
+            aria-label={`웃고 있는 ${nameKo}`} role="img"
+          />
+        ) : (
+          <Illustration src={imageSrc} alt={`웃고 있는 ${nameKo}`} className="victory-img" />
+        )}
       </div>
       <div className="victory-lines" aria-live="polite">
         {lines.slice(0, shown).map((line, i) => (

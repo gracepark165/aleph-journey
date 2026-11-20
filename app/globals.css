@@ -684,6 +684,7 @@ a.lesson-card .lesson-state { color: var(--ink); }
   border-radius: 22px; box-shadow: 0 0 0 4px var(--card), var(--shadow);
   animation: step-in 0.8s var(--ease-spring) both, sway 3.4s ease-in-out 1s infinite;
 }
+.victory-video { aspect-ratio: 9 / 16; max-width: 180px; object-position: center; background: var(--paper-2); }
 @keyframes step-in { from { opacity: 0; translate: 0 40px; scale: 0.9; } to { opacity: 1; translate: 0 0; scale: 1; } }
 @keyframes sway { 0%, 100% { rotate: -1.2deg; } 50% { rotate: 1.2deg; } }
 @keyframes glow-in { from { opacity: 0; scale: 0.6; } to { opacity: 1; scale: 1; } }

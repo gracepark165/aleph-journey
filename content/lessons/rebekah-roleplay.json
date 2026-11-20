@@ -7,7 +7,8 @@
     "nameKo": "리브가",
     "nameHe": "רִבְקָה",
     "avatarSrc": "/illustrations/rebekah-face.webp",
-    "victorySrc": "/illustrations/rebekah-smile.webp",
+    "victorySrc": "/illustrations/rebekah-victory-poster.webp",
+    "victoryVideoSrc": "/video/rebekah-victory.mp4",
     "voiceId": "590c1cf179714823bf3f3990db4fcad7"
   },
   "monster": {

@@ -5,6 +5,8 @@ const Id = z.string().min(1)
 /** Illustrations ship with the app under public/illustrations. */
 const IllustrationSrc = z.string().regex(/^\/illustrations\/[a-z0-9-]+\.(webp|png|jpg)$/, 'image must live in /illustrations/')
 /** Voice recordings ship under public/audio/lines (made by scripts/tts/generate-lines.ts). */
+/** Short clips ship under public/video (muted mp4). */
+const VideoSrc = z.string().regex(/^\/video\/[a-z0-9-]+\.mp4$/, 'video must live in /video/')
 const LineAudioSrc = z.string().regex(/^\/audio\/lines\/[a-z0-9-]+\.mp3$/, 'recording must live in /audio/lines/')
 
 export const HebrewLineSchema = z.object({
@@ -118,6 +120,8 @@ export const RoleplayLessonSchema = z.object({
     avatarSrc: IllustrationSrc.optional(),
     /** Smiling portrait for the victory scene, where the character says the player's right lines back. */
     victorySrc: IllustrationSrc.optional(),
+    /** Optional moving portrait (muted, loops) shown instead of victorySrc; victorySrc stays its poster. */
+    victoryVideoSrc: VideoSrc.optional(),
     /** Fish Audio voice used by scripts/tts/generate-lines.ts. */
     voiceId: z.string().optional(),
   }),

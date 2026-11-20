@@ -124,7 +124,7 @@ export function RoleplayView({ lesson, unitId, nextLessonId, sceneImageSrc }: { 
       </div>
 
       {mission.status === 'won' && lesson.character.victorySrc && (
-        <VictoryScene nameKo={npcName} imageSrc={lesson.character.victorySrc} lines={myLines} />
+        <VictoryScene nameKo={npcName} imageSrc={lesson.character.victorySrc} videoSrc={lesson.character.victoryVideoSrc} lines={myLines} />
       )}
       {mission.status === 'won' && xpGained !== null && <LessonComplete titleKo="미션 성공!" xpGained={xpGained} unitId={unitId} nextLessonId={nextLessonId} />}
 
