@@ -11,12 +11,14 @@ const silentMs = (line: HebrewLine) => 1400 + 260 * line.he.split(/\s+/).length
  * After the battle: the character steps in smiling and says, one by one, the lines the
  * player got right. Words pop in as she speaks; a recording plays when the line has one.
  */
-export function VictoryScene({ nameKo, imageSrc, videoSrc, lines }: { nameKo: string; imageSrc: string; videoSrc?: string; lines: HebrewLine[] }) {
+export function VictoryScene({ nameKo, imageSrc, videoSrc, lines, onDone }: { nameKo: string; imageSrc: string; videoSrc?: string; lines: HebrewLine[]; onDone?: () => void }) {
   const [shown, setShown] = useState(0) // lines revealed so far
   const [done, setDone] = useState(false)
   const [round, setRound] = useState(0) // bumps on replay so the words pop again
   const audio = useRef<HTMLAudioElement | null>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const onDoneRef = useRef(onDone)
+  onDoneRef.current = onDone
   const [reducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true)
 
   const stop = () => {
@@ -27,7 +29,7 @@ export function VictoryScene({ nameKo, imageSrc, videoSrc, lines }: { nameKo: st
 
   const say = useCallback((i: number) => {
     stop()
-    if (i >= lines.length) { setDone(true); return }
+    if (i >= lines.length) { setDone(true); onDoneRef.current?.(); return }
     setShown(i + 1)
     const next = () => { timer.current = setTimeout(() => say(i + 1), 450) }
     const line = lines[i]
