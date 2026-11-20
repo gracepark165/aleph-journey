@@ -6,7 +6,9 @@
   "character": {
     "nameKo": "리브가",
     "nameHe": "רִבְקָה",
-    "avatarSrc": "/illustrations/rebekah-face.webp"
+    "avatarSrc": "/illustrations/rebekah-face.webp",
+    "victorySrc": "/illustrations/rebekah-smile.webp",
+    "voiceId": "590c1cf179714823bf3f3990db4fcad7"
   },
   "monster": {
     "nameKo": "목마름 먼지구름",
@@ -114,7 +116,8 @@
         "lemmaIds": [
           "H4592",
           "H4325"
-        ]
+        ],
+        "ko": "물 조금"
       }
     },
     "rebekah-lowers-jar": {
@@ -144,7 +147,8 @@
         "lemmaIds": [
           "H4592",
           "H4325"
-        ]
+        ],
+        "ko": "물 조금"
       }
     },
     "end": {

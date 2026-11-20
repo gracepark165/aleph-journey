@@ -124,4 +124,17 @@ describe('RoleplayView', () => {
       expect(screen.getAllByText(lesson.monster!.defeatKo).length).toBeGreaterThan(0)
     })
   })
+
+  test('after the win, Rebekah smiles and says the right lines back', async () => {
+    view()
+    await userEvent.click(option(/메아트 마임$/))
+    await userEvent.click(screen.getByRole('button', { name: '계속' }))
+    await buildBlocks()
+    await userEvent.click(screen.getByRole('button', { name: '계속' }))
+    const scene = screen.getByRole('region', { name: '리브가의 대답' })
+    expect(within(scene).getByRole('img', { name: '웃고 있는 리브가' })).toBeInTheDocument()
+    expect(await within(scene).findByText('부디 물을 조금 마시게 해 주세요', {}, { timeout: 2000 })).toBeInTheDocument()
+    expect(await within(scene).findByText('물 조금', {}, { timeout: 5000 })).toBeInTheDocument()
+    expect(await within(scene).findByRole('button', { name: '다시 듣기' }, { timeout: 5000 })).toBeInTheDocument()
+  }, 15000)
 })

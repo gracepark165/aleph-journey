@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="stylesheet" href={FONTS_CSS} />
-        <link rel="preload" href="/fonts/childfundkorea.woff2" as="font" type="font/woff2" crossOrigin="" />
+        <link rel="preload" href="/fonts/cafe24-ssurround.woff2" as="font" type="font/woff2" crossOrigin="" />
       </head>
       <body>
         <ProgressProvider>

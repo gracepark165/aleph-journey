@@ -4,12 +4,15 @@ const LemmaId = z.string().regex(/^H\d+$/, 'lemmaId must look like H1234')
 const Id = z.string().min(1)
 /** Illustrations ship with the app under public/illustrations. */
 const IllustrationSrc = z.string().regex(/^\/illustrations\/[a-z0-9-]+\.(webp|png|jpg)$/, 'image must live in /illustrations/')
+/** Voice recordings ship under public/audio/lines (made by scripts/tts/generate-lines.ts). */
+const LineAudioSrc = z.string().regex(/^\/audio\/lines\/[a-z0-9-]+\.mp3$/, 'recording must live in /audio/lines/')
 
 export const HebrewLineSchema = z.object({
   he: z.string().min(1),
   translit: z.string(),
   ko: z.string(),
   lemmaIds: z.array(LemmaId),
+  audioSrc: LineAudioSrc.optional(),
 })
 
 export const LexemeSchema = z.object({
@@ -90,6 +93,10 @@ export const BlocksReplySchema = z.object({
   accepted: z.array(z.string().min(1)).min(1),
   next: Id,
   lemmaIds: z.array(LemmaId),
+  /** Recording of accepted[0], said back in the victory scene. */
+  audioSrc: LineAudioSrc.optional(),
+  /** Meaning of the built line, shown under it in the victory scene. */
+  ko: z.string().optional(),
 })
 
 export const ScriptNodeSchema = z.object({
@@ -105,7 +112,15 @@ export const RoleplayLessonSchema = z.object({
   type: z.literal('roleplay'),
   titleKo: z.string(),
   setupKo: z.string(),
-  character: z.object({ nameKo: z.string(), nameHe: z.string(), avatarSrc: IllustrationSrc.optional() }),
+  character: z.object({
+    nameKo: z.string(),
+    nameHe: z.string(),
+    avatarSrc: IllustrationSrc.optional(),
+    /** Smiling portrait for the victory scene, where the character says the player's right lines back. */
+    victorySrc: IllustrationSrc.optional(),
+    /** Fish Audio voice used by scripts/tts/generate-lines.ts. */
+    voiceId: z.string().optional(),
+  }),
   /** The scene's difficulty as a cute monster: each right line hits it, each wrong one costs a lamp. */
   monster: z.object({
     nameKo: z.string(),

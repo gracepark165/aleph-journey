@@ -10,6 +10,7 @@ import { ChatBubble } from './ChatBubble'
 import { HebrewText } from './HebrewText'
 import { LampMeter } from './LampMeter'
 import { LessonComplete } from './LessonComplete'
+import { VictoryScene } from './VictoryScene'
 import { TokenPicker } from './TokenPicker'
 import { ZoeFeedback } from './Zoe'
 
@@ -30,7 +31,9 @@ function NodeLines({ node, npcName, avatarSrc }: { node: ScriptNode; npcName: st
 }
 
 function blocksLine(reply: BlocksReply, picked: number[]): HebrewLine {
-  return { he: picked.map(i => reply.tokens[i]).join(' '), translit: '', ko: '', lemmaIds: reply.lemmaIds }
+  const he = picked.map(i => reply.tokens[i]).join(' ')
+  const known = he === reply.accepted[0]
+  return { he, translit: '', ko: known ? reply.ko ?? '' : '', lemmaIds: reply.lemmaIds, ...(known && reply.audioSrc ? { audioSrc: reply.audioSrc } : {}) }
 }
 
 export function RoleplayView({ lesson, unitId, nextLessonId, sceneImageSrc }: { lesson: RoleplayLesson; unitId: string; nextLessonId?: string; sceneImageSrc?: string }) {
@@ -120,6 +123,9 @@ export function RoleplayView({ lesson, unitId, nextLessonId, sceneImageSrc }: { 
         {phase.kind === 'right' && <ChatBubble line={phase.line} speaker={ME} side="me" />}
       </div>
 
+      {mission.status === 'won' && lesson.character.victorySrc && (
+        <VictoryScene nameKo={npcName} imageSrc={lesson.character.victorySrc} lines={myLines} />
+      )}
       {mission.status === 'won' && xpGained !== null && <LessonComplete titleKo="미션 성공!" xpGained={xpGained} unitId={unitId} nextLessonId={nextLessonId} />}
 
       {mission.status === 'lost' && (
