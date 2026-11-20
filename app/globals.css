@@ -581,6 +581,7 @@ a.lesson-card .lesson-state { color: var(--ink); }
     var(--scene, none) center 30% / cover, var(--paper-2);
   box-shadow: var(--shadow), inset 0 0 0 1px var(--rule);
 }
+.battle.is-settled { position: relative; top: auto; }
 .battle-hud { display: flex; align-items: center; gap: 10px; }
 .battle-name { flex: none; font-family: var(--font-display), sans-serif; font-size: 1.05rem; padding: 2px 12px; border-radius: 999px; background: var(--grain), var(--card); box-shadow: inset 0 0 0 1px var(--rule); }
 .battle-hp { flex: 1; height: 14px; border-radius: 999px; background: var(--paper-3); overflow: hidden; box-shadow: inset 0 2px 0 oklch(30% 0.05 42 / 0.1), 0 0 0 2px var(--card); }

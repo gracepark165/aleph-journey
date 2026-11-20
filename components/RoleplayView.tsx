@@ -100,7 +100,7 @@ export function RoleplayView({ lesson, unitId, nextLessonId, sceneImageSrc }: { 
       </div>
       {lesson.monster ? (
         <>
-          <BattleStage monster={lesson.monster} maxHp={maxHp} hp={maxHp - hits} event={battle} sceneImageSrc={sceneImageSrc} />
+          <BattleStage monster={lesson.monster} maxHp={maxHp} hp={maxHp - hits} event={battle} sceneImageSrc={sceneImageSrc} settled={mission.status !== 'playing'} />
           <p className="battle-setup">{lesson.setupKo}</p>
         </>
       ) : (

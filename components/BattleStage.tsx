@@ -11,18 +11,20 @@ export type BattleEvent = { kind: 'idle' | 'hit' | 'miss' | 'defeat' | 'lost'; n
 const BURST = Array.from({ length: 8 }, (_, i) => i)
 const DROPS = Array.from({ length: 12 }, (_, i) => i)
 
-export function BattleStage({ monster, hp, maxHp, event, sceneImageSrc }: {
+export function BattleStage({ monster, hp, maxHp, event, sceneImageSrc, settled = false }: {
   monster: Monster
   hp: number
   maxHp: number
   event: BattleEvent
   sceneImageSrc?: string
+  /** The mission is over: stop pinning the stage so the result card can scroll into view. */
+  settled?: boolean
 }) {
   const worried = event.kind === 'miss' || event.kind === 'lost'
   const defeated = hp <= 0
   return (
     <section
-      className={`battle on-${event.kind}${defeated ? ' is-defeated' : ''}`}
+      className={`battle on-${event.kind}${defeated ? ' is-defeated' : ''}${settled ? ' is-settled' : ''}`}
       aria-label={`${monster.nameKo}와의 대결`}
       style={sceneImageSrc ? { ['--scene' as string]: `url(${sceneImageSrc})` } : undefined}
     >
