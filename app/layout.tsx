@@ -9,7 +9,7 @@ import { APP_NAME } from '@/lib/version'
 import './globals.css'
 
 // Fonts load in the browser from Google Fonts, so builds never depend on fetching font metadata.
-const FONTS_CSS = 'https://fonts.googleapis.com/css2?family=Gaegu:wght@300;400;700&family=Noto+Serif+Hebrew:wght@400;600&display=swap'
+const FONTS_CSS = 'https://fonts.googleapis.com/css2?family=Noto+Serif+Hebrew:wght@400;600&display=swap'
 
 export const metadata: Metadata = { title: APP_NAME, description: '성경 히브리어를 장면 속 대화로 배우는 게임' }
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover' }
@@ -21,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="stylesheet" href={FONTS_CSS} />
+        <link rel="preload" href="/fonts/childfundkorea.woff2" as="font" type="font/woff2" crossOrigin="" />
       </head>
       <body>
         <ProgressProvider>

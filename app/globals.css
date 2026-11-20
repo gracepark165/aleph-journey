@@ -3,8 +3,14 @@
    coral for streaks, sky for links and focus, mint for growth. Hebrew stays in its serif. */
 
 /* Font families (loaded in app/layout.tsx). */
-/* Gaegu: a cute hand-written face for every Korean word; Hebrew keeps its serif. */
-:root { --font-hebrew: 'Noto Serif Hebrew'; --font-korean: 'Gaegu'; --font-display: 'Gaegu'; }
+/* Sandoll Childfundkorea (산돌 초록우산어린이, free incl. web embedding; see public/fonts/README.md) for every
+   Korean word: one weight, so no faux bold. Hebrew keeps its serif. */
+@font-face {
+  font-family: 'Childfundkorea';
+  src: url('/fonts/childfundkorea.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+:root { --font-hebrew: 'Noto Serif Hebrew'; --font-korean: 'Childfundkorea'; --font-display: 'Childfundkorea'; }
 
 :root {
   --paper: oklch(97% 0.018 80);
@@ -77,8 +83,8 @@
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; overflow-x: clip; }
-/* Gaegu sets small on its em box, so the whole type scale steps up. */
-html { font-size: 118%; }
+html { font-size: 104%; }
+body, button, input { font-synthesis: none; }
 body {
   background: var(--grain), var(--fibre), var(--paper);
   background-attachment: fixed;
@@ -88,7 +94,7 @@ body {
   font-family: var(--font-korean), -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   font-size: 1rem;
   line-height: 1.55;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.01em;
   word-break: keep-all;
   overflow-wrap: anywhere;
   -webkit-tap-highlight-color: transparent;
@@ -122,7 +128,7 @@ img { max-width: 100%; }
   border-bottom: 1px solid var(--rule);
 }
 .header-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-block: 10px; }
-.brand { text-decoration: none; color: var(--ink); font-size: 1.3rem; letter-spacing: -0.05em; }
+.brand { text-decoration: none; color: var(--ink); font-size: 1.3rem; letter-spacing: -0.02em; }
 .stats { display: flex; gap: 6px; font-size: 0.9rem; min-height: 32px; font-variant-numeric: tabular-nums; }
 .stat {
   display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; font-weight: 700;
@@ -134,10 +140,10 @@ img { max-width: 100%; }
 main.wrap { padding-block: 12px 40px; min-height: 60vh; }
 .site-footer { font-size: 0.75rem; color: var(--muted); padding-block: 16px 120px; border-top: 1px dashed var(--rule); }
 
-.page-title { font-size: 1.9rem; line-height: 1.2; letter-spacing: -0.05em; margin: 4px 0 6px; text-wrap: balance; }
+.page-title { font-size: 1.75rem; line-height: 1.25; letter-spacing: -0.02em; margin: 4px 0 6px; text-wrap: balance; }
 .back { display: inline-flex; align-items: center; gap: 4px; text-decoration: none; color: var(--muted); font-size: 0.9rem; margin-bottom: 8px; padding: 4px 0; }
 .back:hover { color: var(--ink); }
-h2 { letter-spacing: -0.05em; line-height: 1.25; }
+h2 { letter-spacing: -0.02em; line-height: 1.25; }
 
 .card {
   background: var(--grain), var(--card); border-radius: var(--radius); padding: 16px 18px;
@@ -186,7 +192,7 @@ h2 { letter-spacing: -0.05em; line-height: 1.25; }
 
 /* Home */
 .today { display: flex; flex-direction: column; gap: 20px; padding-top: 8px; }
-.hello { font-size: 2.6rem; line-height: 1.15; letter-spacing: -0.06em; margin: 6px 0 0; color: var(--ink); text-wrap: balance; }
+.hello { font-size: 2.3rem; line-height: 1.2; letter-spacing: -0.03em; margin: 6px 0 0; color: var(--ink); text-wrap: balance; }
 .chips { display: flex; gap: 8px; flex-wrap: wrap; }
 .chip {
   display: inline-flex; align-items: center; gap: 5px; background: var(--paper-2); border-radius: 999px;
