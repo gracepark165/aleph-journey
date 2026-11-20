@@ -3,7 +3,8 @@
    coral for streaks, sky for links and focus, mint for growth. Hebrew stays in its serif. */
 
 /* Font families (loaded in app/layout.tsx). */
-:root { --font-hebrew: 'Noto Serif Hebrew'; --font-korean: 'Noto Sans KR'; --font-display: 'Jua'; }
+/* Gaegu: a cute hand-written face for every Korean word; Hebrew keeps its serif. */
+:root { --font-hebrew: 'Noto Serif Hebrew'; --font-korean: 'Gaegu'; --font-display: 'Gaegu'; }
 
 :root {
   --paper: oklch(97% 0.018 80);
@@ -76,6 +77,8 @@
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; overflow-x: clip; }
+/* Gaegu sets small on its em box, so the whole type scale steps up. */
+html { font-size: 118%; }
 body {
   background: var(--grain), var(--fibre), var(--paper);
   background-attachment: fixed;
@@ -84,7 +87,8 @@ body {
   scrollbar-color: var(--edge) var(--paper);
   font-family: var(--font-korean), -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.55;
+  letter-spacing: -0.04em;
   word-break: keep-all;
   overflow-wrap: anywhere;
   -webkit-tap-highlight-color: transparent;
@@ -96,7 +100,7 @@ img { max-width: 100%; }
 :focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; transition: none; }
 .icon { flex: none; display: inline-block; vertical-align: -0.2em; }
 .display, .hello, .page-title, .brand, .btn, h2, .complete .xp, .friend-code {
-  font-family: var(--font-display), var(--font-korean), sans-serif; font-weight: 400;
+  font-family: var(--font-display), var(--font-korean), sans-serif; font-weight: 700;
 }
 
 .wrap {
@@ -105,7 +109,7 @@ img { max-width: 100%; }
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
-.hebrew { font-family: var(--font-hebrew), 'SBL Hebrew', 'Times New Roman', serif; font-size: 1.35em; line-height: 1.9; unicode-bidi: isolate; }
+.hebrew { letter-spacing: 0; font-family: var(--font-hebrew), 'SBL Hebrew', 'Times New Roman', serif; font-size: 1.35em; line-height: 1.9; unicode-bidi: isolate; }
 .muted { color: var(--muted); }
 .center { text-align: center; }
 .stack { display: flex; flex-direction: column; gap: 16px; align-items: center; }
@@ -118,7 +122,7 @@ img { max-width: 100%; }
   border-bottom: 1px solid var(--rule);
 }
 .header-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-block: 10px; }
-.brand { text-decoration: none; color: var(--ink); font-size: 1.3rem; letter-spacing: -0.01em; }
+.brand { text-decoration: none; color: var(--ink); font-size: 1.3rem; letter-spacing: -0.05em; }
 .stats { display: flex; gap: 6px; font-size: 0.9rem; min-height: 32px; font-variant-numeric: tabular-nums; }
 .stat {
   display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; font-weight: 700;
@@ -130,10 +134,10 @@ img { max-width: 100%; }
 main.wrap { padding-block: 12px 40px; min-height: 60vh; }
 .site-footer { font-size: 0.75rem; color: var(--muted); padding-block: 16px 120px; border-top: 1px dashed var(--rule); }
 
-.page-title { font-size: 1.9rem; line-height: 1.2; letter-spacing: -0.01em; margin: 4px 0 6px; text-wrap: balance; }
+.page-title { font-size: 1.9rem; line-height: 1.2; letter-spacing: -0.05em; margin: 4px 0 6px; text-wrap: balance; }
 .back { display: inline-flex; align-items: center; gap: 4px; text-decoration: none; color: var(--muted); font-size: 0.9rem; margin-bottom: 8px; padding: 4px 0; }
 .back:hover { color: var(--ink); }
-h2 { letter-spacing: -0.005em; line-height: 1.25; }
+h2 { letter-spacing: -0.05em; line-height: 1.25; }
 
 .card {
   background: var(--grain), var(--card); border-radius: var(--radius); padding: 16px 18px;
@@ -168,7 +172,7 @@ h2 { letter-spacing: -0.005em; line-height: 1.25; }
 .zoe-bubble {
   position: relative; margin: 0 0 22px; background: var(--grain), var(--card);
   border-radius: 22px 22px 22px 6px; padding: 12px 16px; box-shadow: var(--shadow), inset 0 0 0 1px var(--rule);
-  min-width: 0; font-weight: 500;
+  min-width: 0; font-weight: 400;
 }
 .zoe-placeholder { height: 104px; }
 .zoe-feedback { display: flex; align-items: center; gap: 8px; margin: 10px 0; }
@@ -182,7 +186,7 @@ h2 { letter-spacing: -0.005em; line-height: 1.25; }
 
 /* Home */
 .today { display: flex; flex-direction: column; gap: 20px; padding-top: 8px; }
-.hello { font-size: 2.6rem; line-height: 1.15; letter-spacing: -0.02em; margin: 6px 0 0; color: var(--ink); text-wrap: balance; }
+.hello { font-size: 2.6rem; line-height: 1.15; letter-spacing: -0.06em; margin: 6px 0 0; color: var(--ink); text-wrap: balance; }
 .chips { display: flex; gap: 8px; flex-wrap: wrap; }
 .chip {
   display: inline-flex; align-items: center; gap: 5px; background: var(--paper-2); border-radius: 999px;
@@ -470,7 +474,7 @@ a.lesson-card .lesson-state { color: var(--ink); }
 .profile-top { display: flex; align-items: center; gap: 14px; }
 .profile-avatar { width: 68px; height: 68px; border-radius: 50%; object-fit: cover; flex: none; background: var(--paper-2); box-shadow: 0 0 0 4px var(--honey), 0 0 0 6px var(--card); }
 .profile-id { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
-.profile-name { font-family: var(--font-display), sans-serif; font-weight: 400; font-size: 1.45rem; line-height: 1.2; display: flex; align-items: center; gap: 4px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.profile-name { font-family: var(--font-display), sans-serif; font-weight: 700; font-size: 1.45rem; line-height: 1.2; display: flex; align-items: center; gap: 4px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .crown { display: inline-flex; color: var(--honey-deep); --icon-fill: var(--honey); }
 .profile-rank { display: flex; align-items: center; gap: 6px; font-size: 0.88rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 .profile-xp { font-weight: 700; color: var(--ink-2); }
@@ -566,7 +570,7 @@ a.lesson-card .lesson-state { color: var(--ink); }
 .account-section h2 { margin: 0; }
 .account-section p { margin: 0; }
 /* Kakao brand rule: yellow container, 85% black label. */
-.btn.kakao-btn { background: #FEE500; color: rgba(0, 0, 0, 0.85); box-shadow: 0 var(--lift) 0 0 #d9c300; font-family: var(--font-korean), sans-serif; font-weight: 700; font-size: 1rem; }
+.btn.kakao-btn { background: #FEE500; color: rgba(0, 0, 0, 0.85); box-shadow: 0 var(--lift) 0 0 #d9c300; font-weight: 700; font-size: 1rem; }
 .btn.danger { background: var(--berry); color: var(--card); box-shadow: 0 var(--lift) 0 0 color-mix(in oklab, var(--berry) 70%, black); }
 .account-delete { align-self: flex-start; color: var(--berry); }
 .account-confirm { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border-radius: 16px; background: var(--berry-soft); color: var(--berry); }
@@ -579,6 +583,9 @@ a.lesson-card .lesson-state { color: var(--ink); }
   background:
     linear-gradient(to bottom, color-mix(in oklab, var(--paper) 55%, transparent), color-mix(in oklab, var(--paper) 88%, transparent) 70%),
     var(--scene, none) center 30% / cover, var(--paper-2);
+}
+.battle.has-stage {
+  background: var(--stage) center 24% / cover, var(--paper-2);
   box-shadow: var(--shadow), inset 0 0 0 1px var(--rule);
 }
 .battle.is-settled { position: relative; top: auto; }

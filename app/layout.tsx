@@ -9,7 +9,7 @@ import { APP_NAME } from '@/lib/version'
 import './globals.css'
 
 // Fonts load in the browser from Google Fonts, so builds never depend on fetching font metadata.
-const FONTS_CSS = 'https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+Hebrew:wght@400;600&display=swap'
+const FONTS_CSS = 'https://fonts.googleapis.com/css2?family=Gaegu:wght@300;400;700&family=Noto+Serif+Hebrew:wght@400;600&display=swap'
 
 export const metadata: Metadata = { title: APP_NAME, description: '성경 히브리어를 장면 속 대화로 배우는 게임' }
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover' }

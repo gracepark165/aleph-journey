@@ -24,9 +24,9 @@ export function BattleStage({ monster, hp, maxHp, event, sceneImageSrc, settled 
   const defeated = hp <= 0
   return (
     <section
-      className={`battle on-${event.kind}${defeated ? ' is-defeated' : ''}${settled ? ' is-settled' : ''}`}
+      className={`battle on-${event.kind}${defeated ? ' is-defeated' : ''}${settled ? ' is-settled' : ''}${monster.stageSrc ? ' has-stage' : ''}`}
       aria-label={`${monster.nameKo}와의 대결`}
-      style={sceneImageSrc ? { ['--scene' as string]: `url(${sceneImageSrc})` } : undefined}
+      style={monster.stageSrc ? { ['--stage' as string]: `url(${monster.stageSrc})` } : sceneImageSrc ? { ['--scene' as string]: `url(${sceneImageSrc})` } : undefined}
     >
       <div className="battle-hud">
         <span className="battle-name">{monster.nameKo}</span>

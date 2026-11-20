@@ -111,6 +111,8 @@ export const RoleplayLessonSchema = z.object({
     nameKo: z.string(),
     src: IllustrationSrc,
     defeatKo: z.string(),
+    /** Battle backdrop; without one the scene illustration shows through a paper veil. */
+    stageSrc: IllustrationSrc.optional(),
     defeat: z.enum(['droplets', 'sparkle']).default('sparkle'),
   }).optional(),
   startNodeId: Id,
